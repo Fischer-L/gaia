@@ -25,7 +25,7 @@
 
   var proto = evt(Connector.prototype);
 
-  proto.init = function c_init() {
+  proto.init = function () {
 
     mDBG.log('Connector#init');
     if (!this._presentation) {
@@ -41,7 +41,7 @@
     }
   };
 
-  proto._initSession = function c_initSession(session) {
+  proto._initSession = function (session) {
 
     mDBG.log('Connector#_initSession');
     if (!this._presentation) {
@@ -77,7 +77,7 @@
     this._session.send(castingMessage.stringify(msg));
   };
 
-  proto.replyACK = function c_replyACK(msg, error) {
+  proto.replyACK = function (msg, error) {
 
     mDBG.log('Connector#replyACK');
 
@@ -93,7 +93,7 @@
     this.sendMsg(reply);
   };
 
-  proto.reportStatus = function c_reportStatus(status, data) {
+  proto.reportStatus = function (status, data) {
 
     mDBG.log('Connector#reportStatus');
 
@@ -115,7 +115,7 @@
     this.sendMsg(msg);
   };
 
-  proto.handleRemoteMessage = function c_handleRemoteMessage(msg) {
+  proto.handleRemoteMessage = function (msg) {
 
     mDBG.log('Connector#handleRemoteMessage');
     mDBG.log('msg = ', msg);
@@ -164,7 +164,7 @@
     this.replyACK(msg, err);
   };
 
-  proto.handleEvent = function c_handleEvent(evt) {
+  proto.handleEvent = function (evt) {
 
     mDBG.log('Connector#handleEvent: event = ', evt);
 

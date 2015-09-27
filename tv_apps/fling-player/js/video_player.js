@@ -31,33 +31,33 @@
     return this._video.addEventListener(type, handle);
   };
 
-  proto.show = function vp_show() {
+  proto.show = function () {
     this._video.hidden = false;
   };
 
-  proto.hide = function vp_hide() {
+  proto.hide = function () {
     this._video.hidden = true;
   };
 
-  proto.load = function vp_load(url) {
+  proto.load = function (url) {
     this._video.src = url;
   };
 
-  proto.release = function vp_release() {
+  proto.release = function () {
     this._video.pause();
     this._video.removeAttribute('src');
     this._video.load();
   };
 
-  proto.play = function vp_play() {
+  proto.play = function () {
     this._video.play();
   };
 
-  proto.pause = function vp_pause() {
+  proto.pause = function () {
     this._video.pause();
   };
 
-  proto.seek = function vp_seek(t) {
+  proto.seek = function (t) {
     if (!this._isLoaded) {
       return;
     }
@@ -97,7 +97,7 @@
     return t;
   };
 
-  proto.handleEvent = function vp_handleEvent(evt) {
+  proto.handleEvent = function (evt) {
 
     switch(evt.type) {
       case 'loadedmetadata':

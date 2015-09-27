@@ -39,7 +39,7 @@
   proto.AUTO_SEEK_STEP_NORMAL_SEC = 10;
   proto.AUTO_SEEK_STEP_LARGE_SEC = 30;
 
-  proto.init = function fp_init() {
+  proto.init = function () {
 
     this._autoSeekDirection = null; // 'backward' or 'forward'
     this._autoSeekStartTime = null; // in ms
@@ -82,7 +82,7 @@
     }.bind(this));
   };
 
-  proto._initSession = function fp_initSession() {
+  proto._initSession = function () {
     this._connector.init();
 
     this._connector.on('loadRequest', this.onLoadRequest.bind(this));
@@ -91,7 +91,7 @@
     this._connector.on('seekRequest', this.onSeekRequest.bind(this));
   };
 
-  proto._initPlayer = function fp_initPlayer() {
+  proto._initPlayer = function () {
     this._player.init();
 
     this._player.addEventListener('loadedmetadata', this);
@@ -105,14 +105,29 @@
 
   // <UI handling>
 
-  proto.setLoading = function fp_setLoading(loading) {
+  proto.setLoading = function (loading) {
     this._loadingUI.hidden = !loading;
+  };
+
+  /**
+   * @param {String} state 'playing' or 'paused'
+   */
+  proto.setPlayButtonState = function (state) {
+    switch (state) {
+      case 'playing':
+        this._playButton.textContent = 'Play';
+      break;
+
+      case 'paused':
+        this._playButton.textContent = 'Pause';
+      break;
+    }
   };
 
   /**
    * @param {Boolean} autoHide Auto hide the controls later. Default to false
    */
-  proto.showControlPanel = function fp_showControlPanel(autoHide) {
+  proto.showControlPanel = function (autoHide) {
 
     if (this._hideControlsTimer) {
       clearTimeout(this._hideControlsTimer);
@@ -129,7 +144,7 @@
   /**
    * @param {Boolean} immediate Hide immediately or later. Default to false.
    */
-  proto.hideControlPanel = function fp_hideControlPanel(immediate) {
+  proto.hideControlPanel = function (immediate) {
 
     if (this._hideControlsTimer) {
       clearTimeout(this._hideControlsTimer);
@@ -185,7 +200,17 @@
 
   // <Video handling>
 
-  proto._startAutoSeek = function fp_startAutoSeek(dir) {
+  proto.play = function () {
+    this._player.play();
+    this.setPlayButtonState('playing');
+  };
+
+  proto.pause = function () {
+    this._player.pause();
+    this.setPlayButtonState('paused');
+  };
+
+  proto._startAutoSeek = function (dir) {
 
     if (this._autoSeekStartTime == null) { // Do not double start
 
@@ -195,12 +220,12 @@
     }
   };
 
-  proto._stopAutoSeek = function fp_stopAutoSeek(dir) {
+  proto._stopAutoSeek = function (dir) {
     this._autoSeekStartTime = null;
     this._autoSeekDirection = null;
   };
 
-  proto._autoSeek = function fp_autoSeek() {
+  proto._autoSeek = function () {
 
     if (this._autoSeekStartTime != null) {
 
@@ -232,7 +257,7 @@
   // </Video handling>
 
   // <Event handling>
-  proto.handleEvent = function fp_handleEvent(e) {
+  proto.handleEvent = function (e) {
 
     mDBG.log('FlingPlayer#handleEvent: e.type = ' + e.type);
 
@@ -253,7 +278,6 @@
         this.setLoading(false);
         this._connector.reportStatus('buffered', data);
         this.showControlPanel(true);
-        this._playButton.textContent = 'Pause';
         this._connector.reportStatus('playing', data);
       break;
 
@@ -264,7 +288,6 @@
       case 'ended':
       case 'paused':
         this.showControlPanel(true);
-        this._playButton.textContent = 'Play';
         this._connector.reportStatus('stopped', data);
       break;
 
@@ -277,15 +300,18 @@
   };
 
   proto.onLoadRequest = function (e) {
+    this.showLoading(true);
+    // TODO: Diplay 'Starting video cast from ...'
     this._player.load(e.url);
+    this.play();
   };
 
   proto.onPlayRequest = function () {
-    this._player.play();
+    this.play();
   };
 
   proto.onPauseRequest = function () {
-    this._player.pause();
+    this.pause();
   };
 
   proto.onSeekRequest = function (e) {
@@ -331,9 +357,9 @@
 
         case uiID.playButton:
           if (this._player.isPlaying()) {
-            this._player.pause();
+            this.pause();
           } else {
-            this._player.play();
+            this.play();
           }
         break;
 
