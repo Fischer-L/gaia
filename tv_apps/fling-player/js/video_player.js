@@ -19,12 +19,31 @@
 
     this._video.addEventListener('loadedmetadata', this);
     this._video.addEventListener('playing', this);
-    this._video.addEventListener('pause', this);
-    this._video.addEventListener('ended', this);
+    this._video.addEventListener('seeked', this);
   };
 
   proto.getVideo = function () {
     return this._video;
+  };
+
+  /**
+   * @return {Number} The rounded video duration in sec.
+   *                  Please read the video's duration property if
+   *                  require accurate to the decimal place.
+   */
+  proto.getVideoLength = function () {
+    var s = Math.round(this._video.duration);
+    return isNaN(s) ? 0 : s;
+  };
+
+  /**
+   * @return {Number} The rounded current video time in sec.
+   *                  Please read the video's currentTime property if
+   *                  require accurate to the decimal place.
+   */
+  proto.getVideoCurrentTime = function () {
+    var s = Math.round(this._video.currentTime);
+    return isNaN(s) ? 0 : s;
   };
 
   proto.addEventListener = function (type, handle) {
@@ -65,11 +84,11 @@
   };
 
   proto.isPlaying = function () {
-    return this._isPlaying;
+    return this._video.paused || this._video.ended;
   };
 
   /**
-   * @param {Integer} The time length in sec
+   * @param {Number} sec The time length in sec
    * @return {Object} One object carrys the pared time value:
    *                  - hh : hour
    *                  - mm : minute
@@ -78,7 +97,7 @@
   proto.parseTime = function (sec) {
 
     var t = {},
-        s = +sec;
+        s = Math.round(sec);
 
     if ((s > 0) === false) {
       s = 0;
@@ -105,20 +124,15 @@
       break;
 
       case 'playing':
-        this._isPlaying = true;
         this.show();
       break;
 
       case 'seeked':
         this.play();
       break;
-
-      case 'ended':
-      case 'pause':
-        this._isPlaying = false;
-      break;
     }
   };
 
   exports.VideoPlayer = VideoPlayer;
+
 })(window);

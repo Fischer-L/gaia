@@ -8,6 +8,7 @@
     window._TMP_duration = 600;
     window._TMP_current = window._TMP_duration * 0.33;
   });
+  // <Helping variables, methods>
 
   var uiID = {
     player : 'player',
@@ -26,6 +27,8 @@
     return document.getElementById(id);
   }
 
+  // </Helping variables, methods>
+
   function FlingPlayer(videoPlayer, connector) {
     this._player = videoPlayer;
     this._connector = connector;
@@ -34,6 +37,7 @@
   var proto = FlingPlayer.prototype;
 
   proto.CONTROL_PANEL_HIDE_DELAY_SEC = 3000;
+  proto.AUTO_UPDATE_CONTROL_PANEL_INTERVAL_MS = 1000;
   proto.AUTO_SEEK_INTERVAL_MS = 330;
   proto.AUTO_SEEK_LONG_PRESSED_SEC = 5;
   proto.AUTO_SEEK_STEP_NORMAL_SEC = 10;
@@ -41,6 +45,7 @@
 
   proto.init = function () {
 
+    this._autoUpdateTimer = null; // a handle to auto update setTimeout
     this._autoSeekDirection = null; // 'backward' or 'forward'
     this._autoSeekStartTime = null; // in ms
     this._focusedControl = null;
@@ -73,13 +78,13 @@
     this._keyNavAdapter.on('enter', this.onKeyEnterDown.bind(this));
     this._keyNavAdapter.on('enter-keyup', this.onKeyEnterUp.bind(this));
 
-    document.addEventListener('visibilitychange', function visibilityChanged() {
+    document.addEventListener('visibilitychange', () => {
       // We don't need to restore the video while visibilityState goes back
       // because system app will kill the original one and relaunch a new one.
       if (document.visibilityState === 'hidden') {
         this._player.release();
       }
-    }.bind(this));
+    });
   };
 
   proto._initSession = function () {
@@ -105,7 +110,7 @@
 
   // <UI handling>
 
-  proto.setLoading = function (loading) {
+  proto.showLoading = function (loading) {
     this._loadingUI.hidden = !loading;
   };
 
@@ -122,6 +127,10 @@
         this._playButton.textContent = 'Pause';
       break;
     }
+  };
+
+  proto.isControlPanelHiding = function () {
+    return this._controlPanel.classList.contains('fade-out');
   };
 
   /**
@@ -153,7 +162,7 @@
 
     if (immediate === true) {
 
-      if (!this._controlPanel.classList.contains('fade-out')) {
+      if (!this.isControlPanelHiding()) {
         this._controlPanel.classList.add('fade-out');
       }
 
@@ -166,7 +175,7 @@
   };
 
   /**
-   * @param {string} type buffered or elapsed
+   * @param {string} type 'buffered' or 'elapsed'
    * @param {number} sec the sec in video you want to move to
    */
   proto.moveTimeBar = function (type, sec) {
@@ -176,24 +185,48 @@
     mDBG.log('Move to ', sec);
 
     var timeBar = this[`_${type}TimeBar`];
-    var duration = this._player.getVideo().duration;
+    var duration = this._player.getVideoLength();
+    sec = Math.round(sec);
 
     mDBG.test(() => { // TMP
       duration = _TMP_duration;
     });
 
     if (!timeBar ||
-        typeof sec != 'number' ||
         (sec >= 0) === false ||
         (sec <= duration) === false
     ) {
-      mDBG.warn('Not moving due to corrupt type or sec!');
+      mDBG.warn('Not moving due to corrupt type/sec', type, sec);
       return;
     }
 
-    mDBG.log('Move to ', (100 * sec / duration) + '%');
+    requestAnimationFrame(() => {
+      mDBG.log('Move to sec / duration = %d / %d', sec, duration);
+      timeBar.style.width = (100 * sec / duration) + '%';
+    });
+  };
 
-    timeBar.style.width = (100 * sec / duration) + '%';
+  /**
+   * @param {string} type 'elapsed' or 'duration'
+   * @param {number} sec
+   */
+  proto.writeTimeInfo = function (type, sec) {
+
+    var timeInfo = this[`_${type}Time`];
+    var duration = this._player.getVideoLength();
+    sec = Math.round(sec);
+
+    if (!timeInfo ||
+        (sec >= 0) === false ||
+        (sec <= duration) === false
+    ) {
+      return;
+    }
+
+    var t = this.parseTime(sec);
+    timeInfo.textContent = (t.hh <= 0) ?
+                            t.mm + ':' + t.ss :
+                            t.hh + ':' + t.mm + ':' + t.ss;
   };
 
   // </UI handling>
@@ -210,9 +243,57 @@
     this.setPlayButtonState('paused');
   };
 
+  proto._startAutoUpdateControlPanel = function () {
+
+    if (this._autoUpdateTimer == null) { // Do not double start
+
+      // To stop this is important.
+      // We don't want they get messed with each other
+      this._stopAutoSeek();
+
+      this._autoUpdateTimer = setTimeout(
+        this._autoUpdateControlPanel.bind(this)
+      );
+    }
+  };
+
+  proto._stopAutoUpdateControlPanel = function () {
+    clearTimeout(this._autoUpdateTimer);
+    this._autoUpdateTimer = null;
+  };
+
+  /**
+   * This is to keep auto updating the info and status on the control panel.
+   */
+  proto._autoUpdateControlPanel = function () {
+
+    if (this._autoUpdateTimer != null) {
+
+      var buf = this._player.getVideo().buffered;
+      var current = this._player.getVideoCurrentTime();
+
+      this.writeTimeInfo('elapsed', current);
+
+      this.moveTimeBar('elapsed', current);
+
+      if (buf.length) {
+        this.moveTimeBar('buffered', buf.end(buf.length - 1));
+      }
+
+      this._autoUpdateTimer = setTimeout(
+        this._autoUpdateControlPanel.bind(this),
+        this.AUTO_UPDATE_CONTROL_PANEL_INTERVAL_MS
+      );
+    }
+  };
+
   proto._startAutoSeek = function (dir) {
 
     if (this._autoSeekStartTime == null) { // Do not double start
+
+      // To stop this is important.
+      // We don't want they get messed with each other
+      this._stopAutoUpdateControlPanel();
 
       this._autoSeekStartTime = (new Date()).getTime();
       this._autoSeekDirection = dir;
@@ -225,58 +306,73 @@
     this._autoSeekDirection = null;
   };
 
+  /**
+   * This is to handle this case that user seeks on video by long pressing key.
+   * Ithe seeking policy would go based on duration of pressing
+   */
   proto._autoSeek = function () {
 
     if (this._autoSeekStartTime != null) {
 
-      var current = this._player.getVideo().currentTime;
-
-      mDBG.test(() => {
-        current = _TMP_current;
-      });
-
+      var time = this._player.getVideoCurrentTime();
       var factor = (this._autoSeekDirection == 'backward') ? -1 : 1;
       var seekDuration = (new Date()).getTime() - this._autoSeekStartTime;
       var seekStep = (seekDuration > this.AUTO_SEEK_LONG_PRESSED_SEC) ?
               this.AUTO_SEEK_STEP_LARGE_SEC : this.AUTO_SEEK_STEP_NORMAL_SEC;
 
-      current += factor * seekStep;
-
       mDBG.test(() => {
-        _TMP_current = current;
+        time = _TMP_current;
       });
 
-      this._player.seek(current);
-      this.moveTimeBar('elapsed', current);
-      // TODO: Update time info
+      time += factor * seekStep;
+      time = Math.min(Math.max(time, 0), this._player.getVideoLength());
+
+      mDBG.test(() => {
+        _TMP_current = time;
+      });
+
+      this.seek(time);
 
       setTimeout(this._autoSeek.bind(this), this.AUTO_SEEK_INTERVAL_MS);
     }
   };
 
+  proto.seek = function (sec) {
+    this._player.seek(sec);
+    this.moveTimeBar('elapsed', sec);
+    this.writeTimeInfo('elapsed', sec);
+    this.showControlPanel(true);
+  };
+
   // </Video handling>
 
   // <Event handling>
-  proto.handleEvent = function (e) {
+
+  proto.handleEvent = function handleVideoEvent(e) {
 
     mDBG.log('FlingPlayer#handleEvent: e.type = ' + e.type);
 
-    var data = { 'time': this._player.currentTime };
+    var data = { 'time': this._player.getVideoCurrentTime() };
 
     switch (e.type) {
 
-      case 'waiting':
-        this.setLoading(true);
-        this._connector.reportStatus('buffering', data);
-      break;
-
       case 'loadedmetadata':
+        this.writeTimeInfo('elapsed', this._player.getVideoCurrentTime());
+        this.writeTimeInfo('duration', this._player.getVideoLength());
         this._connector.reportStatus('loaded', data);
       break;
 
+      case 'waiting':
+        this.showLoading(true);
+        this._connector.reportStatus('buffering', data);
+      break;
+
       case 'playing':
-        this.setLoading(false);
+        this.showLoading(false);
+        // TODO: Hide 'Starting video cast from ...'
         this._connector.reportStatus('buffered', data);
+
+        this._startAutoUpdateControlPanel();
         this.showControlPanel(true);
         this._connector.reportStatus('playing', data);
       break;
@@ -286,13 +382,18 @@
       break;
 
       case 'ended':
-      case 'paused':
-        this.showControlPanel(true);
+      case 'pause':
+        this._stopAutoUpdateControlPanel();
         this._connector.reportStatus('stopped', data);
+        if (e.type == 'ended') {
+          this.showControlPanel();
+        } else {
+          this.showControlPanel(true);
+        }
       break;
 
       case 'error':
-        this.setLoading(false);
+        this.showLoading(false);
         data.error = evt.target.error.code;
         this._connector.reportStatus('error', data);
       break;
@@ -315,7 +416,7 @@
   };
 
   proto.onSeekRequest = function (e) {
-    this._player.seek(e.time);
+    this.seek(e.time);
   };
 
   proto.onFocusChanged = function (elem) {
@@ -326,6 +427,8 @@
   proto.onKeyEnterDown = function () {
 
     mDBG.log('FlingPlayer#onKeyEnterDown');
+
+    // TODO: Handle control panel resumes from hinding
 
     if (this._focusedControl) {
 
@@ -348,6 +451,8 @@
   proto.onKeyEnterUp = function () {
 
     mDBG.log('FlingPlayer#onKeyEnterUp');
+
+    // TODO: Handle control panel resumes from hinding
 
     if (this._focusedControl) {
 
