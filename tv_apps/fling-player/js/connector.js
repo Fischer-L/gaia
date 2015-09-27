@@ -1,4 +1,4 @@
-/* global evt, castingMessage */
+/* global evt, castingMessage, mDBG */
 (function(exports) {
   'use strict';
 
@@ -27,37 +27,37 @@
 
   proto.init = function c_init() {
 
-    console.log('Connector#init');
+    mDBG.log('Connector#init');
     if (!this._presentation) {
       throw new Error('Init connection without the presentation object.');
     }
 
     if (this._presentation.session) {
-      console.log('init session');
+      mDBG.log('init session');
       this._initSession(this._presentation.session);
     } else {
-      console.log('no session, so listent to sessionready event.');
+      mDBG.log('no session, so listen to sessionready event.');
       this._presentation.addEventListener('sessionready', this);
     }
   };
 
   proto._initSession = function c_initSession(session) {
 
-    console.log('Connector#_initSession');
+    mDBG.log('Connector#_initSession');
     if (!this._presentation) {
       throw new Error('Init session without the presentation object.');
     }
 
     this._session = session;
-    console.log('this._session = ', this._session);
+    mDBG.log('this._session = ', this._session);
 
     if (this._session.state !== 'connected') {
 
-      console.log('not connected state so listen to onstatechange');
+      mDBG.log('not connected state so listen to onstatechange');
 
       this._session.onstatechange = function() {
 
-        console.log('this._session.onstatechange and state = ' +
+        mDBG.log('this._session.onstatechange and state = ' +
           this._session.state);
 
           if (this._session.state === 'connected') {
@@ -66,20 +66,20 @@
       }.bind(this);
 
     } else {
-      console.log('connected state so listen to onmessage');
+      mDBG.log('connected state so listen to onmessage');
       this._session.onmessage = this.handleEvent.bind(this);
     }
   };
 
   proto.sendMsg = function (msg) {
-    console.log('Connector#sendMsg');
-    console.log('msg = ', msg);
+    mDBG.log('Connector#sendMsg');
+    mDBG.log('msg = ', msg);
     this._session.send(castingMessage.stringify(msg));
   };
 
   proto.replyACK = function c_replyACK(msg, error) {
 
-    console.log('Connector#replyACK');
+    mDBG.log('Connector#replyACK');
 
     var reply = {
           'type': 'ack',
@@ -95,7 +95,7 @@
 
   proto.reportStatus = function c_reportStatus(status, data) {
 
-    console.log('Connector#reportStatus');
+    mDBG.log('Connector#reportStatus');
 
     var msg = {
       'type': 'status',
@@ -117,8 +117,8 @@
 
   proto.handleRemoteMessage = function c_handleRemoteMessage(msg) {
 
-    console.log('Connector#handleRemoteMessage');
-    console.log('msg = ', msg);
+    mDBG.log('Connector#handleRemoteMessage');
+    mDBG.log('msg = ', msg);
 
     var err;
     try {
@@ -158,7 +158,7 @@
       }
     } catch (e) {
       err = e;
-      console.error(e);
+      mDBG.error(e);
     }
 
     this.replyACK(msg, err);
@@ -166,17 +166,17 @@
 
   proto.handleEvent = function c_handleEvent(evt) {
 
-    console.log('Connector#handleEvent: event = ', evt);
+    mDBG.log('Connector#handleEvent: event = ', evt);
 
     switch(evt.type) {
 
       case 'sessionready':
-        console.log('session is ready so init session');
+        mDBG.log('session is ready so init session');
         this._initSession(this._presentation.session);
       break;
 
       case 'message':
-        console.log('receive message so process message');
+        mDBG.log('receive message so process message');
 
         var messages = castingMessage.parse(evt.data);
 

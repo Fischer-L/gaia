@@ -1,3 +1,4 @@
+/* global mDBG */
 (function(exports) {
   'use strict';
 
@@ -20,9 +21,9 @@
      * The extra message properties:
      *   - error: String. Present if there is error
      */
-    ack : {
-      name : 'ack',
-      sanitizeMsg : function (msg) {
+    ack: {
+      name: 'ack',
+      sanitizeMsg: function (msg) {
 
         if (msg.error !== null &&
             msg.error !== undefined &&
@@ -51,9 +52,9 @@
      *              When error occurs, one more extra message properties:
      *              - error: String. The error code.
      */
-    status : {
-      name : 'status',
-      sanitizeMsg : function (msg) {
+    status: {
+      name: 'status',
+      sanitizeMsg: function (msg) {
 
         if (typeof msg.time != 'number' || (msg.time >= 0) === false) {
           throw new Error('Ilegal time = ' + msg.time +
@@ -82,9 +83,9 @@
      * Request to load and play video. The extra message properties:
      *   - url : String. The video url.
      */
-    load : {
-      name : 'load',
-      sanitizeMsg : function (msg) {
+    load: {
+      name: 'load',
+      sanitizeMsg: function (msg) {
         if (typeof msg.url != 'string' || !msg.url) {
           throw new Error('Ilegal url = ' + msg.url +
             ' in casting message of type = ' + this.name);
@@ -96,24 +97,24 @@
     /**
      * Request to play video
      */
-    play : {
-      name : 'play'
+    play: {
+      name: 'play'
     },
 
     /**
      * Request to pause video
      */
-    pause : {
-      name : 'pause'
+    pause: {
+      name: 'pause'
     },
 
     /**
      * Request to seek on video. The extra message properties:
      *   - time: Number. The time to seek.
      */
-    seek : {
-      name : 'seek',
-      sanitizeMsg : function (msg) {
+    seek: {
+      name: 'seek',
+      sanitizeMsg: function (msg) {
         if (typeof msg.time != 'number' || (msg.time >= 0) === false) {
           throw new Error('Ilegal time in casting message of type = ' +
             this.name, msg.time);
@@ -131,9 +132,9 @@
    */
   castingMessage.sanitizeMsg = function (content) {
 
-    console.log('castingMessage#sanitizeMsg');
+    mDBG.log('castingMessage#sanitizeMsg');
 
-    console.log('Sanitize message content:', content);
+    mDBG.log('Sanitize message content:', content);
 
     if (this.type[content.type]) {
 
@@ -160,14 +161,14 @@
    */
   castingMessage.parse = function (txt) {
 
-    console.log('castingMessage#parse');
+    mDBG.log('castingMessage#parse');
 
-    console.log('Parsing : ', txt);
+    mDBG.log('Parsing : ', txt);
 
     var data = '[' + txt.replace('}{', '},{') + ']';
     var msgs = JSON.parse(data);
 
-    console.log('Parsed : ', msgs);
+    mDBG.log('Parsed : ', msgs);
 
     return msgs.map(m => this.sanitizeMsg(m));
   };
@@ -182,4 +183,5 @@
   };
 
   exports.castingMessage = castingMessage;
+
 })(window);
