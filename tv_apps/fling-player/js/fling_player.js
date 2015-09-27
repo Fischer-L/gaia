@@ -1,5 +1,5 @@
-/* global VideoPlayer, Connector, SimpleKeyNavigation, KeyNavigationAdapter,
-          evt, mDBG
+/* global VideoPlayer, Connector, evt, mDBG, KeyNavigationAdapter,
+          SimpleKeyNavigation, SimpleKeyNavHelper
  */
 (function(exports) {
   'use strict';
@@ -37,6 +37,9 @@
   var proto = FlingPlayer.prototype;
 
   proto.CONTROL_PANEL_HIDE_DELAY_SEC = 3000;
+  mDBG.test(() => { // TMP
+    proto.CONTROL_PANEL_HIDE_DELAY_SEC = 1000 * 60 * 10;
+  });
   proto.AUTO_UPDATE_CONTROL_PANEL_INTERVAL_MS = 1000;
   proto.AUTO_SEEK_INTERVAL_MS = 330;
   proto.AUTO_SEEK_LONG_PRESSED_SEC = 5;
@@ -48,7 +51,6 @@
     this._autoUpdateTimer = null; // a handle to auto update setTimeout
     this._autoSeekDirection = null; // 'backward' or 'forward'
     this._autoSeekStartTime = null; // in ms
-    this._focusedControl = null;
     this._hideControlsTimer = null;
 
     this._loadingUI = $(uiID.loadingUI);
@@ -64,19 +66,25 @@
     this._initSession();
     this._initPlayer();
 
-    this._keyNav = new SimpleKeyNavigation();
-
-    this._keyNav.start(
-      [this._backwardButton, this._playButton, this._forwardButton],
-      SimpleKeyNavigation.DIRECTION.HORIZONTAL
-    );
-    this._keyNav.on('focusChanged', this.onFocusChanged.bind(this));
-    this._keyNav.focusOn(this._playButton);
+    this._keyNavHelp = new SimpleKeyNavHelper({
+      list : [this._backwardButton, this._playButton, this._forwardButton],
+      direction : SimpleKeyNavigation.DIRECTION.HORIZONTAL
+    });
+    this._keyNavHelp.getKeyNav().focusOn(this._playButton);
 
     this._keyNavAdapter = new KeyNavigationAdapter();
     this._keyNavAdapter.init();
     this._keyNavAdapter.on('enter', this.onKeyEnterDown.bind(this));
     this._keyNavAdapter.on('enter-keyup', this.onKeyEnterUp.bind(this));
+    this._keyNavAdapter.on('esc-keyup',
+      this.onDemandingControlPanel.bind(this)
+    );
+    this._keyNavAdapter.on('move-keyup',
+      this.onDemandingControlPanel.bind(this)
+    );
+    this._keyNavAdapter.on('enter-keyup',
+      this.onDemandingControlPanel.bind(this)
+    );
 
     document.addEventListener('visibilitychange', () => {
       // We don't need to restore the video while visibilityState goes back
@@ -110,7 +118,15 @@
 
   // <UI handling>
 
-  proto.showLoading = function (loading) {
+  proto.resetUI = function () {
+    this.moveTimeBar('elapsed', 0);
+    this.moveTimeBar('buffered', 0);
+    this.writeTimeInfo('elapsed', 0);
+    this.writeTimeInfo('duration', 0);
+    this.setPlayButtonState('pause');
+  };
+
+  proto.setLoading = function (loading) {
     this._loadingUI.hidden = !loading;
   };
 
@@ -120,11 +136,11 @@
   proto.setPlayButtonState = function (state) {
     switch (state) {
       case 'playing':
-        this._playButton.textContent = 'Play';
+        this._playButton.textContent = 'Pause';
       break;
 
       case 'paused':
-        this._playButton.textContent = 'Pause';
+        this._playButton.textContent = 'Play';
       break;
     }
   };
@@ -134,24 +150,42 @@
   };
 
   /**
-   * @param {Boolean} autoHide Auto hide the controls later. Default to false
+   * @param {Boolean} autoHide? Auto hide the controls later. Default to false
    */
   proto.showControlPanel = function (autoHide) {
+
+    // -- HACK --
+    // On b2g-desktop, even focus on button in the init stage,
+    // however, still the focused button's class doesn't have 'focus' value.
+    // As a result, the UI style isn't in the focused style.
+    // This could have to do with focus between b2g-desktop and other windows.
+    // But before having a real TV to test, let's add a hack to handle this.
+    // mDBG.warn('Handle the b2g-desktop focus issue!');
+
+    var focused = this._keyNavHelp.getFocused();
+    if (focused) {
+
+      if (!focused.classList.contains('focused')) {
+        focused.classList.add('focused');
+      }
+    }
+    // -- HACK end --
 
     if (this._hideControlsTimer) {
       clearTimeout(this._hideControlsTimer);
       this._hideControlsTimer = null;
     }
 
+    this._keyNavHelp.enable();
     this._controlPanel.classList.remove('fade-out');
 
     if (autoHide === true) {
-      proto.hideControlPanel();
+      this.hideControlPanel();
     }
   };
 
   /**
-   * @param {Boolean} immediate Hide immediately or later. Default to false.
+   * @param {Boolean} immediate? Hide immediately or later. Default to false.
    */
   proto.hideControlPanel = function (immediate) {
 
@@ -163,14 +197,16 @@
     if (immediate === true) {
 
       if (!this.isControlPanelHiding()) {
+        this._keyNavHelp.disable();
         this._controlPanel.classList.add('fade-out');
       }
 
     } else {
 
       this._hideControlsTimer = setTimeout(() => {
-        this.hideControlPanel(true);
-      }, this.CONTROL_PANEL_HIDE_DELAY_SEC);
+          this.hideControlPanel(true);
+        }, this.CONTROL_PANEL_HIDE_DELAY_SEC
+      );
     }
   };
 
@@ -216,6 +252,10 @@
     var duration = this._player.getVideoLength();
     sec = Math.round(sec);
 
+    mDBG.test(() => {
+      duration = _TMP_duration;
+    });
+
     if (!timeInfo ||
         (sec >= 0) === false ||
         (sec <= duration) === false
@@ -223,10 +263,16 @@
       return;
     }
 
-    var t = this.parseTime(sec);
-    timeInfo.textContent = (t.hh <= 0) ?
-                            t.mm + ':' + t.ss :
-                            t.hh + ':' + t.mm + ':' + t.ss;
+    var t = this._player.parseTime(sec);
+
+    t.hh = (t.hh <= 0) ? '' :
+           (t.hh < 10) ? '0' + t.hh + ':' : t.hh + ':';
+
+    t.mm = (t.mm < 10) ? '0' + t.mm + ':' : t.mm + ':';
+
+    t.ss = (t.ss < 10) ? '0' + t.ss : t.ss;
+
+    timeInfo.textContent = t.hh + t.mm + t.ss;
   };
 
   // </UI handling>
@@ -311,25 +357,34 @@
    * Ithe seeking policy would go based on duration of pressing
    */
   proto._autoSeek = function () {
+    mDBG.log('FlingPlayer#_autoSeek');
 
     if (this._autoSeekStartTime != null) {
 
       var time = this._player.getVideoCurrentTime();
       var factor = (this._autoSeekDirection == 'backward') ? -1 : 1;
+      var duration = this._player.getVideoLength();
       var seekDuration = (new Date()).getTime() - this._autoSeekStartTime;
       var seekStep = (seekDuration > this.AUTO_SEEK_LONG_PRESSED_SEC) ?
               this.AUTO_SEEK_STEP_LARGE_SEC : this.AUTO_SEEK_STEP_NORMAL_SEC;
 
       mDBG.test(() => {
         time = _TMP_current;
+        duration = _TMP_duration;
       });
 
       time += factor * seekStep;
-      time = Math.min(Math.max(time, 0), this._player.getVideoLength());
+      time = Math.min(Math.max(time, 0), duration);
 
       mDBG.test(() => {
         _TMP_current = time;
       });
+
+      mDBG.log('time = ', time);
+      mDBG.log('factor = ', factor);
+      mDBG.log('duration = ', duration);
+      mDBG.log('seekStep = ', seekStep);
+      mDBG.log('seekDuration = ', seekDuration);
 
       this.seek(time);
 
@@ -363,12 +418,12 @@
       break;
 
       case 'waiting':
-        this.showLoading(true);
+        this.setLoading(true);
         this._connector.reportStatus('buffering', data);
       break;
 
       case 'playing':
-        this.showLoading(false);
+        this.setLoading(false);
         // TODO: Hide 'Starting video cast from ...'
         this._connector.reportStatus('buffered', data);
 
@@ -393,7 +448,7 @@
       break;
 
       case 'error':
-        this.showLoading(false);
+        this.setLoading(false);
         data.error = evt.target.error.code;
         this._connector.reportStatus('error', data);
       break;
@@ -401,7 +456,8 @@
   };
 
   proto.onLoadRequest = function (e) {
-    this.showLoading(true);
+    this.resetUI();
+    this.setLoading(true);
     // TODO: Diplay 'Starting video cast from ...'
     this._player.load(e.url);
     this.play();
@@ -419,26 +475,24 @@
     this.seek(e.time);
   };
 
-  proto.onFocusChanged = function (elem) {
-    mDBG.log('FlingPlayer#onFocusChanged: elem = ', elem);
-    this._focusedControl = elem;
-  };
-
   proto.onKeyEnterDown = function () {
 
-    mDBG.log('FlingPlayer#onKeyEnterDown');
+    // mDBG.log('FlingPlayer#onKeyEnterDown');
 
-    // TODO: Handle control panel resumes from hinding
+    if (this.isControlPanelHiding()) {
+      mDBG.log('The control panel is hiding so no action is taken.');
+      return;
+    }
 
-    if (this._focusedControl) {
+    if (this._keyNavHelp.getFocused()) {
 
-      mDBG.log('control focused = ', this._focusedControl);
+      // mDBG.log('control focused = ', this._keyNavHelp.getFocused());
 
-      switch (this._focusedControl.id) {
+      switch (this._keyNavHelp.getFocused().id) {
 
         case uiID.backwardButton:
         case uiID.forwardButton:
-          if (this._focusedControl === this._backwardButton) {
+          if (this._keyNavHelp.getFocused() === this._backwardButton) {
             this._startAutoSeek('backward');
           } else {
             this._startAutoSeek('forward');
@@ -452,13 +506,16 @@
 
     mDBG.log('FlingPlayer#onKeyEnterUp');
 
-    // TODO: Handle control panel resumes from hinding
+    if (this.isControlPanelHiding()) {
+      mDBG.log('The control panel is hiding so no action is taken.');
+      return;
+    }
 
-    if (this._focusedControl) {
+    if (this._keyNavHelp.getFocused()) {
 
-      mDBG.log('control focused = ', this._focusedControl);
+      mDBG.log('control focused = ', this._keyNavHelp.getFocused());
 
-      switch (this._focusedControl.id) {
+      switch (this._keyNavHelp.getFocused().id) {
 
         case uiID.playButton:
           if (this._player.isPlaying()) {
@@ -475,6 +532,17 @@
       }
     }
   };
+
+  proto.onDemandingControlPanel = function () {
+
+    mDBG.log('FlingPlayer#onDemandingControlPanel');
+
+    if (this.isControlPanelHiding()) {
+      mDBG.log('The control panel is hiding so let it show first.');
+      this.showControlPanel(true);
+    }
+  };
+
   // </Event handling>
 
   exports.FlingPlayer = FlingPlayer;
