@@ -1,7 +1,7 @@
 /* global VideoPlayer, MockVideoElement */
 'use strict';
 
-requireApp('fling-player/test/unit/mock_video_element.js');
+requireApp('fling-player/js/mock/mock_video_element.js');
 requireApp('fling-player/js/video_player.js');
 
 suite('fling-player/VideoPlayer', function() {
