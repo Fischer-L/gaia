@@ -4,12 +4,6 @@
 (function(exports) {
   'use strict';
 
-  // mDBG.test(() => { // TMP
-  //   window._TMP_duration = 600;
-  //   window._TMP_current = window._TMP_duration * 0.33;
-  // });
-  // <Helping variables, methods>
-
   var uiID = appEnv.UI_ID;
 
   function $(id) {
@@ -30,7 +24,7 @@
     proto.CONTROL_PANEL_HIDE_DELAY_SEC = 1000 * 60 * 10;
   });
   proto.AUTO_SEEK_INTERVAL_MS = appEnv.AUTO_UPDATE_CONTROL_PANEL_INTERVAL_MS;
-  proto.AUTO_SEEK_LONG_PRESSED_SEC = appEnv.AUTO_SEEK_LONG_PRESSED_SEC;
+  proto.AUTO_SEEK_LONG_PRESSED_MS = appEnv.AUTO_SEEK_LONG_PRESSED_MS;
   proto.AUTO_SEEK_STEP_NORMAL_SEC = appEnv.AUTO_SEEK_STEP_NORMAL_SEC;
   proto.AUTO_SEEK_STEP_LARGE_SEC = appEnv.AUTO_SEEK_STEP_LARGE_SEC;
   proto.AUTO_UPDATE_CONTROL_PANEL_INTERVAL_MS =
@@ -214,10 +208,6 @@
     var duration = this._player.getVideoLength();
     sec = Math.round(sec);
 
-    // mDBG.test(() => { // TMP
-    //   duration = _TMP_duration;
-    // });
-
     if (!timeBar ||
         (sec >= 0) === false ||
         (sec <= duration) === false
@@ -241,10 +231,6 @@
     var timeInfo = this[`_${type}Time`];
     var duration = this._player.getVideoLength();
     sec = Math.round(sec);
-
-    // mDBG.test(() => {
-    //   duration = _TMP_duration;
-    // });
 
     if (!timeInfo ||
         (sec >= 0) === false ||
@@ -355,20 +341,11 @@
       var factor = (this._autoSeekDirection == 'backward') ? -1 : 1;
       var duration = this._player.getVideoLength();
       var seekDuration = (new Date()).getTime() - this._autoSeekStartTime;
-      var seekStep = (seekDuration > this.AUTO_SEEK_LONG_PRESSED_SEC) ?
+      var seekStep = (seekDuration > this.AUTO_SEEK_LONG_PRESSED_MS) ?
               this.AUTO_SEEK_STEP_LARGE_SEC : this.AUTO_SEEK_STEP_NORMAL_SEC;
-
-      // mDBG.test(() => {
-      //   time = _TMP_current;
-      //   duration = _TMP_duration;
-      // });
 
       time += factor * seekStep;
       time = Math.min(Math.max(time, 0), duration);
-
-      // mDBG.test(() => {
-      //   _TMP_current = time;
-      // });
 
       mDBG.log('time = ', time);
       mDBG.log('factor = ', factor);
@@ -536,21 +513,5 @@
   // </Event handling>
 
   exports.FlingPlayer = FlingPlayer;
-
-  window.fp = new FlingPlayer(
-    new VideoPlayer(document.getElementById(appEnv.UI_ID.player)),
-    new Connector(navigator.presentation)
-  );
-
-  window.fp.init();
-
-  if (document.visibilityState === 'hidden') {
-    navigator.mozApps.getSelf().onsuccess = function(evt) {
-      var app = evt.target.result;
-      if (app) {
-        app.launch();
-      }
-    };
-  }
 
 })(window);
