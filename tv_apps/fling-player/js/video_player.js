@@ -51,7 +51,9 @@
   };
 
   proto.show = function () {
+    console.log('FFFFFFF = ', this._video.hidden);
     this._video.hidden = false;
+    console.log('FFFFFFF = ', this._video.hidden);
   };
 
   proto.hide = function () {
@@ -84,7 +86,7 @@
   };
 
   proto.isPlaying = function () {
-    return this._video.paused || this._video.ended;
+    return !this._video.paused;
   };
 
   /**

@@ -1,8 +1,10 @@
 /* global SimpleKeyNavHelper, SimpleKeyNavigation, mockKeyEvent */
 'use strict';
 
+require('/bower_components/evt/index.js');
 require('/shared/js/smart-screen/simple_key_navigation.js');
-requireApp('/fling-player/test/js/unit/mock_key_event.js');
+require('/shared/test/unit/mocks/smart-screen/mock_key_navigation_adapter.js');
+requireApp('/fling-player/test/unit/mock_key_event.js');
 requireApp('/fling-player/js/simple_key_nav_helper.js');
 
 suite('fling-player/SimpleKeyNavHelper', function() {
@@ -29,10 +31,10 @@ suite('fling-player/SimpleKeyNavHelper', function() {
 
   test('should return focused element', function () {
 
-    navHelp.getKeyNav().focuseOn(elems[1]);
+    navHelp.getKeyNav().focusOn(elems[1]);
     assert.equal(navHelp.getFocused(), elems[1]);
 
-    navHelp.getKeyNav().focuseOn(elems[0]);
+    navHelp.getKeyNav().focusOn(elems[0]);
     assert.equal(navHelp.getFocused(), elems[0]);
   });
 
@@ -40,11 +42,11 @@ suite('fling-player/SimpleKeyNavHelper', function() {
 
     var e;
 
-    navHelp.getKeyNav().focuseOn(elems[0]);
+    navHelp.getKeyNav().focusOn(elems[0]);
 
     navHelp.disable();
 
-    e = mockKeyEvent.makeKeyDown(mockKeyEvent.KEY.RIGHT);
+    e = mockKeyEvent.makeKeydown(mockKeyEvent.KEY.RIGHT);
     window.dispatchEvent(e);
     assert.equal(navHelp.getFocused(), elems[0]);
 
@@ -61,12 +63,12 @@ suite('fling-player/SimpleKeyNavHelper', function() {
 
     var e;
 
-    navHelp.getKeyNav().focuseOn(elems[0]);
+    navHelp.getKeyNav().focusOn(elems[0]);
 
     navHelp.disable();
     navHelp.enable();
 
-    e = mockKeyEvent.makeKeyDown(mockKeyEvent.KEY.RIGHT);
+    e = mockKeyEvent.makeKeydown(mockKeyEvent.KEY.RIGHT);
     window.dispatchEvent(e);
     assert.equal(navHelp.getFocused(), elems[1]);
 

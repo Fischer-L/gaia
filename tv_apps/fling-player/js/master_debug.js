@@ -1,3 +1,4 @@
+/* global appEnv */
 (function(exports) {
   'use strict';
 
@@ -60,6 +61,6 @@
     }
   };
 
-  window.mDBG = new MasterDebug(true);
+  window.mDBG = new MasterDebug(appEnv.DEBUG_MODE);
 
 })(window);

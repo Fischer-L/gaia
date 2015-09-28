@@ -1,6 +1,8 @@
-/* global castingMessage */
+/* global mDBG, castingMessage */
 'use strict';
 
+requireApp('fling-player/js/app_env.js');
+requireApp('fling-player/js/master_debug.js');
 requireApp('fling-player/js/casting_message.js');
 
 suite('fling-player/castingMessage', function() {

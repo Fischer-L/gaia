@@ -41,9 +41,12 @@
   };
 
   keyEventFactory.EVENT = {
-    KEY_UP : 'keyup',
-    KEY_DOWN : 'keydown',
-    KEY_PRESS : 'keypress'
+    KEY_UP : 'KEY_UP',
+    KEY_DOWN : 'KEY_DOWN',
+    KEY_PRESS : 'KEY_PRESS',
+    _map : {
+      KEY_UP : 'keyup', KEY_DOWN : 'keydown', KEY_PRESS : 'keypress'
+    }
   };
 
   /**
@@ -53,8 +56,8 @@
    */
   keyEventFactory.makeEvent = function (type, targetKey) {
 
-    var t = thie.EVENT[type],
-        k = this.KEY[targetKey];
+    var k = this.KEY[targetKey],
+        t = this.EVENT._map[this.EVENT[type]];
 
     if (t && k) {
       var e = new Event(t);

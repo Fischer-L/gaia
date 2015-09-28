@@ -1,27 +1,16 @@
-/* global VideoPlayer, Connector, evt, mDBG, KeyNavigationAdapter,
-          SimpleKeyNavigation, SimpleKeyNavHelper
+/* global VideoPlayer, Connector, mDBG, KeyNavigationAdapter,
+          SimpleKeyNavigation, SimpleKeyNavHelper, appEnv
  */
 (function(exports) {
   'use strict';
 
-  mDBG.test(() => { // TMP
-    window._TMP_duration = 600;
-    window._TMP_current = window._TMP_duration * 0.33;
-  });
+  // mDBG.test(() => { // TMP
+  //   window._TMP_duration = 600;
+  //   window._TMP_current = window._TMP_duration * 0.33;
+  // });
   // <Helping variables, methods>
 
-  var uiID = {
-    player : 'player',
-    loadingUI : 'loading-section',
-    controlPanel : 'video-control-panel',
-    backwardButton : 'backward-button',
-    playButton : 'play-button',
-    forwardButton : 'forward-button',
-    bufferedTimeBar : 'buffered-time-bar',
-    elapsedTimeBar : 'elapsed-time-bar',
-    elapsedTime : 'elapsed-time',
-    durationTime : 'duration-time'
-  };
+  var uiID = appEnv.UI_ID;
 
   function $(id) {
     return document.getElementById(id);
@@ -29,22 +18,23 @@
 
   // </Helping variables, methods>
 
-  function FlingPlayer(videoPlayer, connector) {
+  function FlingPlayer(videoPlayer, connector, elem) {
     this._player = videoPlayer;
     this._connector = connector;
   }
 
   var proto = FlingPlayer.prototype;
 
-  proto.CONTROL_PANEL_HIDE_DELAY_SEC = 3000;
+  proto.CONTROL_PANEL_HIDE_DELAY_SEC = appEnv.CONTROL_PANEL_HIDE_DELAY_SEC;
   mDBG.test(() => { // TMP
     proto.CONTROL_PANEL_HIDE_DELAY_SEC = 1000 * 60 * 10;
   });
-  proto.AUTO_UPDATE_CONTROL_PANEL_INTERVAL_MS = 1000;
-  proto.AUTO_SEEK_INTERVAL_MS = 330;
-  proto.AUTO_SEEK_LONG_PRESSED_SEC = 5;
-  proto.AUTO_SEEK_STEP_NORMAL_SEC = 10;
-  proto.AUTO_SEEK_STEP_LARGE_SEC = 30;
+  proto.AUTO_SEEK_INTERVAL_MS = appEnv.AUTO_UPDATE_CONTROL_PANEL_INTERVAL_MS;
+  proto.AUTO_SEEK_LONG_PRESSED_SEC = appEnv.AUTO_SEEK_LONG_PRESSED_SEC;
+  proto.AUTO_SEEK_STEP_NORMAL_SEC = appEnv.AUTO_SEEK_STEP_NORMAL_SEC;
+  proto.AUTO_SEEK_STEP_LARGE_SEC = appEnv.AUTO_SEEK_STEP_LARGE_SEC;
+  proto.AUTO_UPDATE_CONTROL_PANEL_INTERVAL_MS =
+      appEnv.AUTO_UPDATE_CONTROL_PANEL_INTERVAL_MS;
 
   proto.init = function () {
 
@@ -224,9 +214,9 @@
     var duration = this._player.getVideoLength();
     sec = Math.round(sec);
 
-    mDBG.test(() => { // TMP
-      duration = _TMP_duration;
-    });
+    // mDBG.test(() => { // TMP
+    //   duration = _TMP_duration;
+    // });
 
     if (!timeBar ||
         (sec >= 0) === false ||
@@ -252,9 +242,9 @@
     var duration = this._player.getVideoLength();
     sec = Math.round(sec);
 
-    mDBG.test(() => {
-      duration = _TMP_duration;
-    });
+    // mDBG.test(() => {
+    //   duration = _TMP_duration;
+    // });
 
     if (!timeInfo ||
         (sec >= 0) === false ||
@@ -368,17 +358,17 @@
       var seekStep = (seekDuration > this.AUTO_SEEK_LONG_PRESSED_SEC) ?
               this.AUTO_SEEK_STEP_LARGE_SEC : this.AUTO_SEEK_STEP_NORMAL_SEC;
 
-      mDBG.test(() => {
-        time = _TMP_current;
-        duration = _TMP_duration;
-      });
+      // mDBG.test(() => {
+      //   time = _TMP_current;
+      //   duration = _TMP_duration;
+      // });
 
       time += factor * seekStep;
       time = Math.min(Math.max(time, 0), duration);
 
-      mDBG.test(() => {
-        _TMP_current = time;
-      });
+      // mDBG.test(() => {
+      //   _TMP_current = time;
+      // });
 
       mDBG.log('time = ', time);
       mDBG.log('factor = ', factor);
@@ -547,32 +537,20 @@
 
   exports.FlingPlayer = FlingPlayer;
 
-  window.onload = function() {
+  window.fp = new FlingPlayer(
+    new VideoPlayer(document.getElementById(appEnv.UI_ID.player)),
+    new Connector(navigator.presentation)
+  );
 
-    var presentation = navigator.presentation;
+  window.fp.init();
 
-    mDBG.test(() => {
-      // TMP
-      presentation = navigator.presentation || {
-        addEventListener : function () {}
-      };
-      // TMP end
-    });
+  if (document.visibilityState === 'hidden') {
+    navigator.mozApps.getSelf().onsuccess = function(evt) {
+      var app = evt.target.result;
+      if (app) {
+        app.launch();
+      }
+    };
+  }
 
-    window.fp = new FlingPlayer(
-      new VideoPlayer($(uiID.player)),
-      new Connector(presentation)
-    );
-
-    window.fp.init();
-
-    if (document.visibilityState === 'hidden') {
-      navigator.mozApps.getSelf().onsuccess = function(evt) {
-        var app = evt.target.result;
-        if (app) {
-          app.launch();
-        }
-      };
-    }
-  };
 })(window);
