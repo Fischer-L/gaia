@@ -4,7 +4,11 @@
 (function(exports) {
   'use strict';
 
+  // <Helping variables, methods>
+
   var uiID = appEnv.UI_ID;
+
+  function noop() {}
 
   function $(id) {
     return document.getElementById(id);
@@ -32,6 +36,11 @@
 
   proto.init = function () {
 
+    if (this.init === noop) return;
+
+    mDBG.log('FlingPlayer#init');
+    this.init = noop;
+
     this._autoUpdateTimer = null; // a handle to auto update setTimeout
     this._autoSeekDirection = null; // 'backward' or 'forward'
     this._autoSeekStartTime = null; // in ms
@@ -54,6 +63,10 @@
       list : [this._backwardButton, this._playButton, this._forwardButton],
       direction : SimpleKeyNavigation.DIRECTION.HORIZONTAL
     });
+    // ISSUE:
+    // At this point, the focus event of smart-button web component dosen't
+    // get fired even SimpleKeyNavHelper call its focus method.
+    // So the button's style isn't in the focused state at the 1st displaying
     this._keyNavHelp.getKeyNav().focusOn(this._playButton);
 
     this._keyNavAdapter = new KeyNavigationAdapter();
@@ -80,8 +93,12 @@
   };
 
   proto._initSession = function () {
-    this._connector.init();
+    if (this._initSession === noop) return;
 
+    mDBG.log('FlingPlayer#_initSession');
+    this._initSession = noop;
+
+    this._connector.init();
     this._connector.on('loadRequest', this.onLoadRequest.bind(this));
     this._connector.on('playRequest', this.onPlayRequest.bind(this));
     this._connector.on('pauseRequest', this.onPauseRequest.bind(this));
@@ -89,8 +106,12 @@
   };
 
   proto._initPlayer = function () {
-    this._player.init();
+    if (this._initPlayer === noop) return;
 
+    mDBG.log('FlingPlayer#_initPlayer');
+    this._initPlayer = noop;
+
+    this._player.init();
     this._player.addEventListener('loadedmetadata', this);
     this._player.addEventListener('seeked', this);
     this._player.addEventListener('waiting', this);
@@ -111,6 +132,7 @@
   };
 
   proto.setLoading = function (loading) {
+    mDBG.log('FlingPlayer#setLoading = ', loading);
     this._loadingUI.hidden = !loading;
   };
 
@@ -137,24 +159,6 @@
    * @param {Boolean} autoHide? Auto hide the controls later. Default to false
    */
   proto.showControlPanel = function (autoHide) {
-
-    // -- HACK --
-    // On b2g-desktop, even focus on button in the init stage,
-    // however, still the focused button's class doesn't have 'focus' value.
-    // As a result, the UI style isn't in the focused style.
-    // This could have to do with focus between b2g-desktop and other windows.
-    // But before having a real TV to test, let's add a hack to handle this.
-    // mDBG.warn('Handle the b2g-desktop focus issue!');
-
-    var focused = this._keyNavHelp.getFocused();
-    if (focused) {
-
-      if (!focused.classList.contains('focused')) {
-        focused.classList.add('focused');
-      }
-    }
-    // -- HACK end --
-
     if (this._hideControlsTimer) {
       clearTimeout(this._hideControlsTimer);
       this._hideControlsTimer = null;
@@ -200,9 +204,9 @@
    */
   proto.moveTimeBar = function (type, sec) {
 
-    mDBG.log('FlingPlayer#moveTimeBar');
-    mDBG.log('Move type ', type);
-    mDBG.log('Move to ', sec);
+    // mDBG.log('FlingPlayer#moveTimeBar');
+    // mDBG.log('Move type', type);
+    // mDBG.log('Move to', sec);
 
     var timeBar = this[`_${type}TimeBar`];
     var duration = this._player.getVideoLength();
@@ -288,8 +292,10 @@
    * This is to keep auto updating the info and status on the control panel.
    */
   proto._autoUpdateControlPanel = function () {
+    mDBG.log('FlingPlayer#_autoUpdateControlPanel');
 
     if (this._autoUpdateTimer != null) {
+      mDBG.log('Auto updating');
 
       var buf = this._player.getVideo().buffered;
       var current = this._player.getVideoCurrentTime();
@@ -447,7 +453,7 @@
     // mDBG.log('FlingPlayer#onKeyEnterDown');
 
     if (this.isControlPanelHiding()) {
-      mDBG.log('The control panel is hiding so no action is taken.');
+      // mDBG.log('The control panel is hiding so no action is taken.');
       return;
     }
 
@@ -474,7 +480,7 @@
     mDBG.log('FlingPlayer#onKeyEnterUp');
 
     if (this.isControlPanelHiding()) {
-      mDBG.log('The control panel is hiding so no action is taken.');
+      // mDBG.log('The control panel is hiding so no action is taken.');
       return;
     }
 
@@ -502,7 +508,7 @@
 
   proto.onDemandingControlPanel = function () {
 
-    mDBG.log('FlingPlayer#onDemandingControlPanel');
+    // mDBG.log('FlingPlayer#onDemandingControlPanel');
 
     if (this.isControlPanelHiding()) {
       mDBG.log('The control panel is hiding so let it show first.');

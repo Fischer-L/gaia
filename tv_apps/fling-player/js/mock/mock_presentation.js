@@ -5,9 +5,9 @@
   var proto,
       noop = function () {},
       sessionState = {
-          connected : "connected",
-          closed : "closed",
-          terminated : "terminated"
+        connected : "connected",
+        closed : "closed",
+        terminated : "terminated"
       };
 
   /**
