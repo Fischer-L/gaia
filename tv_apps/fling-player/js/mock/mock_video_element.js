@@ -6,6 +6,7 @@
     this.ended = config.ended || false;
     this.paused = config.paused || true;
     this.hidden = config.hidden || false;
+    this.buffered = [];
     this.duration = config.duration || 0;
     this.currentTime = config.currentTime || 0;
 

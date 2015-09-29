@@ -7,28 +7,29 @@
 
     if (mDBG.isDBG()) { // TMP
 
-      var script = document.createElement('script');
+      var initForTest = function () {
 
-      script.onload = function () {
+        var fp, testVideo, testPresentation;
 
-        var
-        presentation = navigator.presentation || {
-          addEventListener : function () {}
-        },
-
-        video = new MockVideoElement({
+        testVideo = new MockVideoElement({
           duration : 600,
-          currentTime : 600 * 0.33
+          currentTime : 0
         });
+        testVideo = document.getElementById(appEnv.UI_ID.player)
 
-        window.fp = new FlingPlayer(
-          new VideoPlayer(video),
-          new Connector(presentation)
+        testPresentation = new MockPresentation();
+        testPresentation._controller.videoSrc =
+            'http://media.w3.org/2010/05/sintel/trailer.webm';
+
+        fp = new FlingPlayer(
+          new VideoPlayer(testVideo),
+          new Connector(testPresentation)
         );
+        fp.init();
 
-        window.fp.init();
-
-        video.load('');
+        window.fp = fp;
+        window.testVideo = testVideo;
+        window.testPresentation = testPresentation;
 
         if (document.visibilityState === 'hidden') {
           navigator.mozApps.getSelf().onsuccess = function(evt) {
@@ -38,11 +39,31 @@
             }
           };
         }
-      }
+      };
 
-      script.src = 'js/mock/mock_video_element.js';
+      var scripts = [
+        'js/mock/mock_key_event.js',
+        'js/mock/mock_presentation.js',
+        'js/mock/mock_video_element.js',
+      ];
 
-      document.head.appendChild(script);
+      scripts.waited = scripts.length;
+
+      scripts.forEach((s) => {
+
+        var script = document.createElement('script');
+
+        script.onload = function () {
+          --scripts.waited;
+          if (!scripts.waited) {
+            initForTest();
+          }
+        };
+
+        script.src = s;
+
+        document.head.appendChild(script);
+      });
 
       return;
     }

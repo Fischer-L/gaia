@@ -2,6 +2,8 @@
 (function(exports) {
   'use strict';
 
+  var noop = function () {};
+
   /**
    * This class handles the connection to controller via the presentation API
    * The events of controller's message are:
@@ -27,48 +29,42 @@
 
   proto.init = function () {
 
+    if (this.init === noop) return;
+
     mDBG.log('Connector#init');
     if (!this._presentation) {
       throw new Error('Init connection without the presentation object.');
     }
 
-    if (this._presentation.session) {
-      mDBG.log('init session');
-      this._initSession(this._presentation.session);
-    } else {
-      mDBG.log('no session, so listen to sessionready event.');
-      this._presentation.addEventListener('sessionready', this);
-    }
+    this.init = noop;
+
+    this._presentation.receiver.getSession().then(
+      this._initSession.bind(this)
+    );
+
+    this._presentation.receiver.onsessionavailable = (e) => {
+      this._presentation.receiver.getSession().then(
+        this._initSession.bind(this)
+      );
+    };
   };
 
   proto._initSession = function (session) {
+
+    if (this._initSession === noop) return;
 
     mDBG.log('Connector#_initSession');
     if (!this._presentation) {
       throw new Error('Init session without the presentation object.');
     }
 
+    this._initSession = noop;
+
+    mDBG.log('this._session = ', session);
+
     this._session = session;
-    mDBG.log('this._session = ', this._session);
-
-    if (this._session.state !== 'connected') {
-
-      mDBG.log('not connected state so listen to onstatechange');
-
-      this._session.onstatechange = function() {
-
-        mDBG.log('this._session.onstatechange and state = ' +
-          this._session.state);
-
-          if (this._session.state === 'connected') {
-            this._initSession(this._session);
-          }
-      }.bind(this);
-
-    } else {
-      mDBG.log('connected state so listen to onmessage');
-      this._session.onmessage = this.handleEvent.bind(this);
-    }
+    this._session.onmessage = this.onSessionMessage.bind(this);
+    this._session.onstatechange = this.onSessionStateChange.bind(this);
   };
 
   proto.sendMsg = function (msg) {
@@ -108,7 +104,7 @@
       msg.error = data.error;
     }
 
-    if (data.detail) {
+    if (data.detail) { // TODO: Discuss should we need this ?
       msg.detail = data.detail;
     }
 
@@ -164,29 +160,24 @@
     this.replyACK(msg, err);
   };
 
-  proto.handleEvent = function (evt) {
+  proto.onSessionMessage = function (e) {
+    mDBG.log('Connector#onSessionMessage');
 
-    mDBG.log('Connector#handleEvent: event = ', evt);
+    var messages = castingMessage.parse(e.data);
 
-    switch(evt.type) {
+    mDBG.log('messages = ', messages);
 
-      case 'sessionready':
-        mDBG.log('session is ready so init session');
-        this._initSession(this._presentation.session);
-      break;
+    messages.sort((a, b) => { // Make sure message sequence
+      return a.seq - b.seq;
+    });
 
-      case 'message':
-        mDBG.log('receive message so process message');
+    messages.forEach(message => this.handleRemoteMessage(message));
+  };
 
-        var messages = castingMessage.parse(evt.data);
-
-        messages.sort((a, b) => { // Make sure message sequence
-          return a.seq - b.seq;
-        });
-
-        messages.forEach(message => this.handleRemoteMessage(message));
-      break;
-    }
+  proto.onSessionStateChange = function () {
+    mDBG.log('Connector#onSessionStateChange');
+    mDBG.log('State = ', this._session.state);
+    // TODO: How to do when presentation session is closed or terminated
   };
 
   exports.Connector = Connector;

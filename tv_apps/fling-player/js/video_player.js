@@ -1,6 +1,8 @@
 (function(exports) {
   'use strict';
 
+  function noop() {}
+
   /**
    * This class is a thin wrapper of HTMLVideoElement
    * @param {HTMLVideoElement}
@@ -12,11 +14,12 @@
   var proto = VideoPlayer.prototype;
 
   proto.init = function vp_init() {
-    this._video.mozAudioChannelType = 'content';
+    if (this.init === noop) return;
+
+    this.init = noop;
 
     this._isLoaded = false;
-    this._isPlaying = false;
-
+    this._video.mozAudioChannelType = 'content';
     this._video.addEventListener('loadedmetadata', this);
     this._video.addEventListener('playing', this);
     this._video.addEventListener('seeked', this);
@@ -62,6 +65,7 @@
 
   proto.load = function (url) {
     this._video.src = url;
+    this._video.load();
   };
 
   proto.release = function () {
