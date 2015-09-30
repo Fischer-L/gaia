@@ -24,9 +24,6 @@
   var proto = FlingPlayer.prototype;
 
   proto.CONTROL_PANEL_HIDE_DELAY_SEC = appEnv.CONTROL_PANEL_HIDE_DELAY_SEC;
-  mDBG.test(() => { // TMP
-    proto.CONTROL_PANEL_HIDE_DELAY_SEC = 1000 * 60 * 10;
-  });
   proto.AUTO_SEEK_INTERVAL_MS = appEnv.AUTO_UPDATE_CONTROL_PANEL_INTERVAL_MS;
   proto.AUTO_SEEK_LONG_PRESSED_MS = appEnv.AUTO_SEEK_LONG_PRESSED_MS;
   proto.AUTO_SEEK_STEP_NORMAL_SEC = appEnv.AUTO_SEEK_STEP_NORMAL_SEC;
@@ -58,16 +55,16 @@
 
     this._initSession();
     this._initPlayer();
-
-    this._keyNavHelp = new SimpleKeyNavHelper({
-      list : [this._backwardButton, this._playButton, this._forwardButton],
-      direction : SimpleKeyNavigation.DIRECTION.HORIZONTAL
-    });
     // ISSUE:
     // At this point, the focus event of smart-button web component dosen't
     // get fired even SimpleKeyNavHelper call its focus method.
     // So the button's style isn't in the focused state at the 1st displaying
     this._keyNavHelp.getKeyNav().focusOn(this._playButton);
+
+    this._keyNavHelp = new SimpleKeyNavHelper({
+      list : [this._backwardButton, this._playButton, this._forwardButton],
+      direction : SimpleKeyNavigation.DIRECTION.HORIZONTAL
+    });
 
     this._keyNavAdapter = new KeyNavigationAdapter();
     this._keyNavAdapter.init();
@@ -142,11 +139,11 @@
   proto.setPlayButtonState = function (state) {
     switch (state) {
       case 'playing':
-        this._playButton.textContent = 'Pause';
+        this._playButton.setAttribute('data-icon', 'fling-player-pause');
       break;
 
       case 'paused':
-        this._playButton.textContent = 'Play';
+        this._playButton.setAttribute('data-icon', 'fling-player-play');
       break;
     }
   };

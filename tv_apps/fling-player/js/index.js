@@ -15,7 +15,7 @@
           duration : 600,
           currentTime : 0
         });
-        testVideo = document.getElementById(appEnv.UI_ID.player)
+        // testVideo = document.getElementById(appEnv.UI_ID.player)
 
         testPresentation = new MockPresentation();
         testPresentation._controller.videoSrc =
