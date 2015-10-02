@@ -2,6 +2,8 @@
   'use strict';
 
   function MockVideoElement(config = {}) {
+    var self = this;
+
     this.src = config.src || '';
     this.ended = config.ended || false;
     this.paused = config.paused || true;
@@ -9,6 +11,15 @@
     this.buffered = [];
     this.duration = config.duration || 0;
     this.currentTime = config.currentTime || 0;
+    this.buffered = {
+      length : 1,
+      start : function () {
+        return 0;
+      },
+      end : function () {
+        return Math.max(self.currentTime + 10, self.duration);
+      }
+    };
 
     this._events = {};
   }
