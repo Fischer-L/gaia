@@ -333,7 +333,7 @@
 
   /**
    * This is to handle this case that user seeks on video by long pressing key.
-   * Ithe seeking policy would go based on duration of pressing
+   * The seeking policy would go based on duration of pressing
    */
   proto._autoSeek = function () {
     mDBG.log('FlingPlayer#_autoSeek');
