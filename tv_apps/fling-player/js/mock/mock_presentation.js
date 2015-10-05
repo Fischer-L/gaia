@@ -26,6 +26,7 @@
     if (!this.videoSrc) {
       throw new Error('You forget to set video src so fail to start');
     }
+    console.log('MockCastingController#start');
     this.start = noop;
     this.presentation._start();
   };
@@ -89,6 +90,7 @@
   proto = MockPresentationSession.prototype;
 
   proto._open = function () {
+    console.log('MockPresentationSession#_open');
     this.state = sessionState.connected;
     if (typeof this.onstatechange == 'function') {
       var e = new Event('statechange');
@@ -145,6 +147,7 @@
   proto = MockPresentationReceiver.prototype;
 
   proto._start = function (session) {
+    console.log('MockPresentationReceiver#_start');
     this._start = noop;
     this._session = session;
     if (typeof this.onsessionavailable == 'function'){
@@ -167,6 +170,7 @@
   proto = MockPresentation.prototype;
 
   proto._start = function () {
+    console.log('MockPresentation#_start');
     var session;
     this._start = noop;
     session = new MockPresentationSession();

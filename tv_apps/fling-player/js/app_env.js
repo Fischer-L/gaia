@@ -28,6 +28,6 @@
     durationTime : 'duration-time'
   };
 
-  window.appEnv = appEnv;
+  exports.appEnv = appEnv;
 
 })(window);

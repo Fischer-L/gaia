@@ -23,20 +23,24 @@
     this._presentation = presentation;
     this._msgSeq = 0; // This sequence of message sent to controller
     this._lastSeq = -1; // The sequence of the last message received
+    this._isInit = false;
+    this._isInitSession = false;
   }
 
   var proto = evt(Connector.prototype);
 
   proto.init = function () {
 
-    if (this.init === noop) return;
+    if (this._isInit) {
+      return;
+    }
 
     mDBG.log('Connector#init');
     if (!this._presentation) {
       throw new Error('Init connection without the presentation object.');
     }
 
-    this.init = noop;
+    this._isInit = true;
 
     this._presentation.receiver.getSession().then(
       this._initSession.bind(this)
@@ -51,14 +55,16 @@
 
   proto._initSession = function (session) {
 
-    if (this._initSession === noop) return;
+    if (this._isInitSession) {
+      return;
+    }
 
     mDBG.log('Connector#_initSession');
     if (!this._presentation) {
       throw new Error('Init session without the presentation object.');
     }
 
-    this._initSession = noop;
+    this._isInitSession = true;
 
     mDBG.log('this._session = ', session);
 

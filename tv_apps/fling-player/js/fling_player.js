@@ -55,16 +55,16 @@
 
     this._initSession();
     this._initPlayer();
-    // ISSUE:
-    // At this point, the focus event of smart-button web component dosen't
-    // get fired even SimpleKeyNavHelper call its focus method.
-    // So the button's style isn't in the focused state at the 1st displaying
-    this._keyNavHelp.getKeyNav().focusOn(this._playButton);
 
     this._keyNavHelp = new SimpleKeyNavHelper({
       list : [this._backwardButton, this._playButton, this._forwardButton],
       direction : SimpleKeyNavigation.DIRECTION.HORIZONTAL
     });
+    // ISSUE:
+    // At this point, the focus event of smart-button web component dosen't
+    // get fired even SimpleKeyNavHelper call its focus method.
+    // So the button's style isn't in the focused state at the 1st displaying
+    this._keyNavHelp.getKeyNav().focusOn(this._playButton);
 
     this._keyNavAdapter = new KeyNavigationAdapter();
     this._keyNavAdapter.init();
