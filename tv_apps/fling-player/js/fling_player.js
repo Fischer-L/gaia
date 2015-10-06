@@ -24,12 +24,14 @@
   var proto = FlingPlayer.prototype;
 
   proto.CONTROL_PANEL_HIDE_DELAY_SEC = appEnv.CONTROL_PANEL_HIDE_DELAY_SEC;
-  proto.AUTO_SEEK_INTERVAL_MS = appEnv.AUTO_UPDATE_CONTROL_PANEL_INTERVAL_MS;
-  proto.AUTO_SEEK_LONG_PRESSED_MS = appEnv.AUTO_SEEK_LONG_PRESSED_MS;
-  proto.AUTO_SEEK_STEP_NORMAL_SEC = appEnv.AUTO_SEEK_STEP_NORMAL_SEC;
-  proto.AUTO_SEEK_STEP_LARGE_SEC = appEnv.AUTO_SEEK_STEP_LARGE_SEC;
-  proto.AUTO_UPDATE_CONTROL_PANEL_INTERVAL_MS =
-      appEnv.AUTO_UPDATE_CONTROL_PANEL_INTERVAL_MS;
+  proto.SEEK_ON_KEY_PRESS_INTERVAL_MS = appEnv.SEEK_ON_KEY_PRESS_INTERVAL_MS;
+  proto.SEEK_ON_LONG_KEY_PRESS_SEC = appEnv.SEEK_ON_LONG_KEY_PRESS_SEC;
+  proto.SEEK_ON_KEY_PRESS_NORMAL_STEP_SEC =
+      appEnv.SEEK_ON_KEY_PRESS_NORMAL_STEP_SEC;
+  proto.SEEK_ON_KEY_PRESS_LARGE_STEP_SEC =
+      appEnv.SEEK_ON_KEY_PRESS_LARGE_STEP_SEC;
+  proto.UPDATE_CONTROL_PANEL_INTERVAL_MS =
+      appEnv.UPDATE_CONTROL_PANEL_INTERVAL_MS;
 
   proto.init = function () {
 
@@ -38,9 +40,10 @@
     mDBG.log('FlingPlayer#init');
     this.init = noop;
 
-    this._autoUpdateTimer = null; // a handle to auto update setTimeout
-    this._autoSeekDirection = null; // 'backward' or 'forward'
-    this._autoSeekStartTime = null; // in ms
+    this._contrlPanelUpdateTimer = null;
+    this._seekOnKeyPressTimer = null;
+    this._seekOnKeyPressDirection = null; // 'backward' or 'forward'
+    this._seekOnKeyPressStartTime = null; // in ms
     this._hideControlsTimer = null;
 
     this._loadingUI = $(uiID.loadingUI);
@@ -266,99 +269,95 @@
     this.setPlayButtonState('paused');
   };
 
-  proto._startAutoUpdateControlPanel = function () {
+  proto._startUpdateControlPanelContinuously = function () {
 
-    if (this._autoUpdateTimer == null) { // Do not double start
+    if (this._contrlPanelUpdateTimer == null) {
 
       // To stop this is important.
       // We don't want they get messed with each other
-      this._stopAutoSeek();
+      this._stopSeekOnKeyPress();
 
-      this._autoUpdateTimer = setTimeout(
-        this._autoUpdateControlPanel.bind(this)
+      this._contrlPanelUpdateTimer = setTimeout(
+        this._updateControlPanelContinuously.bind(this)
       );
+      this.showControlPanel(true);
     }
   };
 
-  proto._stopAutoUpdateControlPanel = function () {
-    clearTimeout(this._autoUpdateTimer);
-    this._autoUpdateTimer = null;
+  proto._stopUpdateControlPanelContinuously = function () {
+    clearTimeout(this._contrlPanelUpdateTimer);
+    this._contrlPanelUpdateTimer = null;
   };
 
   /**
    * This is to keep auto updating the info and status on the control panel.
    */
-  proto._autoUpdateControlPanel = function () {
-    mDBG.log('FlingPlayer#_autoUpdateControlPanel');
+  proto._updateControlPanelContinuously = function () {
 
-    if (this._autoUpdateTimer != null) {
-      mDBG.log('Auto updating');
+    if (this._contrlPanelUpdateTimer != null) {
 
       var buf = this._player.getVideo().buffered;
       var current = this._player.getRoundedCurrentTime();
 
       this.writeTimeInfo('elapsed', current);
-
       this.moveTimeBar('elapsed', current);
 
       if (buf.length) {
         this.moveTimeBar('buffered', buf.end(buf.length - 1));
       }
 
-      this._autoUpdateTimer = setTimeout(
-        this._autoUpdateControlPanel.bind(this),
-        this.AUTO_UPDATE_CONTROL_PANEL_INTERVAL_MS
+      this._contrlPanelUpdateTimer = setTimeout(
+        this._updateControlPanelContinuously.bind(this),
+        this.UPDATE_CONTROL_PANEL_INTERVAL_MS
       );
     }
   };
 
-  proto._startAutoSeek = function (dir) {
+  proto._startSeekOnKeyPress = function (dir) {
 
-    if (this._autoSeekStartTime == null) { // Do not double start
+    if (this._seekOnKeyPressStartTime == null) { // Do not double start
 
       // To stop this is important.
       // We don't want they get messed with each other
-      this._stopAutoUpdateControlPanel();
+      this._stopUpdateControlPanelContinuously();
 
-      this._autoSeekStartTime = (new Date()).getTime();
-      this._autoSeekDirection = dir;
-      this._autoSeek();
+      this._seekOnKeyPressStartTime = (new Date()).getTime();
+      this._seekOnKeyPressDirection = dir;
+      this._seekOnKeyPress();
     }
   };
 
-  proto._stopAutoSeek = function (dir) {
-    this._autoSeekStartTime = null;
-    this._autoSeekDirection = null;
+  proto._stopSeekOnKeyPress = function () {
+    clearTimeout(this._seekOnKeyPressTimer);
+    this._seekOnKeyPressDirection = null;
+    this._seekOnKeyPressStartTime = null;
+    this._seekOnKeyPressTimer = null;
   };
 
   /**
    * This is to handle this case that user seeks on video by long pressing key.
    * The seeking policy would go based on duration of pressing
    */
-  proto._autoSeek = function () {
-    mDBG.log('FlingPlayer#_autoSeek');
+  proto._seekOnKeyPress = function () {
 
-    if (this._autoSeekStartTime != null) {
+    if (this._seekOnKeyPressStartTime != null) {
 
       var time = this._player.getRoundedCurrentTime();
-      var factor = (this._autoSeekDirection == 'backward') ? -1 : 1;
-      var duration = this._player.getRoundedDuration();
-      var seekDuration = (new Date()).getTime() - this._autoSeekStartTime;
-      var seekStep = (seekDuration > this.AUTO_SEEK_LONG_PRESSED_MS) ?
-              this.AUTO_SEEK_STEP_LARGE_SEC : this.AUTO_SEEK_STEP_NORMAL_SEC;
+      var factor = (this._seekOnKeyPressDirection == 'backward') ? -1 : 1;
+      var seekDuration = (new Date()).getTime() - this._seekOnKeyPressStartTime;
+      var seekStep = (seekDuration > this.SEEK_ON_LONG_KEY_PRESS_SEC) ?
+                      this.SEEK_ON_KEY_PRESS_LARGE_STEP_SEC :
+                      this.SEEK_ON_KEY_PRESS_NORMAL_STEP_SEC;
 
       time += factor * seekStep;
-      time = Math.min(Math.max(time, 0), duration);
-
-      mDBG.log('time = ', time);
-      mDBG.log('factor = ', factor);
-      mDBG.log('duration = ', duration);
-      mDBG.log('seekStep = ', seekStep);
-      mDBG.log('seekDuration = ', seekDuration);
+      time = Math.min(Math.max(0, time), this._player.getRoundedDuration());
 
       this.seek(time);
 
-      setTimeout(this._autoSeek.bind(this), this.AUTO_SEEK_INTERVAL_MS);
+      this._seekOnKeyPressTimer = setTimeout(
+        this._seekOnKeyPress.bind(this),
+        this.SEEK_ON_KEY_PRESS_INTERVAL_MS
+      );
     }
   };
 
@@ -397,8 +396,7 @@
         // TODO: Hide 'Starting video cast from ...'
         this._connector.reportStatus('buffered', data);
 
-        this._startAutoUpdateControlPanel();
-        this.showControlPanel(true);
+        this._startUpdateControlPanelContinuously();
         this._connector.reportStatus('playing', data);
       break;
 
@@ -408,7 +406,7 @@
 
       case 'ended':
       case 'pause':
-        this._stopAutoUpdateControlPanel();
+        this._stopUpdateControlPanelContinuously();
         this._connector.reportStatus('stopped', data);
         if (e.type == 'ended') {
           this.showControlPanel();
@@ -463,9 +461,9 @@
         case uiID.backwardButton:
         case uiID.forwardButton:
           if (this._keyNavHelp.getFocused() === this._backwardButton) {
-            this._startAutoSeek('backward');
+            this._startSeekOnKeyPress('backward');
           } else {
-            this._startAutoSeek('forward');
+            this._startSeekOnKeyPress('forward');
           }
         break;
       }
@@ -497,7 +495,7 @@
 
         case uiID.backwardButton:
         case uiID.forwardButton:
-          this._stopAutoSeek();
+          this._stopSeekOnKeyPress();
         break;
       }
     }
