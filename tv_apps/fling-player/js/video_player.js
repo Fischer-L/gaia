@@ -34,7 +34,7 @@
    *                  Please read the video's duration property if
    *                  require accurate to the decimal place.
    */
-  proto.getVideoLength = function () {
+  proto.getRoundedDuration = function () {
     var s = Math.round(this._video.duration);
     return isNaN(s) ? 0 : s;
   };
@@ -44,7 +44,7 @@
    *                  Please read the video's currentTime property if
    *                  require accurate to the decimal place.
    */
-  proto.getVideoCurrentTime = function () {
+  proto.getRoundedCurrentTime = function () {
     var s = Math.round(this._video.currentTime);
     return isNaN(s) ? 0 : s;
   };
@@ -90,7 +90,7 @@
   };
 
   proto.isPlaying = function () {
-    return !this._video.paused;
+    return !this._video.paused && !this._video.ended;
   };
 
   /**
@@ -110,13 +110,9 @@
     }
 
     t.ss = s % 3600 % 60;
-
     s -= t.ss;
-
     t.mm = (s % 3600) / 60;
-
     s -= t.mm * 60;
-
     t.hh = s / 3600;
 
     return t;

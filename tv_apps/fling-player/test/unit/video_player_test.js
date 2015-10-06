@@ -25,27 +25,27 @@ suite('fling-player/VideoPlayer', function() {
     assert.equal(player.getVideo(), video);
   });
 
-  test('should return video length in rounded sec', function () {
+  test('should return video duration in rounded sec', function () {
 
     video.duration = NaN;
     player = new VideoPlayer(video);
     player.init();
-    assert.equal(player.getVideoLength(), 0);
+    assert.equal(player.getRoundedDuration(), 0);
 
     video.duration = 100;
     player = new VideoPlayer(video);
     player.init();
-    assert.equal(player.getVideoLength(), Math.round(video.duration));
+    assert.equal(player.getRoundedDuration(), Math.round(video.duration));
 
     video.duration = 100.01;
     player = new VideoPlayer(video);
     player.init();
-    assert.equal(player.getVideoLength(), Math.round(video.duration));
+    assert.equal(player.getRoundedDuration(), Math.round(video.duration));
 
     video.duration = 100.55;
     player = new VideoPlayer(video);
     player.init();
-    assert.equal(player.getVideoLength(), Math.round(video.duration));
+    assert.equal(player.getRoundedDuration(), Math.round(video.duration));
   });
 
   test('should return current video time in rounded sec', function () {
@@ -53,22 +53,22 @@ suite('fling-player/VideoPlayer', function() {
     video.currentTime = NaN;
     player = new VideoPlayer(video);
     player.init();
-    assert.equal(player.getVideoCurrentTime(), 0);
+    assert.equal(player.getRoundedCurrentTime(), 0);
 
     video.currentTime = 100;
     player = new VideoPlayer(video);
     player.init();
-    assert.equal(player.getVideoCurrentTime(), Math.round(video.currentTime));
+    assert.equal(player.getRoundedCurrentTime(), Math.round(video.currentTime));
 
     video.currentTime = 100.01;
     player = new VideoPlayer(video);
     player.init();
-    assert.equal(player.getVideoCurrentTime(), Math.round(video.currentTime));
+    assert.equal(player.getRoundedCurrentTime(), Math.round(video.currentTime));
 
     video.currentTime = 100.55;
     player = new VideoPlayer(video);
     player.init();
-    assert.equal(player.getVideoCurrentTime(), Math.round(video.currentTime));
+    assert.equal(player.getRoundedCurrentTime(), Math.round(video.currentTime));
   });
 
   test('should show video element', function () {

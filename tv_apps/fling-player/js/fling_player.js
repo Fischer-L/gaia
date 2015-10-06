@@ -206,7 +206,7 @@
     // mDBG.log('Move to', sec);
 
     var timeBar = this[`_${type}TimeBar`];
-    var duration = this._player.getVideoLength();
+    var duration = this._player.getRoundedDuration();
     sec = Math.round(sec);
 
     if (!timeBar ||
@@ -230,7 +230,7 @@
   proto.writeTimeInfo = function (type, sec) {
 
     var timeInfo = this[`_${type}Time`];
-    var duration = this._player.getVideoLength();
+    var duration = this._player.getRoundedDuration();
     sec = Math.round(sec);
 
     if (!timeInfo ||
@@ -295,7 +295,7 @@
       mDBG.log('Auto updating');
 
       var buf = this._player.getVideo().buffered;
-      var current = this._player.getVideoCurrentTime();
+      var current = this._player.getRoundedCurrentTime();
 
       this.writeTimeInfo('elapsed', current);
 
@@ -340,9 +340,9 @@
 
     if (this._autoSeekStartTime != null) {
 
-      var time = this._player.getVideoCurrentTime();
+      var time = this._player.getRoundedCurrentTime();
       var factor = (this._autoSeekDirection == 'backward') ? -1 : 1;
-      var duration = this._player.getVideoLength();
+      var duration = this._player.getRoundedDuration();
       var seekDuration = (new Date()).getTime() - this._autoSeekStartTime;
       var seekStep = (seekDuration > this.AUTO_SEEK_LONG_PRESSED_MS) ?
               this.AUTO_SEEK_STEP_LARGE_SEC : this.AUTO_SEEK_STEP_NORMAL_SEC;
@@ -377,13 +377,13 @@
 
     mDBG.log('FlingPlayer#handleEvent: e.type = ' + e.type);
 
-    var data = { 'time': this._player.getVideoCurrentTime() };
+    var data = { 'time': this._player.getRoundedCurrentTime() };
 
     switch (e.type) {
 
       case 'loadedmetadata':
-        this.writeTimeInfo('elapsed', this._player.getVideoCurrentTime());
-        this.writeTimeInfo('duration', this._player.getVideoLength());
+        this.writeTimeInfo('elapsed', this._player.getRoundedCurrentTime());
+        this.writeTimeInfo('duration', this._player.getRoundedDuration());
         this._connector.reportStatus('loaded', data);
       break;
 
