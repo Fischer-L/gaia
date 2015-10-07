@@ -16,6 +16,13 @@
 
   // </Helping variables, methods>
 
+  /**
+   * FlingPlayer could be controled by 2 sources.
+   * The 1st source is remote controll device, like Android mobile Fennec,
+   * which sends command through the Presentation API.
+   * The 2nd source is TV remote controller which sends command through
+   * UI navigation by pressing TV remote controller's key
+   */
   function FlingPlayer(videoPlayer, connector, elem) {
     this._player = videoPlayer;
     this._connector = connector;
