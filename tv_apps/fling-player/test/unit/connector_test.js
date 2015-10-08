@@ -1,9 +1,9 @@
 /* global Connector, castingMessage, castingMsgTemplate, MockPresentation */
 'use strict';
 
-requireApp('fling-player/js/mock/casting_message_template.js');
+requireApp('fling-player/test/mock/casting_message_template.js');
+requireApp('fling-player/test/mock/mock_presentation.js');
 requireApp('fling-player/bower_components/evt/index.js');
-requireApp('fling-player/js/mock/mock_presentation.js');
 requireApp('fling-player/js/casting_message.js');
 requireApp('fling-player/js/app_env.js');
 requireApp('fling-player/js/master_debug.js');

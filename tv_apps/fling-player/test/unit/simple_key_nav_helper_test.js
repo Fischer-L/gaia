@@ -4,7 +4,7 @@
 require('/bower_components/evt/index.js');
 require('/shared/js/smart-screen/simple_key_navigation.js');
 require('/shared/test/unit/mocks/smart-screen/mock_key_navigation_adapter.js');
-requireApp('/fling-player/js/mock/mock_key_event.js');
+requireApp('/fling-player/test/mock/mock_key_event.js');
 requireApp('/fling-player/js/simple_key_nav_helper.js');
 
 suite('fling-player/SimpleKeyNavHelper', function() {
