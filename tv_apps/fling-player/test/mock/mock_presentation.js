@@ -1,4 +1,3 @@
-/* global castingMessage */
 (function(exports) {
   'use strict';
 
@@ -15,68 +14,32 @@
    * video-casting service via Presentation API
    */
   function MockCastingController (mockPresentation) {
-    this._seq = 0;
-    this.videoSrc = '';
     this.presentation = mockPresentation;
   }
 
   proto = MockCastingController.prototype;
 
   proto.start = function () {
-    if (!this.videoSrc) {
-      throw new Error('You forget to set video src so fail to start');
-    }
     console.log('MockCastingController#start');
     this.start = noop;
     this.presentation._start();
   };
 
   /**
+   * Cast messages to Fling player
    * @param {Object|Array.<Object>} msgs
    */
-  proto.request = function (msg) {
-    if (!this.videoSrc) {
-      throw new Error('You forget to set video src so fail to cast video');
-    }
-
+  proto.castMsg = function (msgs) {
     var txt = '';
 
-    if (!(msg instanceof Array)) msg = [msg];
+    if (!(msgs instanceof Array)) {
+      msgs = [msgs];
+    }
 
-    msg.forEach((m) => {
-      txt += castingMessage.stringify(m);
+    msgs.forEach((m) => {
+      txt += JSON.stringify(m);
     });
     this.presentation._toReceiver(txt);
-  };
-
-  proto.load = function () {
-    var msg = {};
-    msg.seq = ++this._seq;
-    msg.type = 'load';
-    msg.url = this.videoSrc;
-    this.request(msg);
-  };
-
-  proto.play = function () {
-    var msg = {};
-    msg.seq = ++this._seq;
-    msg.type = 'play';
-    this.request(msg);
-  };
-
-  proto.pause = function () {
-    var msg = {};
-    msg.seq = ++this._seq;
-    msg.type = 'pause';
-    this.request(msg);
-  };
-
-  proto.seek = function (time) {
-    var msg = {};
-    msg.seq = ++this._seq;
-    msg.type = 'seek';
-    msg.time = time;
-    this.request(msg);
   };
 
 
