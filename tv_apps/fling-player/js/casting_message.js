@@ -71,6 +71,7 @@
         }
 
         if (msg.status == 'error' && typeof msg.error != 'string') {
+          console.log('GGGG ' + typeof msg.error); // TMP DEL
           throw new Error('Ilegal error = ' + msg.error +
             ' in casting message of type = ' + this.name);
         }

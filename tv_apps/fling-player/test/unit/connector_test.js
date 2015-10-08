@@ -11,7 +11,7 @@ requireApp('fling-player/js/connector.js');
 
 suite('fling-player/Connector', function() {
 
-  var msg, mock, connector, presentation;
+  var exp, msg, spy, connector, presentation;
 
   setup(function (done) {
     var timer;
@@ -32,121 +32,196 @@ suite('fling-player/Connector', function() {
 
   test('should send message', function () {
     msg = castingMsgTemplate.get().ack;
-    mock = sinon.mock(presentation.receiver._session);
-    mock.expects('send').once().withExactArgs(castingMessage.stringify(msg));
+    spy = sinon.spy(presentation.receiver._session, 'send');
     connector.sendMsg(msg);
-    mock.verify();
+    assert.isTrue(spy.withArgs(castingMessage.stringify(msg)).calledOnce);
   });
 
-  // suite('reply ack', function () {
+  suite('reply ack', function () {
 
-  //   test('should reply ack', function () {
+    setup(function () {
+      msg = castingMsgTemplate.get().play;
+      spy = sinon.spy(connector, 'sendMsg');
+    });
 
-  //   });
+    test('should reply ack', function () {
+      exp = castingMsgTemplate.get().ack;
+      exp.seq = msg.seq;
+      connector.replyACK(msg);
+      assert.isTrue(spy.withArgs(exp).calledOnce);
+    });
 
-  //   test('should reply ack with error', function () {
+    test('should reply ack with error', function () {
+      exp = castingMsgTemplate.get().ack;
+      exp.seq = msg.seq;
+      exp.error = 'error';
+      connector.replyACK(msg, exp.error);
+      assert.isTrue(spy.withArgs(exp).calledOnce);
+    });
 
-  //   });
+    test('should not reply ack with wrong error type', function () {
+      exp = castingMsgTemplate.get().ack;
+      exp.seq = msg.seq;
+      exp.error = new Error;
+      expect(connector.replyACK.bind(connector, msg, exp.error))
+          .to.throw(/in casting message of type/);
+    });
+  });
 
-  //   test('should not reply ack with wrong message sequence type', function () {
+  suite('report status', function () {
 
-  //   });
+    function assertCalledOnce() {
+      assert.isTrue(
+        spy.withArgs(msg).calledOnce,
+        'Not called once with specified msg arg'
+      );
+    }
 
-  //   test('should not reply ack with wrong error type', function () {
+    function assertMsgSeq() {
+      assert.isTrue(
+        msg.seq + 1 == connector._msgSeq,
+        'Msg seq does not increase by 1 after reporting status'
+      );
+    }
 
-  //   });
-  // });
+    setup(function () {
+      spy = sinon.spy(connector, 'sendMsg');
+    });
 
-  // suite('report status', function () {
+    test('should report status of buffering', function () {
+      msg = castingMsgTemplate.get().statusBuffering;
+      msg.seq = connector._msgSeq;
+      connector.reportStatus(msg.status, { time : msg.time });
+      assertCalledOnce();
+      assertMsgSeq();
+    });
 
-  //   test('should report status of buffering', function () {
+    test('should report status of loaded', function () {
+      msg = castingMsgTemplate.get().statusLoaded;
+      msg.seq = connector._msgSeq;
+      connector.reportStatus(msg.status, { time : msg.time });
+      assertCalledOnce();
+      assertMsgSeq();
+    });
 
-  //   });
+    test('should report status of buffered', function () {
+      msg = castingMsgTemplate.get().statusBuffered;
+      msg.seq = connector._msgSeq;
+      connector.reportStatus(msg.status, { time : msg.time });
+      assertCalledOnce();
+      assertMsgSeq();
+    });
 
-  //   test('should report status of loaded', function () {
+    test('should report status of playing', function () {
+      msg = castingMsgTemplate.get().statusPlaying;
+      msg.seq = connector._msgSeq;
+      connector.reportStatus(msg.status, { time : msg.time });
+      assertCalledOnce();
+      assertMsgSeq();
+    });
 
-  //   });
+    test('should report status of seeked', function () {
+      msg = castingMsgTemplate.get().statusSeeked;
+      msg.seq = connector._msgSeq;
+      connector.reportStatus(msg.status, { time : msg.time });
+      assertCalledOnce();
+      assertMsgSeq();
+    });
 
-  //   test('should report status of buffered', function () {
+    test('should report status of stopped', function () {
+      msg = castingMsgTemplate.get().statusStopped;
+      msg.seq = connector._msgSeq;
+      connector.reportStatus(msg.status, { time : msg.time });
+      assertCalledOnce();
+      assertMsgSeq();
+    });
 
-  //   });
+    test('should report status of error', function () {
+      msg = castingMsgTemplate.get().statusError;
+      msg.seq = connector._msgSeq;
+      connector.reportStatus(msg.status, {
+        time : msg.time,
+        error : msg.error
+      });
+      assertCalledOnce();
+      assertMsgSeq();
+    });
 
-  //   test('should report status of playing', function () {
+    test('should not report status of unknown', function () {
+      msg = castingMsgTemplate.get().statusPlaying;
+      msg.seq = connector._msgSeq;
+      msg.status = 'unknown';
+      expect(
+        connector.reportStatus.bind(
+          connector, msg.status, { time : msg.time }
+        )
+      ).to.throw(/Ilegal status/);
+    });
 
-  //   });
+    test('should not report status without time', function () {
+      msg = castingMsgTemplate.get().statusPlaying;
+      msg.seq = connector._msgSeq;
+      expect(
+        connector.reportStatus.bind(
+          connector, msg.status, {}
+        )
+      ).to.throw(/Ilegal time/);
+    });
 
-  //   test('should report status of seeked', function () {
+    test('should not report status with wrong error type', function () {
+      msg = castingMsgTemplate.get().statusError;
+      msg.seq = connector._msgSeq;
+      msg.error = 404;
+      expect(
+        connector.reportStatus.bind(
+          connector, msg.status, { time : msg.time, error : msg.error }
+        )
+      ).to.throw(/Ilegal error/);
+    });
+  });
 
-  //   });
+  suite('handle remote message', function () {
 
-  //   test('should report status of stopped', function () {
+    var spyOnLoadRequest, spyOnPlayRequest, spyOnPauseRequest, spyOnSeekRequest;
 
-  //   });
+    setup(function () {
+      spy = sinon.spy(connector, 'handleRemoteMessage');
+    });
 
-  //   test('should report status of error', function () {
+    test('should handle load message', function () {
 
-  //   });
+    });
 
-  //   test('should not report status of unknown', function () {
+    test('should handle play message', function () {
 
-  //   });
+    });
 
-  //   test('should not report status without time', function () {
+    test('should handle pause message', function () {
 
-  //   });
+    });
 
-  //   test('should not report status with wrong error type', function () {
+    test('should handle seek message', function () {
 
-  //   });
-  // });
+    });
 
-  // suite('handle remote message', function () {
+    test('should not handle unknown message', function () {
 
-  //   test('should handle load message', function () {
+    });
 
-  //   });
+    test('should not handle load message without url', function () {
 
-  //   test('should handle play message', function () {
+    });
 
-  //   });
+    test('should not handle load message with wrong url type', function () {
 
-  //   test('should handle pause message', function () {
+    });
 
-  //   });
+    test('should not handle seek message without time', function () {
 
-  //   test('should handle seek message', function () {
+    });
 
-  //   });
+    test('should not handle seek message with wrong time type', function () {
 
-  //   test('should not handle unknown message', function () {
-
-  //   });
-
-  //   test('should not handle load message without url', function () {
-
-  //   });
-
-  //   test('should not handle load message with wrong url type', function () {
-
-  //   });
-
-  //   test('should not handle seek message without time', function () {
-
-  //   });
-
-  //   test('should not handle seek message with wrong time type', function () {
-
-  //   });
-  // });
-
-  // suite('handle events', function () {
-
-  //   test('should handle on seesion message', function () {
-
-  //   });
-
-  //   test('should handle on seesion state change', function () {
-
-  //   });
-  // });
+    });
+  });
 });
