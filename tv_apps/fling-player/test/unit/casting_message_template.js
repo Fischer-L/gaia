@@ -3,7 +3,7 @@
 
   var castingMsgTemplate = {
     get : function () {
-      return JSON.parse(JSON.stringify({
+      return {
         ack : {
           type : 'ack',
           seq : 1
@@ -69,7 +69,7 @@
           seq : 1,
           time : 168
         }
-      }));
+      };
     }
   };
 

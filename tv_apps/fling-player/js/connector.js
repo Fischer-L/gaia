@@ -89,7 +89,7 @@
         };
 
     if (error) {
-      reply.error = error;
+      reply.error = '' + error;
     }
 
     this.sendMsg(reply);
@@ -107,7 +107,7 @@
     };
 
     if (data.error) {
-      msg.error = data.error;
+      msg.error = '' + data.error;
     }
 
     if (data.detail) { // TODO: Discuss should we need this ?

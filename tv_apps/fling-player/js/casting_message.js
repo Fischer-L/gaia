@@ -162,14 +162,14 @@
    */
   castingMessage.parse = function (txt) {
 
-    // mDBG.log('castingMessage#parse');
+    mDBG.log('castingMessage#parse');
+    mDBG.log('Parsing : ', txt);
 
-    // mDBG.log('Parsing : ', txt);
+    var data = '[' + txt.replace(/}{/g, '},{') + ']';
+    mDBG.log('Transformed : ', data);
 
-    var data = '[' + txt.replace('}{', '},{') + ']';
     var msgs = JSON.parse(data);
-
-    // mDBG.log('Parsed : ', msgs);
+    mDBG.log('Parsed : ', msgs);
 
     return msgs.map(m => this.sanitizeMsg(m));
   };
