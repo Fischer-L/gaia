@@ -61,6 +61,6 @@
     }
   };
 
-  exports.mDBG = new MasterDebug(appEnv.DEBUG_MODE);
+  exports.mDBG = new MasterDebug(true);
 
 })(window);

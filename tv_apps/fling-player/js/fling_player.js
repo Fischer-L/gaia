@@ -6,7 +6,18 @@
 
   // <Helping variables, methods>
 
-  var uiID = appEnv.UI_ID;
+  var uiID = {
+    player : 'player',
+    loadingUI : 'loading-section',
+    controlPanel : 'video-control-panel',
+    backwardButton : 'backward-button',
+    playButton : 'play-button',
+    forwardButton : 'forward-button',
+    bufferedTimeBar : 'buffered-time-bar',
+    elapsedTimeBar : 'elapsed-time-bar',
+    elapsedTime : 'elapsed-time',
+    durationTime : 'duration-time'
+  };
 
   function noop() {}
 
@@ -30,15 +41,12 @@
 
   var proto = FlingPlayer.prototype;
 
-  proto.CONTROL_PANEL_HIDE_DELAY_SEC = appEnv.CONTROL_PANEL_HIDE_DELAY_SEC;
-  proto.SEEK_ON_KEY_PRESS_INTERVAL_MS = appEnv.SEEK_ON_KEY_PRESS_INTERVAL_MS;
-  proto.SEEK_ON_LONG_KEY_PRESS_SEC = appEnv.SEEK_ON_LONG_KEY_PRESS_SEC;
-  proto.SEEK_ON_KEY_PRESS_NORMAL_STEP_SEC =
-      appEnv.SEEK_ON_KEY_PRESS_NORMAL_STEP_SEC;
-  proto.SEEK_ON_KEY_PRESS_LARGE_STEP_SEC =
-      appEnv.SEEK_ON_KEY_PRESS_LARGE_STEP_SEC;
-  proto.UPDATE_CONTROL_PANEL_INTERVAL_MS =
-      appEnv.UPDATE_CONTROL_PANEL_INTERVAL_MS;
+  proto.CONTROL_PANEL_HIDE_DELAY_SEC = 3000;
+  proto.UPDATE_CONTROL_PANEL_INTERVAL_MS = 1000;
+  proto.SEEK_ON_KEY_PRESS_INTERVAL_MS = 150;
+  proto.SEEK_ON_LONG_KEY_PRESS_SEC = 5;
+  proto.SEEK_ON_KEY_PRESS_NORMAL_STEP_SEC = 10;
+  proto.SEEK_ON_KEY_PRESS_LARGE_STEP_SEC = 30;
 
   proto.init = function () {
 
@@ -519,6 +527,88 @@
   };
 
   // </Event handling>
+
+  window.addEventListener('load', function() {
+
+    if (mDBG.isDBG()) { // TMP
+
+      var initForTest = function () {
+
+        var fp, testVideo, testPresentation;
+
+        testVideo = new MockVideoElement({
+          duration : 600,
+          currentTime : 0
+        });
+        // testVideo = document.getElementById(appEnv.UI_ID.player)
+
+        testPresentation = new MockPresentation();
+        testPresentation._controller.videoSrc =
+            'http://media.w3.org/2010/05/sintel/trailer.webm';
+
+        fp = new FlingPlayer(
+          new VideoPlayer(testVideo),
+          new Connector(testPresentation)
+        );
+        fp.init();
+
+        window.fp = fp;
+        window.testVideo = testVideo;
+        window.testPresentation = testPresentation;
+
+        if (document.visibilityState === 'hidden') {
+          navigator.mozApps.getSelf().onsuccess = function(evt) {
+            var app = evt.target.result;
+            if (app) {
+              app.launch();
+            }
+          };
+        }
+      };
+
+      var scripts = [
+        'test/unit/mock_key_event.js',
+        'test/unit/mock_presentation.js',
+        'test/unit/mock_video_element.js',
+      ];
+
+      scripts.waited = scripts.length;
+
+      scripts.forEach((s) => {
+
+        var script = document.createElement('script');
+
+        script.onload = function () {
+          --scripts.waited;
+          if (!scripts.waited) {
+            initForTest();
+          }
+        };
+
+        script.src = s;
+
+        document.head.appendChild(script);
+      });
+
+      return;
+    }
+
+    window.fp = new FlingPlayer(
+      new VideoPlayer($(uiID.player)),
+      new Connector(navigator.presentation)
+    );
+
+    window.fp.init();
+
+    if (document.visibilityState === 'hidden') {
+      navigator.mozApps.getSelf().onsuccess = function(evt) {
+        var app = evt.target.result;
+        if (app) {
+          app.launch();
+        }
+      };
+    }
+  });
 
   exports.FlingPlayer = FlingPlayer;
 
