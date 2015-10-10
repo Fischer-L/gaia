@@ -42,9 +42,9 @@
       };
 
       var scripts = [
-        'test/mock/mock_key_event.js',
-        'test/mock/mock_presentation.js',
-        'test/mock/mock_video_element.js',
+        'test/unit/mock_key_event.js',
+        'test/unit/mock_presentation.js',
+        'test/unit/mock_video_element.js',
       ];
 
       scripts.waited = scripts.length;
