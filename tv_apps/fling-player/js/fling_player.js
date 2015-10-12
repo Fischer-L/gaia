@@ -1,5 +1,5 @@
 /* global VideoPlayer, Connector, mDBG, KeyNavigationAdapter,
-          SimpleKeyNavigation, SimpleKeyNavHelper, appEnv
+          SimpleKeyNavigation
  */
 (function(exports) {
   'use strict';
@@ -29,7 +29,7 @@
 
   /**
    * FlingPlayer could be controled by 2 sources.
-   * The 1st source is remote controll device, like Android mobile Fennec,
+   * The 1st source is remote control device, like Android mobile Fennec,
    * which sends command through the Presentation API.
    * The 2nd source is TV remote controller which sends command through
    * UI navigation by pressing TV remote controller's key
@@ -74,15 +74,12 @@
     this._initSession();
     this._initPlayer();
 
-    this._keyNavHelp = new SimpleKeyNavHelper({
-      list : [this._backwardButton, this._playButton, this._forwardButton],
-      direction : SimpleKeyNavigation.DIRECTION.HORIZONTAL
-    });
-    // ISSUE:
-    // At this point, the focus event of smart-button web component dosen't
-    // get fired even SimpleKeyNavHelper call its focus method.
-    // So the button's style isn't in the focused state at the 1st displaying
-    this._keyNavHelp.getKeyNav().focusOn(this._playButton);
+    this._keyNav = new SimpleKeyNavigation();
+    this._keyNav.start(
+      [this._backwardButton, this._playButton, this._forwardButton],
+      SimpleKeyNavigation.DIRECTION.HORIZONTAL
+    );
+    this._keyNav.focusOn(this._playButton);
 
     this._keyNavAdapter = new KeyNavigationAdapter();
     this._keyNavAdapter.init();
@@ -179,7 +176,7 @@
       this._hideControlsTimer = null;
     }
 
-    this._keyNavHelp.enable();
+    this._keyNav.resume();
     this._controlPanel.classList.remove('fade-out');
 
     if (autoHide === true) {
@@ -200,7 +197,7 @@
     if (immediate === true) {
 
       if (!this.isControlPanelHiding()) {
-        this._keyNavHelp.disable();
+        this._keyNav.pause();
         this._controlPanel.classList.add('fade-out');
       }
 
@@ -219,9 +216,9 @@
    */
   proto.moveTimeBar = function (type, sec) {
 
-    // mDBG.log('FlingPlayer#moveTimeBar');
-    // mDBG.log('Move type', type);
-    // mDBG.log('Move to', sec);
+    mDBG.log('FlingPlayer#moveTimeBar');
+    mDBG.log('Move type ', type);
+    mDBG.log('Move to ', sec);
 
     var timeBar = this[`_${type}TimeBar`];
     var duration = this._player.getRoundedDuration();
@@ -432,7 +429,7 @@
 
       case 'error':
         this.setLoading(false);
-        data.error = evt.target.error.code;
+        data.error = e.target.error.code;
         this._connector.reportStatus('error', data);
       break;
     }
@@ -460,22 +457,23 @@
 
   proto.onKeyEnterDown = function () {
 
-    // mDBG.log('FlingPlayer#onKeyEnterDown');
+    mDBG.log('FlingPlayer#onKeyEnterDown');
 
     if (this.isControlPanelHiding()) {
-      // mDBG.log('The control panel is hiding so no action is taken.');
+      mDBG.log('The control panel is hiding so no action is taken.');
       return;
     }
 
-    if (this._keyNavHelp.getFocused()) {
+    var focused = this._keyNav.getFocusedElement();
+    if (focused) {
 
-      // mDBG.log('control focused = ', this._keyNavHelp.getFocused());
+      mDBG.log('control focused = ', focused);
 
-      switch (this._keyNavHelp.getFocused().id) {
+      switch (focused.id) {
 
         case uiID.backwardButton:
         case uiID.forwardButton:
-          if (this._keyNavHelp.getFocused() === this._backwardButton) {
+          if (focused === this._backwardButton) {
             this._startSeekOnKeyPress('backward');
           } else {
             this._startSeekOnKeyPress('forward');
@@ -486,19 +484,19 @@
   };
 
   proto.onKeyEnterUp = function () {
-
     mDBG.log('FlingPlayer#onKeyEnterUp');
 
     if (this.isControlPanelHiding()) {
-      // mDBG.log('The control panel is hiding so no action is taken.');
+      mDBG.log('The control panel is hiding so no action is taken.');
       return;
     }
 
-    if (this._keyNavHelp.getFocused()) {
+    var focused = this._keyNav.getFocusedElement();
+    if (focused) {
 
-      mDBG.log('control focused = ', this._keyNavHelp.getFocused());
+      mDBG.log('control focused = ', focused);
 
-      switch (this._keyNavHelp.getFocused().id) {
+      switch (focused.id) {
 
         case uiID.playButton:
           if (this._player.isPlaying()) {

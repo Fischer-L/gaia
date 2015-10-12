@@ -10,7 +10,7 @@
    * start it. If we don't need it, we should stop it.
   **/
   function SimpleKeyNavigation() {
-    this._started = false;
+    this._paused = true;
   }
 
   var proto = SimpleKeyNavigation.prototype = new evt();
@@ -21,7 +21,7 @@
   });
 
   proto.start = function skn_start(list, direction, options) {
-    this._started = true;
+    this._paused = false;
     this.direction = direction;
     this.updateList(list);
     this.isChild = options ? !!options.isChild : false;
@@ -32,27 +32,31 @@
   };
 
   proto.stop = function skn_stop() {
-    if (!this._started) {
+    this.target.removeEventListener('keydown', this);
+  };
+
+  proto.pause = function skn_pause() {
+    if (this._paused) {
       return;
     }
 
-    this._started = false;
+    this._paused = true;
     this._List.forEach((elem) => { // For nested case
       if (elem instanceof SimpleKeyNavigation) {
-        elem.stop();
+        elem.pause();
       }
     });
   };
 
-  proto.restart = function skn_restart() {
-    if (this._started) {
+  proto.resume = function skn_resume() {
+    if (!this._paused) {
       return;
     }
 
-    this._started = true;
+    this._paused = false;
     this._List.forEach((elem) => { // For nested case
       if (elem instanceof SimpleKeyNavigation) {
-        elem.restart();
+        elem.resume();
       }
     });
   };
@@ -66,12 +70,12 @@
     }
   };
 
-  proto.getFocused = function skn_getFocused() {
+  proto.getFocusedElement = function skn_getFocusedElement() {
     var elem = this._List[this._focusedIndex];
     if (!elem) {
       elem = null;
     } else if (elem instanceof SimpleKeyNavigation) {
-      elem = elem.getFocused();
+      elem = elem.getFocusedElement();
     }
     return elem;
   };
@@ -125,7 +129,7 @@
   };
 
   proto.handleKeyMove = function skn_handleKeyMove(e, pre, next) {
-    if (!this._started) {
+    if (this._paused) {
       return;
     }
 
@@ -137,7 +141,7 @@
   };
 
   proto.propagateKeyMove = function skn_propagateKeyMove(e, pre, next) {
-    if (!this._started) {
+    if (this._paused) {
       return;
     }
 
@@ -148,7 +152,7 @@
   };
 
   proto.handleEvent = function skn_handleEvent(e) {
-    if (!this._started) {
+    if (this._paused) {
       return;
     }
 
