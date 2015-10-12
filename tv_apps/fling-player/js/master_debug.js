@@ -1,4 +1,3 @@
-/* global appEnv */
 (function(exports) {
   'use strict';
 

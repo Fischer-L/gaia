@@ -1,7 +1,6 @@
-/* global mDBG, appEnv */
+/* global mDBG */
 'use strict';
 
-requireApp('fling-player/js/app_env.js');
 requireApp('fling-player/js/master_debug.js');
 
 suite('fling-player/MasterDebug', function() {

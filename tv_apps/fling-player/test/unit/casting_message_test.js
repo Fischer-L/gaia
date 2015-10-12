@@ -2,7 +2,6 @@
 'use strict';
 
 requireApp('fling-player/test/unit/casting_message_template.js');
-requireApp('fling-player/js/app_env.js');
 requireApp('fling-player/js/master_debug.js');
 requireApp('fling-player/js/casting_message.js');
 
