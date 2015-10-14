@@ -26,12 +26,10 @@
 
   var proto = MockVideoElement.prototype;
 
-  proto.fireEvent = function (type) {
+  proto.fireEvent = function (e) {
 
-    var listeners = this._events[type];
+    var listeners = this._events[e.type];
     if (listeners) {
-
-      var e = { type : type };
 
       listeners.forEach((listener) => {
         if (typeof listener == 'function') {
@@ -60,17 +58,17 @@
   proto.load =  function () {
     this.paused = false;
     this.currentTime = 0;
-    this.fireEvent('loadedmetadata');
+    this.fireEvent(new Event('loadedmetadata'));
   };
 
   proto.play = function () {
     this.paused = false;
-    this.fireEvent('playing');
+    this.fireEvent(new Event('playing'));
   };
 
   proto.pause = function () {
     this.paused = true;
-    this.fireEvent('pause');
+    this.fireEvent(new Event('pause'));
   };
 
   exports.MockVideoElement = MockVideoElement;
