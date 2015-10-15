@@ -526,31 +526,32 @@
 
   window.addEventListener('load', function() {
 
-    if (mDBG.isDBG() && false) { // TMP
+    // TMP DEL
+    if (mDBG.isDBG()) {
 
       var initForTest = function () {
 
-        var fp, testVideo, testPresentation;
+        var fp, mockVideo, mockPresentation;
 
-        testVideo = new MockVideoElement({
+        mockVideo = new MockVideoElement({
           duration : 600,
           currentTime : 0
         });
-        // testVideo = document.getElementById(uiID.player)
+        // mockVideo = document.getElementById(uiID.player)
 
-        testPresentation = new MockPresentation();
-        testPresentation._controller.videoSrc =
+        mockPresentation = new MockPresentation();
+        mockPresentation._controller.videoSrc =
             'http://media.w3.org/2010/05/sintel/trailer.webm';
 
         fp = new FlingPlayer(
-          new VideoPlayer(testVideo),
-          new Connector(testPresentation)
+          new VideoPlayer(mockVideo),
+          new Connector(mockPresentation)
         );
         fp.init();
 
         window.fp = fp;
-        window.testVideo = testVideo;
-        window.testPresentation = testPresentation;
+        window.mockVideo = mockVideo;
+        window.mockPresentation = mockPresentation;
 
         if (document.visibilityState === 'hidden') {
           navigator.mozApps.getSelf().onsuccess = function(evt) {
@@ -563,9 +564,9 @@
       };
 
       var scripts = [
-        'test/unit/mock_key_event.js',
         'test/unit/mock_presentation.js',
         'test/unit/mock_video_element.js',
+        'test/unit/casting_message_template.js'
       ];
 
       scripts.waited = scripts.length;
@@ -588,6 +589,7 @@
 
       return;
     }
+    // TMP DEL end
 
     window.fp = new FlingPlayer(
       new VideoPlayer($(uiID.player)),

@@ -21,16 +21,16 @@ suite('fling-player/Connector', function() {
 
     this.timeout(200);
     timer = setInterval(() => {
-      if (connector._isInit && connector._isInitSession) {
-        done();
+      if (connector._isInit && connector._isInitConnection) {
         clearInterval(timer);
+        done();
       }
     });
   });
 
   test('should send message', function () {
     msg = castingMsgTemplate.get().ack;
-    spy = sinon.spy(presentation.receiver._session, 'send');
+    spy = sinon.spy(presentation.receiver._connection, 'send');
     connector.sendMsg(msg);
     assert.isTrue(spy.withArgs(JSON.stringify(msg)).calledOnce);
   });

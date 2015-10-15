@@ -3,7 +3,7 @@
 
   var proto,
       noop = function () {},
-      sessionState = {
+      connectionState = {
         connected : "connected",
         closed : "closed",
         terminated : "terminated"
@@ -43,18 +43,18 @@
   };
 
 
-  function MockPresentationSession() {
+  function MockPresentationConnection() {
     this.id = 0;
-    this.state = sessionState.closed;
+    this.state = connectionState.closed;
     this.onmessage = null;
     this.onstatechange = null;
   }
 
-  proto = MockPresentationSession.prototype;
+  proto = MockPresentationConnection.prototype;
 
   proto._open = function () {
-    console.log('MockPresentationSession#_open');
-    this.state = sessionState.connected;
+    console.log('MockPresentationConnection#_open');
+    this.state = connectionState.connected;
     if (typeof this.onstatechange == 'function') {
       var e = new Event('statechange');
       this.onstatechange(e);
@@ -62,7 +62,7 @@
   };
 
   proto._receive = function (txt) {
-    if (this.state != sessionState.connected) return;
+    if (this.state != connectionState.connected) return;
 
     if (typeof this.onmessage == 'function') {
       var e = new Event('message', { bubbles : false, cancelable : false });
@@ -72,9 +72,9 @@
   };
 
   proto.close = function () {
-    if (this.state != sessionState.connected) return;
+    if (this.state != connectionState.connected) return;
 
-    this.state = sessionState.closed;
+    this.state = connectionState.closed;
     if (typeof this.onstatechange == 'function') {
       var e = new Event('statechange');
       this.onstatechange(e);
@@ -82,9 +82,9 @@
   };
 
   proto.terminate = function () {
-    if (this.state != sessionState.connected) return;
+    if (this.state != connectionState.connected) return;
 
-    this.state = sessionState.terminated;
+    this.state = connectionState.terminated;
     if (typeof this.onstatechange == 'function') {
       var e = new Event('statechange');
       this.onstatechange(e);
@@ -96,12 +96,12 @@
 
   function MockPresentationReceiver() {
 
-    this.onsessionavailable;
-    this._session; // MockPresentationSession
+    this.onconnectionavailable;
+    this._connection; // MockPresentationConnection
     this._reject;
     this._resolve;
 
-    this._sessionPromise = new Promise((resolve, reject) => {
+    this._connPromise = new Promise((resolve, reject) => {
       this._reject = reject;
       this._resolve = resolve;
     });
@@ -109,19 +109,19 @@
 
   proto = MockPresentationReceiver.prototype;
 
-  proto._start = function (session) {
+  proto._start = function (connection) {
     console.log('MockPresentationReceiver#_start');
     this._start = noop;
-    this._session = session;
-    if (typeof this.onsessionavailable == 'function'){
-      var e = new Event('sessionavailable');
-      this.onsessionavailable(e);
+    this._connection = connection;
+    if (typeof this.onconnectionavailable == 'function'){
+      var e = new Event('connectionavailable');
+      this.onconnectionavailable(e);
     }
-    this._resolve(this._session);
+    this._resolve(this._connection);
   };
 
-  proto.getSession = function () {
-    return this._sessionPromise;
+  proto.getConnection = function () {
+    return this._connPromise;
   };
 
 
@@ -134,16 +134,16 @@
 
   proto._start = function () {
     console.log('MockPresentation#_start');
-    var session;
+    var connection;
     this._start = noop;
-    session = new MockPresentationSession();
-    this.receiver._start(session);
-    session._open();
+    connection = new MockPresentationConnection();
+    this.receiver._start(connection);
+    connection._open();
   };
 
   proto._toReceiver = function (txt) {
-    if (this.receiver._session) {
-      this.receiver._session._receive(txt);
+    if (this.receiver._connection) {
+      this.receiver._connection._receive(txt);
     }
   };
 
