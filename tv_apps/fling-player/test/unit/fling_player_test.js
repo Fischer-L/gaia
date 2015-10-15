@@ -164,7 +164,7 @@ suite('fling-player/fling_player', function() {
           'Wrong isControlPanelHiding afterwards'
         );
         done();
-      }, flingPlayer.CONTROL_PANEL_HIDE_DELAY_SEC + 200);
+      }, flingPlayer.CONTROL_PANEL_HIDE_DELAY_MS + 200);
     });
 
     test('should show control panel and hide automatically later',
@@ -189,7 +189,7 @@ suite('fling-player/fling_player', function() {
                 'Wrong isControlPanelHiding afterwards'
               );
               done();
-            }, flingPlayer.CONTROL_PANEL_HIDE_DELAY_SEC + 200);
+            }, flingPlayer.CONTROL_PANEL_HIDE_DELAY_MS + 200);
           }
     );
 
@@ -228,7 +228,7 @@ suite('fling-player/fling_player', function() {
           'Wrong isControlPanelHiding afterwards'
         );
         done();
-      }, flingPlayer.CONTROL_PANEL_HIDE_DELAY_SEC + 200);
+      }, flingPlayer.CONTROL_PANEL_HIDE_DELAY_MS + 200);
     });
 
     test('should move time bar', function (done) {

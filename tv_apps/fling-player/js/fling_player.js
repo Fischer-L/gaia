@@ -42,10 +42,10 @@
   var proto = FlingPlayer.prototype;
 
   proto.MAX_DISPLAYED_VIDEO_TIME_SEC = 3600 * 99 + 60 * 59 + 59;
-  proto.CONTROL_PANEL_HIDE_DELAY_SEC = 3000;
+  proto.CONTROL_PANEL_HIDE_DELAY_MS = 3000;
   proto.UPDATE_CONTROL_PANEL_INTERVAL_MS = 1000;
   proto.SEEK_ON_KEY_PRESS_INTERVAL_MS = 150;
-  proto.SEEK_ON_LONG_KEY_PRESS_SEC = 5;
+  proto.SEEK_ON_LONG_KEY_PRESS_MS = 5000;
   proto.SEEK_ON_KEY_PRESS_NORMAL_STEP_SEC = 10;
   proto.SEEK_ON_KEY_PRESS_LARGE_STEP_SEC = 30;
 
@@ -207,7 +207,7 @@
 
       this._hideControlsTimer = setTimeout(() => {
           this.hideControlPanel(true);
-        }, this.CONTROL_PANEL_HIDE_DELAY_SEC
+        }, this.CONTROL_PANEL_HIDE_DELAY_MS
       );
     }
   };
@@ -360,7 +360,7 @@
       var time = this._player.getRoundedCurrentTime();
       var factor = (this._seekOnKeyPressDirection == 'backward') ? -1 : 1;
       var seekDuration = (new Date()).getTime() - this._seekOnKeyPressStartTime;
-      var seekStep = (seekDuration > this.SEEK_ON_LONG_KEY_PRESS_SEC) ?
+      var seekStep = (seekDuration > this.SEEK_ON_LONG_KEY_PRESS_MS) ?
                       this.SEEK_ON_KEY_PRESS_LARGE_STEP_SEC :
                       this.SEEK_ON_KEY_PRESS_NORMAL_STEP_SEC;
 
