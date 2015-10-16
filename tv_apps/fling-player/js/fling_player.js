@@ -38,6 +38,7 @@
 
   var proto = FlingPlayer.prototype;
 
+  proto.MAX_DISPLAYED_VIDEO_TIME_SEC = 3600 * 99 + 60 * 59 + 59;
   proto.CONTROL_PANEL_HIDE_DELAY_MS = 3000;
   proto.UPDATE_CONTROL_PANEL_INTERVAL_MS = 1000;
   proto.SEEK_ON_KEY_PRESS_INTERVAL_MS = 150;
@@ -72,6 +73,7 @@
       SimpleKeyNavigation.DIRECTION.HORIZONTAL
     );
     this._keyNav.focusOn(this._playButton);
+    this._keyNav.pause();
 
     this._keyNavAdapter = new KeyNavigationAdapter();
     this._keyNavAdapter.init();
@@ -124,7 +126,7 @@
     this.moveTimeBar('buffered', 0);
     this.writeTimeInfo('elapsed', 0);
     this.writeTimeInfo('duration', 0);
-    this.setPlayButtonState('pause');
+    this.setPlayButtonState('paused');
   };
 
   proto.showLoading = function (loading) {
@@ -230,8 +232,9 @@
   proto.writeTimeInfo = function (type, sec) {
 
     var timeInfo = this[`_${type}Time`];
-    var duration = this._player.getRoundedDuration();
-    sec = Math.round(sec);
+    var duration = Math.min(this._player.getRoundedDuration(),
+                            this.MAX_DISPLAYED_VIDEO_TIME_SEC);
+    sec = Math.min(Math.round(sec), this.MAX_DISPLAYED_VIDEO_TIME_SEC);
 
     if (!timeInfo ||
         (sec >= 0) === false ||
