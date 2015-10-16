@@ -13,3 +13,4 @@ user_pref('dom.presentation.discoverable', true);
 user_pref('dom.presentation.discovery.enabled', true);
 user_pref('dom.presentation.enabled', true);
 user_pref('devtools.useragent.device_type', 'TV');
+user_pref('layout.css.devPixelsPerPx', '1');
