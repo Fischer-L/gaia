@@ -1,14 +1,18 @@
+/**
+ * This mock is for the case that just want a simple video element for testing.
+ * Also, see Bug 1199985, because a real HTMLVideoElement cannot play video
+ * on TV gecko, we can use it for a temp subtitude for test case that needs
+ * a HTMLVideoElement.
+ */
 (function(exports) {
   'use strict';
 
   function MockVideoElement(config = {}) {
     var self = this;
-
     this.src = config.src || '';
     this.ended = config.ended || false;
     this.paused = config.paused || true;
     this.hidden = config.hidden || false;
-    this.buffered = [];
     this.duration = config.duration || 0;
     this.currentTime = config.currentTime || 0;
     this.buffered = {

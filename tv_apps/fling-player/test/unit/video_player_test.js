@@ -110,7 +110,8 @@ suite('fling-player/VideoPlayer', function() {
 
   test('should seek with loading metadata', function () {
     var exp = video.currentTime + 10;
-    video.load(videoURL);
+    video.src = videoURL;
+    video.load();
     player.seek(exp);
     assert.equal(video.currentTime, exp);
   });

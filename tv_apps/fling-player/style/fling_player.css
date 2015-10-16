@@ -66,7 +66,7 @@ article, section, video {
   visibility: hidden;
 }
 
-#video-time-progess {
+#video-time-progress {
   height: 8rem;
   border-radius: 4rem;
   left: 34.8rem;
@@ -76,11 +76,11 @@ article, section, video {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-#video-time-progess div {
+#video-time-progress div {
   position: absolute;
 }
 
-#time-progess {
+#time-progress {
   height: 8rem;
   left: 19.2rem;
   right: 19.2rem;

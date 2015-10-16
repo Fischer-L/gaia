@@ -35,7 +35,8 @@ suite('fling-player/MasterDebug', function() {
 
   suite('behavior in the debug mode', function () {
 
-    var a = 'a', b= 'b';
+    var a = 'a';
+    var b = 'b';
 
     setup(function () {
       exp = sinon.mock(console);
@@ -74,7 +75,7 @@ suite('fling-player/MasterDebug', function() {
     });
   });
 
-  suite('behavior in the debug mode', function () {
+  suite('behavior not in the debug mode', function () {
 
     setup(function () {
       exp = sinon.mock(console);

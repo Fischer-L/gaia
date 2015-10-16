@@ -2,8 +2,6 @@
 (function(exports) {
   'use strict';
 
-  var noop = function () {};
-
   /**
    * This class handles the connection to controller via the presentation API
    * The events of controller's message are:

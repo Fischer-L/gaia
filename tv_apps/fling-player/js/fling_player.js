@@ -4,7 +4,7 @@
 (function(exports) {
   'use strict';
 
-  // <Helping variables, methods>
+  // Helping variables, methods
 
   var uiID = {
     player : 'player',
@@ -19,22 +19,19 @@
     durationTime : 'duration-time'
   };
 
-  function noop() {}
-
   function $(id) {
     return document.getElementById(id);
   }
 
-  // </Helping variables, methods>
-
+  // Helping variables, methods end
   /**
-   * FlingPlayer could be controled by 2 sources.
-   * The 1st source is remote control device, like Android mobile Fennec,
+   * FlingPlayer could be controlled by 2 sources.
+   * The 1st source is remote control device, like Fennec,
    * which sends command through the Presentation API.
    * The 2nd source is TV remote controller which sends command through
    * UI navigation by pressing TV remote controller's key
    */
-  function FlingPlayer(videoPlayer, connector, elem) {
+  function FlingPlayer(videoPlayer, connector) {
     this._player = videoPlayer;
     this._connector = connector;
   }
@@ -50,11 +47,6 @@
   proto.SEEK_ON_KEY_PRESS_LARGE_STEP_SEC = 30;
 
   proto.init = function () {
-
-    if (this.init === noop) return;
-
-    mDBG.log('FlingPlayer#init');
-    this.init = noop;
 
     this._contrlPanelUpdateTimer = null;
     this._seekOnKeyPressTimer = null;
@@ -107,12 +99,8 @@
   };
 
   proto._initSession = function () {
-    if (this._initSession === noop) return;
-
-    mDBG.log('FlingPlayer#_initSession');
-    this._initSession = noop;
-
     this._connector.init();
+
     this._connector.on('loadRequest', this.onLoadRequest.bind(this));
     this._connector.on('playRequest', this.onPlayRequest.bind(this));
     this._connector.on('pauseRequest', this.onPauseRequest.bind(this));
@@ -120,12 +108,8 @@
   };
 
   proto._initPlayer = function () {
-    if (this._initPlayer === noop) return;
-
-    mDBG.log('FlingPlayer#_initPlayer');
-    this._initPlayer = noop;
-
     this._player.init();
+
     this._player.addEventListener('loadedmetadata', this);
     this._player.addEventListener('seeked', this);
     this._player.addEventListener('waiting', this);
@@ -135,7 +119,7 @@
     this._player.addEventListener('error', this);
   };
 
-  // <UI handling>
+  // UI handling
 
   proto.resetUI = function () {
     this.moveTimeBar('elapsed', 0);
@@ -146,7 +130,6 @@
   };
 
   proto.showLoading = function (loading) {
-    mDBG.log('FlingPlayer#showLoading = ', loading);
     this._loadingUI.hidden = !loading;
   };
 
@@ -173,6 +156,7 @@
    * @param {Boolean} autoHide? Auto hide the controls later. Default to false
    */
   proto.showControlPanel = function (autoHide) {
+
     if (this._hideControlsTimer) {
       clearTimeout(this._hideControlsTimer);
       this._hideControlsTimer = null;
@@ -206,9 +190,8 @@
     } else {
 
       this._hideControlsTimer = setTimeout(() => {
-          this.hideControlPanel(true);
-        }, this.CONTROL_PANEL_HIDE_DELAY_MS
-      );
+        this.hideControlPanel(true);
+      }, this.CONTROL_PANEL_HIDE_DELAY_MS);
     }
   };
 
@@ -227,8 +210,10 @@
     sec = Math.round(sec);
 
     if (!timeBar ||
-        (sec >= 0) === false ||
-        (sec <= duration) === false
+        typeof sec != 'number' ||
+        isNaN(sec) ||
+        sec < 0 ||
+        sec > duration
     ) {
       mDBG.warn('Not moving due to corrupt type/sec', type, sec);
       return;
@@ -259,20 +244,16 @@
     }
 
     var t = this._player.parseTime(sec);
-
     t.hh = (t.hh <= 0) ? '' :
            (t.hh < 10) ? '0' + t.hh + ':' : t.hh + ':';
-
     t.mm = (t.mm < 10) ? '0' + t.mm + ':' : t.mm + ':';
-
     t.ss = (t.ss < 10) ? '0' + t.ss : t.ss;
-
     timeInfo.textContent = t.hh + t.mm + t.ss;
   };
 
-  // </UI handling>
+  // UI handling end
 
-  // <Video handling>
+  // Video handling
 
   proto.play = function () {
     this._player.play();
@@ -383,9 +364,9 @@
     this.showControlPanel(true);
   };
 
-  // </Video handling>
+  // Video handling end
 
-  // <Event handling>
+  // Event handling
 
   proto.handleEvent = function handleVideoEvent(e) {
 
@@ -522,7 +503,7 @@
     this.showControlPanel(true);
   };
 
-  // </Event handling>
+  // Event handling end
 
   window.addEventListener('load', function() {
 

@@ -71,7 +71,6 @@
         }
 
         if (msg.status == 'error' && typeof msg.error != 'string') {
-          console.log('GGGG ' + typeof msg.error); // TMP DEL
           throw new Error('Ilegal error = ' + msg.error +
             ' in casting message of type = ' + this.name);
         }
@@ -132,10 +131,8 @@
    * @return {Object} Sanitized message
    */
   castingMessage.sanitizeMsg = function (content) {
-
-    // mDBG.log('castingMessage#sanitizeMsg');
-
-    // mDBG.log('Sanitize message content:', content);
+    mDBG.log('castingMessage#sanitizeMsg');
+    mDBG.log('Sanitize message content:', content);
 
     if (this.type[content.type]) {
 
@@ -161,7 +158,6 @@
    * @return {Array.<Object>} the parsed messages
    */
   castingMessage.parse = function (txt) {
-
     mDBG.log('castingMessage#parse');
     mDBG.log('Parsing : ', txt);
 
