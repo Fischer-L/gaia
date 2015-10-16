@@ -201,9 +201,9 @@
    */
   proto.moveTimeBar = function (type, sec) {
 
-    mDBG.log('FlingPlayer#moveTimeBar');
-    mDBG.log('Move type ', type);
-    mDBG.log('Move to ', sec);
+    // mDBG.log('FlingPlayer#moveTimeBar');
+    // mDBG.log('Move type ', type);
+    // mDBG.log('Move to ', sec);
 
     var timeBar = this[`_${type}TimeBar`];
     var duration = this._player.getRoundedDuration();
@@ -220,7 +220,7 @@
     }
 
     requestAnimationFrame(() => {
-      mDBG.log('Move to sec / duration = %d / %d', sec, duration);
+      // mDBG.log('Move to sec / duration = %d / %d', sec, duration);
       timeBar.style.width = (100 * sec / duration) + '%';
     });
   };
@@ -298,8 +298,12 @@
       this.writeTimeInfo('elapsed', current);
       this.moveTimeBar('elapsed', current);
 
-      if (buf.length) {
-        this.moveTimeBar('buffered', buf.end(buf.length - 1));
+      for (var bufEnd, bufStart, i = 0; i < buf.length; ++i ) {
+        bufEnd = buf.end(i);
+        bufStart = buf.start(i);
+        if (bufStart <= current && current <= bufEnd) {
+          this.moveTimeBar('buffered', bufEnd);
+        }
       }
 
       this._contrlPanelUpdateTimer = setTimeout(
@@ -406,6 +410,7 @@
         this._connector.reportStatus('stopped', data);
         if (e.type == 'ended') {
           this.showControlPanel();
+          this.setPlayButtonState('paused');
         } else {
           this.showControlPanel(true);
         }
@@ -441,7 +446,7 @@
 
   proto.onKeyEnterDown = function () {
 
-    mDBG.log('FlingPlayer#onKeyEnterDown');
+    // mDBG.log('FlingPlayer#onKeyEnterDown');
 
     if (this.isControlPanelHiding()) {
       mDBG.log('The control panel is hiding so no action is taken.');
@@ -451,7 +456,7 @@
     var focused = this._keyNav.getFocusedElement();
     if (focused) {
 
-      mDBG.log('control focused = ', focused);
+      // mDBG.log('control focused = ', focused);
 
       switch (focused.id) {
 
@@ -468,7 +473,7 @@
   };
 
   proto.onKeyEnterUp = function () {
-    mDBG.log('FlingPlayer#onKeyEnterUp');
+    // mDBG.log('FlingPlayer#onKeyEnterUp');
 
     if (this.isControlPanelHiding()) {
       mDBG.log('The control panel is hiding so no action is taken.');
@@ -478,7 +483,7 @@
     var focused = this._keyNav.getFocusedElement();
     if (focused) {
 
-      mDBG.log('control focused = ', focused);
+      // mDBG.log('control focused = ', focused);
 
       switch (focused.id) {
 
@@ -499,7 +504,7 @@
   };
 
   proto.onDemandingControlPanel = function () {
-    mDBG.log('FlingPlayer#onDemandingControlPanel');
+    // mDBG.log('FlingPlayer#onDemandingControlPanel');
     this.showControlPanel(true);
   };
 
@@ -518,11 +523,47 @@
           duration : 600,
           currentTime : 0
         });
-        // mockVideo = document.getElementById(uiID.player)
+        mockVideo = document.getElementById(uiID.player);
+        mockVideo.handleEvent = function (e) {
+          console.log('------ Video event : ' + e.type);
+        }.bind(mockVideo);
+        for (var p in mockVideo) {
+          if (p.indexOf('on') == 0) {
+            p = p.substr(2);
+            switch (p) {
+              case 'click':
+              case 'blur':
+              case 'focus':
+              case 'keyup':
+              case 'keydown':
+              case 'keypress':
+              case 'mouseup':
+              case 'mousedown':
+              case 'mouseenter':
+              case 'mouseover':
+              case 'mousemove':
+              case 'mouseout':
+              case 'mouseleave':
+              case 'progress':
+              case 'timeupdate':
+                break;
+              default:
+                mockVideo.addEventListener(p, mockVideo);
+            }
+          }
+        }
 
         mockPresentation = new MockPresentation();
-        mockPresentation._controller.videoSrc =
-            'http://media.w3.org/2010/05/sintel/trailer.webm';
+        mockPresentation._controller.load = function () {
+          var videos = [
+            'http://media.w3.org/2010/05/sintel/trailer.webm',
+            'http://video.webmfiles.org/elephants-dream.webm',
+            'http://download.wavetlan.com/SVV/Media/HTTP/H264/Other_Media/H264_test5_voice_mp4_480x360.mp4'
+          ];
+          var m = castingMsgTemplate.get().load;
+          m.url = videos[1];
+          mockPresentation._controller.castMsg(m);
+        }.bind(mockPresentation._controller);
 
         fp = new FlingPlayer(
           new VideoPlayer(mockVideo),
@@ -551,20 +592,15 @@
       ];
 
       scripts.waited = scripts.length;
-
       scripts.forEach((s) => {
-
         var script = document.createElement('script');
-
         script.onload = function () {
           --scripts.waited;
           if (!scripts.waited) {
             initForTest();
           }
         };
-
         script.src = s;
-
         document.head.appendChild(script);
       });
 

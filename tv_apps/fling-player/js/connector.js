@@ -72,8 +72,8 @@
   };
 
   proto.sendMsg = function (msg) {
-    mDBG.log('Connector#sendMsg');
-    mDBG.log('msg = ', msg);
+    // mDBG.log('Connector#sendMsg');
+    // mDBG.log('msg = ', msg);
     this._connection.send(castingMessage.stringify(msg));
   };
 
@@ -95,7 +95,7 @@
 
   proto.reportStatus = function (status, data) {
 
-    mDBG.log('Connector#reportStatus');
+    // mDBG.log('Connector#reportStatus');
 
     var msg = {
       'type': 'status',
