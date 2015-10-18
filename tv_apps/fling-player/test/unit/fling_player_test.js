@@ -536,8 +536,14 @@ suite('fling-player/fling_player', function() {
     });
 
     test('should handle seeked event', function () {
+      var spyOnPlay = sinon.spy(flingPlayer, 'play');
+
       mockVideo.fireEvent(new Event('seeked'));
 
+      assert.isTrue(
+        spyOnPlay.calledOnce,
+        'Not play after seeked event'
+      );
       assert.isTrue(
         spyOnReportStatus.withArgs('seeked', data).calledOnce,
         'Not report correct status'

@@ -364,18 +364,19 @@
       break;
 
       case 'seeked':
+        this.play();
         this._connector.reportStatus('seeked', data);
       break;
 
-      case 'ended':
       case 'pause':
+        this.showControlPanel(true);
         this._connector.reportStatus('stopped', data);
-        if (e.type == 'ended') {
-          this.showControlPanel();
-          this.setPlayButtonState('paused');
-        } else {
-          this.showControlPanel(true);
-        }
+      break;
+
+      case 'ended':
+        this.showControlPanel();
+        this.setPlayButtonState('paused'); // Make sure state changed at ending
+        this._connector.reportStatus('stopped', data);
       break;
 
       case 'error':
@@ -487,9 +488,9 @@
         });
         mockVideo = document.getElementById(uiID.player);
         mockVideo.handleEvent = function (e) {
+          console.log('------ Video event : ' + e.type);
           switch (e.type) {
             case 'timeupdate':
-              console.log('------ Video event : ' + e.type);
               console.log('---------- Current Time : ' + mockVideo.currentTime);
             break;
           }
@@ -512,7 +513,7 @@
               case 'mouseout':
               case 'mouseleave':
               case 'progress':
-              // case 'timeupdate':
+              case 'timeupdate':
                 break;
               default:
                 mockVideo.addEventListener(p, mockVideo);
