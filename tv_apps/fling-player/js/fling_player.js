@@ -40,7 +40,6 @@
 
   proto.MAX_DISPLAYED_VIDEO_TIME_SEC = 3600 * 99 + 60 * 59 + 59;
   proto.CONTROL_PANEL_HIDE_DELAY_MS = 3000;
-  proto.UPDATE_CONTROL_PANEL_INTERVAL_MS = 1000;
   proto.SEEK_ON_KEY_PRESS_INTERVAL_MS = 150;
   proto.SEEK_ON_LONG_KEY_PRESS_MS = 5000;
   proto.SEEK_ON_KEY_PRESS_NORMAL_STEP_SEC = 10;
@@ -48,7 +47,6 @@
 
   proto.init = function () {
 
-    this._contrlPanelUpdateTimer = null;
     this._seekOnKeyPressTimer = null;
     this._seekOnKeyPressDirection = null; // 'backward' or 'forward'
     this._seekOnKeyPressStartTime = null; // in ms
@@ -111,9 +109,10 @@
     this._player.init();
 
     this._player.addEventListener('loadedmetadata', this);
-    this._player.addEventListener('seeked', this);
+    this._player.addEventListener('timeupdate', this);
     this._player.addEventListener('waiting', this);
     this._player.addEventListener('playing', this);
+    this._player.addEventListener('seeked', this);
     this._player.addEventListener('pause', this);
     this._player.addEventListener('ended', this);
     this._player.addEventListener('error', this);
@@ -265,62 +264,24 @@
     this.setPlayButtonState('paused');
   };
 
-  proto._startUpdateControlPanelContinuously = function () {
+  proto._updateControlPanel = function () {
+    var buf = this._player.getVideo().buffered;
+    var current = this._player.getRoundedCurrentTime();
 
-    if (this._contrlPanelUpdateTimer == null) {
+    this.writeTimeInfo('elapsed', current);
+    this.moveTimeBar('elapsed', current);
 
-      // To stop this is important.
-      // We don't want they get messed with each other
-      this._stopSeekOnKeyPress();
-
-      this._contrlPanelUpdateTimer = setTimeout(
-        this._updateControlPanelContinuously.bind(this)
-      );
-      this.showControlPanel(true);
-    }
-  };
-
-  proto._stopUpdateControlPanelContinuously = function () {
-    clearTimeout(this._contrlPanelUpdateTimer);
-    this._contrlPanelUpdateTimer = null;
-  };
-
-  /**
-   * This is to keep auto updating the info and status on the control panel.
-   */
-  proto._updateControlPanelContinuously = function () {
-
-    if (this._contrlPanelUpdateTimer != null) {
-
-      var buf = this._player.getVideo().buffered;
-      var current = this._player.getRoundedCurrentTime();
-
-      this.writeTimeInfo('elapsed', current);
-      this.moveTimeBar('elapsed', current);
-
-      for (var bufEnd, bufStart, i = 0; i < buf.length; ++i ) {
-        bufEnd = buf.end(i);
-        bufStart = buf.start(i);
-        if (bufStart <= current && current <= bufEnd) {
-          this.moveTimeBar('buffered', bufEnd);
-        }
+    for (var bufEnd, bufStart, i = 0; i < buf.length; ++i ) {
+      bufEnd = buf.end(i);
+      bufStart = buf.start(i);
+      if (bufStart <= current && current <= bufEnd) {
+        this.moveTimeBar('buffered', bufEnd);
       }
-
-      this._contrlPanelUpdateTimer = setTimeout(
-        this._updateControlPanelContinuously.bind(this),
-        this.UPDATE_CONTROL_PANEL_INTERVAL_MS
-      );
     }
   };
 
   proto._startSeekOnKeyPress = function (dir) {
-
     if (this._seekOnKeyPressStartTime == null) { // Do not double start
-
-      // To stop this is important.
-      // We don't want they get messed with each other
-      this._stopUpdateControlPanelContinuously();
-
       this._seekOnKeyPressStartTime = (new Date()).getTime();
       this._seekOnKeyPressDirection = dir;
       this._seekOnKeyPress();
@@ -386,6 +347,10 @@
         this._connector.reportStatus('loaded', data);
       break;
 
+      case 'timeupdate':
+        this._updateControlPanel();
+      break;
+
       case 'waiting':
         this.showLoading(true);
         this._connector.reportStatus('buffering', data);
@@ -395,8 +360,6 @@
         this.showLoading(false);
         // TODO: Hide 'Starting video cast from ...'
         this._connector.reportStatus('buffered', data);
-
-        this._startUpdateControlPanelContinuously();
         this._connector.reportStatus('playing', data);
       break;
 
@@ -406,7 +369,6 @@
 
       case 'ended':
       case 'pause':
-        this._stopUpdateControlPanelContinuously();
         this._connector.reportStatus('stopped', data);
         if (e.type == 'ended') {
           this.showControlPanel();
@@ -525,7 +487,12 @@
         });
         mockVideo = document.getElementById(uiID.player);
         mockVideo.handleEvent = function (e) {
-          console.log('------ Video event : ' + e.type);
+          switch (e.type) {
+            case 'timeupdate':
+              console.log('------ Video event : ' + e.type);
+              console.log('---------- Current Time : ' + mockVideo.currentTime);
+            break;
+          }
         }.bind(mockVideo);
         for (var p in mockVideo) {
           if (p.indexOf('on') == 0) {
@@ -545,7 +512,7 @@
               case 'mouseout':
               case 'mouseleave':
               case 'progress':
-              case 'timeupdate':
+              // case 'timeupdate':
                 break;
               default:
                 mockVideo.addEventListener(p, mockVideo);
@@ -561,7 +528,7 @@
             'http://download.wavetlan.com/SVV/Media/HTTP/H264/Other_Media/H264_test5_voice_mp4_480x360.mp4'
           ];
           var m = castingMsgTemplate.get().load;
-          m.url = videos[1];
+          m.url = videos[0];
           mockPresentation._controller.castMsg(m);
         }.bind(mockPresentation._controller);
 

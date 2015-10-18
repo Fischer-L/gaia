@@ -474,6 +474,33 @@ suite('fling-player/fling_player', function() {
       );
     });
 
+    test('should handle timeupdate event', function () {
+      var spyOnUpdate = sinon.spy(flingPlayer, '_updateControlPanel');
+      var spyOnWriteTimeBar = sinon.spy(flingPlayer, 'moveTimeBar');
+      var spyOnWriteTimeInfo = sinon.spy(flingPlayer, 'writeTimeInfo');
+      var current = flingPlayer._player.getRoundedCurrentTime();
+      var bufEnd = mockVideo.buffered.end(0);
+
+      mockVideo.fireEvent(new Event('timeupdate'));
+
+      assert.isTrue(
+        spyOnUpdate.calledOnce,
+        'Not update control panel'
+      );
+      assert.isTrue(
+        spyOnWriteTimeBar.withArgs('elapsed', current).calledOnce,
+        'Not move the elapsed time bar'
+      );
+      assert.isTrue(
+        spyOnWriteTimeBar.withArgs('buffered', bufEnd).calledOnce,
+        'Not move the buffered time bar'
+      );
+      assert.isTrue(
+        spyOnWriteTimeInfo.withArgs('elapsed', current).calledOnce,
+        'Not move the elapsed time info'
+      );
+    });
+
     test('should handle waiting event', function () {
       var spyOnShowLoading = sinon.spy(flingPlayer, 'showLoading');
 
@@ -491,18 +518,12 @@ suite('fling-player/fling_player', function() {
 
     test('should handle playing event', function () {
       var spyOnShowLoading = sinon.spy(flingPlayer, 'showLoading');
-      var spyOnUpdate = sinon.spy(flingPlayer,
-                                  '_startUpdateControlPanelContinuously');
 
       mockVideo.fireEvent(new Event('playing'));
 
       assert.isTrue(
         spyOnShowLoading.withArgs(false).calledOnce,
         'Not hide loading UI'
-      );
-      assert.isTrue(
-        spyOnUpdate.calledOnce,
-        'Not start updating control panel'
       );
       assert.isTrue(
         spyOnReportStatus.withArgs('buffered', data).calledOnce,
@@ -525,18 +546,12 @@ suite('fling-player/fling_player', function() {
 
     test('should handle ended event', function () {
       var spyOnShowControlPanel = sinon.spy(flingPlayer, 'showControlPanel');
-      var spyOnStop = sinon.spy(flingPlayer,
-                                '_stopUpdateControlPanelContinuously');
 
       mockVideo.fireEvent(new Event('ended'));
 
       assert.isTrue(
         spyOnShowControlPanel.withArgs().calledOnce,
         'Not show control panel'
-      );
-      assert.isTrue(
-        spyOnStop.calledOnce,
-        'Not stop updating control panel'
       );
       assert.isTrue(
         spyOnReportStatus.withArgs('stopped', data).calledOnce,
@@ -546,18 +561,12 @@ suite('fling-player/fling_player', function() {
 
     test('should handle pause event', function () {
       var spyOnShowControlPanel = sinon.spy(flingPlayer, 'showControlPanel');
-      var spyOnStop = sinon.spy(flingPlayer,
-                                '_stopUpdateControlPanelContinuously');
 
       mockVideo.fireEvent(new Event('pause'));
 
       assert.isTrue(
         spyOnShowControlPanel.withArgs(true).calledOnce,
         'Not show control panel'
-      );
-      assert.isTrue(
-        spyOnStop.calledOnce,
-        'Not stop updating control panel'
       );
       assert.isTrue(
         spyOnReportStatus.withArgs('stopped', data).calledOnce,
