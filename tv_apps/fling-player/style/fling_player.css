@@ -57,13 +57,11 @@ article, section, video {
   right: 19.5rem;
   bottom: 4rem;
   opacity: 1;
-  visibility: visible;
   transition: all 1s ease;
 }
 
 .control-panel.fade-out {
   opacity: 0;
-  visibility: hidden;
 }
 
 #video-time-progress {
