@@ -4,9 +4,9 @@
   var proto,
       noop = function () {},
       connectionState = {
-        connected : "connected",
-        closed : "closed",
-        terminated : "terminated"
+        connected : 'connected',
+        closed : 'closed',
+        terminated : 'terminated'
       };
 
   /**
