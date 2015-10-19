@@ -158,7 +158,7 @@ suite('fling-player/Connector', function() {
 
     function assertNotHandled() {
       assert.isFalse(
-        spy.withArgs(msg).calledOnce, 'Sould not handle remote message'
+        spy.withArgs(msg).calledOnce, 'Should not handle remote message'
       );
       assert.notEqual(
         connector._lastSeq, msg.seq, 'Should not update last received msg seq'
