@@ -56,13 +56,14 @@
     console.log('MockPresentationConnection#_open');
     this.state = connectionState.connected;
     if (typeof this.onstatechange == 'function') {
-      var e = new Event('statechange');
-      this.onstatechange(e);
+      this.onstatechange(new Event('statechange'));
     }
   };
 
   proto._receive = function (txt) {
-    if (this.state != connectionState.connected) return;
+    if (this.state != connectionState.connected) {
+      return;
+    }
 
     if (typeof this.onmessage == 'function') {
       var e = new Event('message', { bubbles : false, cancelable : false });
@@ -72,22 +73,24 @@
   };
 
   proto.close = function () {
-    if (this.state != connectionState.connected) return;
+    if (this.state != connectionState.connected) {
+      return;
+    }
 
     this.state = connectionState.closed;
     if (typeof this.onstatechange == 'function') {
-      var e = new Event('statechange');
-      this.onstatechange(e);
+      this.onstatechange(new Event('statechange'));
     }
   };
 
   proto.terminate = function () {
-    if (this.state != connectionState.connected) return;
+    if (this.state != connectionState.connected) {
+      return;
+    }
 
     this.state = connectionState.terminated;
     if (typeof this.onstatechange == 'function') {
-      var e = new Event('statechange');
-      this.onstatechange(e);
+      this.onstatechange(new Event('statechange'));
     }
   };
 
@@ -95,12 +98,10 @@
 
 
   function MockPresentationReceiver() {
-
     this.onconnectionavailable;
     this._connection; // MockPresentationConnection
     this._reject;
     this._resolve;
-
     this._connPromise = new Promise((resolve, reject) => {
       this._reject = reject;
       this._resolve = resolve;
@@ -113,9 +114,8 @@
     console.log('MockPresentationReceiver#_start');
     this._start = noop;
     this._connection = connection;
-    if (typeof this.onconnectionavailable == 'function'){
-      var e = new Event('connectionavailable');
-      this.onconnectionavailable(e);
+    if (typeof this.onconnectionavailable == 'function') {
+      this.onconnectionavailable(new Event('connectionavailable'));
     }
     this._resolve(this._connection);
   };
