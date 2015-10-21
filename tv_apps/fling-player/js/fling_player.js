@@ -1,6 +1,8 @@
 /* global VideoPlayer, Connector, mDBG, KeyNavigationAdapter,
           SimpleKeyNavigation
  */
+ /* global MockVideoElement, MockPresentation, castingMsgTemplate
+ */
 (function(exports) {
   'use strict';
 
@@ -62,9 +64,6 @@
     this._elapsedTime = $(uiID.elapsedTime);
     this._durationTime = $(uiID.durationTime);
 
-    this._initSession();
-    this._initPlayer();
-
     this._keyNav = new SimpleKeyNavigation();
     this._keyNav.start(
       [this._backwardButton, this._playButton, this._forwardButton],
@@ -94,20 +93,21 @@
         this._player.release();
       }
     });
+
+    this._initPlayer();
+    this._initSession();
   };
 
   proto._initSession = function () {
     this._connector.init();
-
     this._connector.on('loadRequest', this.onLoadRequest.bind(this));
     this._connector.on('playRequest', this.onPlayRequest.bind(this));
-    this._connector.on('pauseRequest', this.onPauseRequest.bind(this));
     this._connector.on('seekRequest', this.onSeekRequest.bind(this));
+    this._connector.on('pauseRequest', this.onPauseRequest.bind(this));
   };
 
   proto._initPlayer = function () {
     this._player.init();
-
     this._player.addEventListener('loadedmetadata', this);
     this._player.addEventListener('timeupdate', this);
     this._player.addEventListener('waiting', this);
@@ -476,7 +476,7 @@
   window.addEventListener('load', function() {
 
     // TMP DEL
-    if (mDBG.isDBG()) {
+    if (mDBG.isDBG() && false) {
 
       var initForTest = function () {
 
@@ -496,7 +496,7 @@
           }
         }.bind(mockVideo);
         for (var p in mockVideo) {
-          if (p.indexOf('on') == 0) {
+          if (p.indexOf('on') === 0) {
             p = p.substr(2);
             switch (p) {
               case 'click':
@@ -526,7 +526,8 @@
           var videos = [
             'http://media.w3.org/2010/05/sintel/trailer.webm',
             'http://video.webmfiles.org/elephants-dream.webm',
-            'http://download.wavetlan.com/SVV/Media/HTTP/H264/Other_Media/H264_test5_voice_mp4_480x360.mp4'
+            'http://download.wavetlan.com/SVV/Media/HTTP/H264/Other_Media/' +
+               'H264_test5_voice_mp4_480x360.mp4'
           ];
           var m = castingMsgTemplate.get().load;
           m.url = videos[0];
