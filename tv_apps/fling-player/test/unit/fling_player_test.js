@@ -81,7 +81,7 @@ suite('fling-player/fling_player', function() {
       new Connector(mockPresentation)
     );
 
-    mockPresentation._controller.start();
+    mockPresentation.mInit();
     setTimeout(() => { // Presentation start is async so let's wait a little bit
       flingPlayer.init();
       done();
@@ -617,7 +617,7 @@ suite('fling-player/fling_player', function() {
       var spyOnResetUI = sinon.spy(flingPlayer, 'resetUI');
       var spyOnShowLoadingSpy = sinon.spy(flingPlayer, 'showLoading');
 
-      mockPresentation._controller.castMsg(msg.load);
+      mockPresentation.mCastMsgToReceiver(msg.load);
 
       assert.isTrue(
         spyOnPlayerLoad.withArgs(msg.load.url).calledOnce,
@@ -640,7 +640,7 @@ suite('fling-player/fling_player', function() {
     test('should handle play request', function () {
       var spyOnPlay = sinon.spy(flingPlayer, 'play');
 
-      mockPresentation._controller.castMsg(msg.play);
+      mockPresentation.mCastMsgToReceiver(msg.play);
 
       assert.isTrue(
         spyOnPlay.calledOnce,
@@ -651,7 +651,7 @@ suite('fling-player/fling_player', function() {
     test('should handle pause request', function () {
       var spyOnPause = sinon.spy(flingPlayer, 'pause');
 
-      mockPresentation._controller.castMsg(msg.pause);
+      mockPresentation.mCastMsgToReceiver(msg.pause);
 
       assert.isTrue(
         spyOnPause.calledOnce,
@@ -662,7 +662,7 @@ suite('fling-player/fling_player', function() {
     test('should handle seek request', function () {
       var spyOnSeek = sinon.spy(flingPlayer, 'seek');
 
-      mockPresentation._controller.castMsg(msg.seek);
+      mockPresentation.mCastMsgToReceiver(msg.seek);
 
       assert.isTrue(
         spyOnSeek.withArgs(msg.seek.time).calledOnce,
