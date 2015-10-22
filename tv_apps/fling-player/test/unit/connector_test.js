@@ -16,7 +16,7 @@ suite('fling-player/Connector', function() {
     var timer;
     presentation = new MockPresentation();
     connector = new Connector(presentation);
-    presentation._controller.start();
+    presentation.mInit();
     connector.init();
 
     this.timeout(200);
@@ -28,14 +28,14 @@ suite('fling-player/Connector', function() {
     });
   });
 
-  test('should send message', function () {
+  test('sendMsg()', function () {
     msg = castingMsgTemplate.get().ack;
     spy = sinon.spy(presentation.receiver._connection, 'send');
     connector.sendMsg(msg);
     assert.isTrue(spy.withArgs(JSON.stringify(msg)).calledOnce);
   });
 
-  suite('reply ack', function () {
+  suite('replyAck()', function () {
 
     setup(function () {
       msg = castingMsgTemplate.get().play;
@@ -58,9 +58,9 @@ suite('fling-player/Connector', function() {
     });
   });
 
-  suite('report status', function () {
+  suite('reportStatus()', function () {
 
-    function assertReportStatus() {
+    function assertReportStatus(spy, msg) {
       assert.isTrue(
         spy.withArgs(msg).calledOnce,
         'Not called once with specified msg arg'
@@ -79,42 +79,42 @@ suite('fling-player/Connector', function() {
       msg = castingMsgTemplate.get().statusBuffering;
       msg.seq = connector._msgSeq;
       connector.reportStatus(msg.status, { time : msg.time });
-      assertReportStatus();
+      assertReportStatus(spy, msg);
     });
 
     test('should report status of loaded', function () {
       msg = castingMsgTemplate.get().statusLoaded;
       msg.seq = connector._msgSeq;
       connector.reportStatus(msg.status, { time : msg.time });
-      assertReportStatus();
+      assertReportStatus(spy, msg);
     });
 
     test('should report status of buffered', function () {
       msg = castingMsgTemplate.get().statusBuffered;
       msg.seq = connector._msgSeq;
       connector.reportStatus(msg.status, { time : msg.time });
-      assertReportStatus();
+      assertReportStatus(spy, msg);
     });
 
     test('should report status of playing', function () {
       msg = castingMsgTemplate.get().statusPlaying;
       msg.seq = connector._msgSeq;
       connector.reportStatus(msg.status, { time : msg.time });
-      assertReportStatus();
+      assertReportStatus(spy, msg);
     });
 
     test('should report status of seeked', function () {
       msg = castingMsgTemplate.get().statusSeeked;
       msg.seq = connector._msgSeq;
       connector.reportStatus(msg.status, { time : msg.time });
-      assertReportStatus();
+      assertReportStatus(spy, msg);
     });
 
     test('should report status of stopped', function () {
       msg = castingMsgTemplate.get().statusStopped;
       msg.seq = connector._msgSeq;
       connector.reportStatus(msg.status, { time : msg.time });
-      assertReportStatus();
+      assertReportStatus(spy, msg);
     });
 
     test('should report status of error', function () {
@@ -124,7 +124,7 @@ suite('fling-player/Connector', function() {
         time : msg.time,
         error : msg.error
       });
-      assertReportStatus();
+      assertReportStatus(spy, msg);
     });
 
     test('should not report status of unknown', function () {
@@ -143,11 +143,11 @@ suite('fling-player/Connector', function() {
     });
   });
 
-  suite('handle remote request message', function () {
+  suite('handleRemoteMessage()', function () {
 
     var spyOnLoadRequest, spyOnPlayRequest, spyOnSeekRequest, spyOnPauseRequest;
 
-    function assertHandled() {
+    function assertHandled(spy, msg) {
       assert.isTrue(
         spy.withArgs(msg).calledOnce, 'Not hanlding remote message'
       );
@@ -156,7 +156,7 @@ suite('fling-player/Connector', function() {
       );
     }
 
-    function assertNotHandled() {
+    function assertNotHandled(spy, msg) {
       assert.isFalse(
         spy.withArgs(msg).calledOnce, 'Should not handle remote message'
       );
@@ -165,23 +165,21 @@ suite('fling-player/Connector', function() {
       );
     }
 
-    function assertRequestCallCount(
-      loadRequestCount, playRequestCount, seekRequestCount, pauseRequestCount
-    ) {
+    function assertRequestCallCount(callCounts = {}) {
       assert.equal(
-        spyOnLoadRequest.callCount, loadRequestCount,
+        spyOnLoadRequest.callCount, callCounts.loadRequestCount,
         'Wrong load request count'
       );
       assert.equal(
-        spyOnPlayRequest.callCount, playRequestCount,
+        spyOnPlayRequest.callCount, callCounts.playRequestCount,
         'Wrong play request count'
       );
       assert.equal(
-        spyOnSeekRequest.callCount, seekRequestCount,
+        spyOnSeekRequest.callCount, callCounts.seekRequestCount,
         'Wrong seek request count'
       );
       assert.equal(
-        spyOnPauseRequest.callCount, pauseRequestCount,
+        spyOnPauseRequest.callCount, callCounts.pauseRequestCount,
         'Wrong pause request count'
       );
     }
@@ -198,91 +196,136 @@ suite('fling-player/Connector', function() {
       connector.on('pauseRequest', spyOnPauseRequest);
     });
 
-    test('should handle load message', function () {
+    test('should fire loadRequest on message', function () {
       msg = castingMsgTemplate.get().load;
       msg.seq = connector._lastSeq + 1;
-      presentation._controller.castMsg(msg);
-      assertHandled();
-      assertRequestCallCount(1, 0, 0, 0);
+      presentation.mCastMsgToReceiver(msg);
+      assertHandled(spy, msg);
+      assertRequestCallCount({
+        loadRequestCount : 1,
+        playRequestCount : 0,
+        seekRequestCount : 0,
+        pauseRequestCount : 0
+      });
       assert.isTrue(spyOnLoadRequest.calledWithExactly({ url : msg.url }));
     });
 
-    test('should handle play message', function () {
+    test('should fire playRequest on play message', function () {
       msg = castingMsgTemplate.get().play;
       msg.seq = connector._lastSeq + 1;
-      presentation._controller.castMsg(msg);
-      assertHandled();
-      assertRequestCallCount(0, 1, 0, 0);
+      presentation.mCastMsgToReceiver(msg);
+      assertHandled(spy, msg);
+      assertRequestCallCount({
+        loadRequestCount : 0,
+        playRequestCount : 1,
+        seekRequestCount : 0,
+        pauseRequestCount : 0
+      });
       assert.isTrue(spyOnPlayRequest.calledWithExactly());
     });
 
-    test('should handle seek message', function () {
+    test('should fire seekRequest on seek message', function () {
       msg = castingMsgTemplate.get().seek;
       msg.seq = connector._lastSeq + 1;
-      presentation._controller.castMsg(msg);
-      assertHandled();
-      assertRequestCallCount(0, 0, 1, 0);
+      presentation.mCastMsgToReceiver(msg);
+      assertHandled(spy, msg);
+      assertRequestCallCount({
+        loadRequestCount : 0,
+        playRequestCount : 0,
+        seekRequestCount : 1,
+        pauseRequestCount : 0
+      });
       assert.isTrue(spyOnSeekRequest.calledWithExactly({ time : msg.time }));
     });
 
-    test('should handle pause message', function () {
+    test('should fire pauseRequest on pause message', function () {
       msg = castingMsgTemplate.get().pause;
       msg.seq = connector._lastSeq + 1;
-      presentation._controller.castMsg(msg);
-      assertHandled();
-      assertRequestCallCount(0, 0, 0, 1);
+      presentation.mCastMsgToReceiver(msg);
+      assertHandled(spy, msg);
+      assertRequestCallCount({
+        loadRequestCount : 0,
+        playRequestCount : 0,
+        seekRequestCount : 0,
+        pauseRequestCount : 1
+      });
       assert.isTrue(spyOnPauseRequest.calledWithExactly());
     });
 
     test('should handle but identify outdated msg seq', function () {
       msg = castingMsgTemplate.get().play;
       msg.seq = connector._lastSeq = 1;
-      presentation._controller.castMsg(msg);
-      assertHandled();
-      assertRequestCallCount(0, 0, 0, 0);
+      presentation.mCastMsgToReceiver(msg);
+      assertHandled(spy, msg);
+      assertRequestCallCount({
+        loadRequestCount : 0,
+        playRequestCount : 0,
+        seekRequestCount : 0,
+        pauseRequestCount : 0
+      });
     });
 
-    test('should not handle unknown message', function () {
+    test('should not fire unknown request message', function () {
       msg = castingMsgTemplate.get().pause;
       msg.type = 'unknown';
       msg.seq = connector._lastSeq + 1;
-      expect(() => presentation._controller.castMsg(msg))
+      expect(() => presentation.mCastMsgToReceiver(msg))
             .to.throw(/Unknown type of casting message/);
-      assertNotHandled();
-      assertRequestCallCount(0, 0, 0, 0);
+      assertNotHandled(spy, msg);
+      assertRequestCallCount({
+        loadRequestCount : 0,
+        playRequestCount : 0,
+        seekRequestCount : 0,
+        pauseRequestCount : 0
+      });
     });
 
     test('should not handle load message without url', function () {
       msg = castingMsgTemplate.get().load;
       delete msg.url;
       msg.seq = connector._lastSeq + 1;
-      expect(() => presentation._controller.castMsg(msg))
+      expect(() => presentation.mCastMsgToReceiver(msg))
             .to.throw(/Ilegal url/);
-      assertNotHandled();
-      assertRequestCallCount(0, 0, 0, 0);
+      assertNotHandled(spy, msg);
+      assertRequestCallCount({
+        loadRequestCount : 0,
+        playRequestCount : 0,
+        seekRequestCount : 0,
+        pauseRequestCount : 0
+      });
     });
 
-    test('should not handle seek message without time', function () {
+    test('should not fire seekRequest without seeking time', function () {
       msg = castingMsgTemplate.get().seek;
       delete msg.time;
       msg.seq = connector._lastSeq + 1;
-      expect(() => presentation._controller.castMsg(msg))
+      expect(() => presentation.mCastMsgToReceiver(msg))
             .to.throw(/Ilegal time/);
-      assertNotHandled();
-      assertRequestCallCount(0, 0, 0, 0);
+      assertNotHandled(spy, msg);
+      assertRequestCallCount({
+        loadRequestCount : 0,
+        playRequestCount : 0,
+        seekRequestCount : 0,
+        pauseRequestCount : 0
+      });
     });
 
-    test('should not handle seek message with NaN', function () {
+    test('should not fire seekRequest with seeking time of NaN', function () {
       msg = castingMsgTemplate.get().seek;
       msg.time = NaN;
       msg.seq = connector._lastSeq + 1;
-      expect(() => presentation._controller.castMsg(msg))
+      expect(() => presentation.mCastMsgToReceiver(msg))
             .to.throw(/Ilegal time/);
-      assertNotHandled();
-      assertRequestCallCount(0, 0, 0, 0);
+      assertNotHandled(spy, msg);
+      assertRequestCallCount({
+        loadRequestCount : 0,
+        playRequestCount : 0,
+        seekRequestCount : 0,
+        pauseRequestCount : 0
+      });
     });
 
-    test('should handle multiple messages at once', function () {
+    test('should fire multiple request messages at once', function () {
       var msgs = [
             castingMsgTemplate.get().load,
             castingMsgTemplate.get().pause,
@@ -292,9 +335,14 @@ suite('fling-player/Connector', function() {
       msgs[0].seq = ++lastSeq;
       msgs[1].seq = ++lastSeq;
       msgs[2].seq = ++lastSeq;
-      presentation._controller.castMsg(msgs);
+      presentation.mCastMsgToReceiver(msgs);
       assert.equal(spy.callCount, 3);
-      assertRequestCallCount(1, 1, 0, 1);
+      assertRequestCallCount({
+        loadRequestCount : 1,
+        playRequestCount : 1,
+        seekRequestCount : 0,
+        pauseRequestCount : 1
+      });
       assert.isTrue(spyOnLoadRequest.calledWithExactly({ url : msgs[0].url }));
     });
   });
