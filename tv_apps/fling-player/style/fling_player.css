@@ -94,11 +94,13 @@ article, section, video {
 
 #elapsed-time-bar {
   width: 0%;
+  top: 2.8rem;
   background: #71c9f0;
 }
 
 #buffered-time-bar {
   width: 0%;
+  top: 3.4rem;
   background: #fff;
 }
 
