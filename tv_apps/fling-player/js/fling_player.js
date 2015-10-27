@@ -476,7 +476,9 @@
   window.addEventListener('load', function() {
 
     // TMP DEL
-    if (mDBG.isDBG() && false) {
+    if (mDBG.isDBG() && 1) {
+
+      var env_testOnB2G = true;
 
       var initForTest = function () {
 
@@ -522,7 +524,7 @@
         }
 
         mockPresentation = new MockPresentation();
-        mockPresentation._controller.load = function () {
+        mockPresentation.mload = function () {
           var videos = [
             'http://media.w3.org/2010/05/sintel/trailer.webm',
             'http://video.webmfiles.org/elephants-dream.webm',
@@ -531,8 +533,8 @@
           ];
           var m = castingMsgTemplate.get().load;
           m.url = videos[0];
-          mockPresentation._controller.castMsg(m);
-        }.bind(mockPresentation._controller);
+          mockPresentation.mCastMsgToReceiver(m);
+        }.bind(mockPresentation);
 
         fp = new FlingPlayer(
           new VideoPlayer(mockVideo),
@@ -566,10 +568,11 @@
         script.onload = function () {
           --scripts.waited;
           if (!scripts.waited) {
+            console.log('scripts.waited = ' + scripts.waited);
             initForTest();
           }
         };
-        script.src = s;
+        script.src = env_testOnB2G ? 'js/' + s : s;
         document.head.appendChild(script);
       });
 
