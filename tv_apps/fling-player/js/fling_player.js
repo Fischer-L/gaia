@@ -478,7 +478,7 @@
     // TMP DEL
     if (mDBG.isDBG() && 1) {
 
-      var env_testOnB2G = true;
+      var env_testOnB2G = false;
 
       var initForTest = function () {
 
@@ -524,7 +524,7 @@
         }
 
         mockPresentation = new MockPresentation();
-        mockPresentation.mload = function () {
+        mockPresentation.mLoad = function () {
           var videos = [
             'http://media.w3.org/2010/05/sintel/trailer.webm',
             'http://video.webmfiles.org/elephants-dream.webm',
