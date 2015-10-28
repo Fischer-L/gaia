@@ -21,6 +21,7 @@ suite('fling-player/fling_player', function() {
       mockVideo,
       mockPresentation,
       loadingUI,
+      initialMsg,
       controlPanel,
       backwardButton,
       playButton,
@@ -35,39 +36,53 @@ suite('fling-player/fling_player', function() {
     loadingUI = document.createElement('div');
     loadingUI.id = 'loading-section';
     document.body.appendChild(loadingUI);
+    loadingUI = document.getElementById(loadingUI.id);
+
+    initialMsg = document.createElement('div');
+    initialMsg.id = 'initial-message-section';
+    document.body.appendChild(initialMsg);
+    initialMsg = document.getElementById(initialMsg.id);
 
     controlPanel = document.createElement('div');
     controlPanel.id = 'video-control-panel';
     controlPanel.classList.add('fade-out');
     document.body.appendChild(controlPanel);
+    controlPanel = document.getElementById(controlPanel.id);
 
     backwardButton = document.createElement('button');
     backwardButton.id = 'backward-button';
     document.body.appendChild(backwardButton);
+    backwardButton = document.getElementById(backwardButton.id);
 
     playButton = document.createElement('button');
     playButton.id = 'play-button';
     document.body.appendChild(playButton);
+    playButton = document.getElementById(playButton.id);
 
     forwardButton = document.createElement('button');
     forwardButton.id = 'forward-button';
     document.body.appendChild(forwardButton);
+    forwardButton = document.getElementById(forwardButton.id);
 
     bufferedTimeBar = document.createElement('div');
     bufferedTimeBar.id = 'buffered-time-bar';
     document.body.appendChild(bufferedTimeBar);
+    bufferedTimeBar = document.getElementById(bufferedTimeBar.id);
 
     elapsedTimeBar = document.createElement('div');
     elapsedTimeBar.id = 'elapsed-time-bar';
     document.body.appendChild(elapsedTimeBar);
+    elapsedTimeBar = document.getElementById(elapsedTimeBar.id);
 
     elapsedTime = document.createElement('div');
     elapsedTime.id = 'elapsed-time';
     document.body.appendChild(elapsedTime);
+    elapsedTime = document.getElementById(elapsedTime.id);
 
     durationTime = document.createElement('div');
     durationTime.id = 'duration-time';
     document.body.appendChild(durationTime);
+    durationTime = document.getElementById(durationTime.id);
 
     mockPresentation = new MockPresentation();
 
@@ -129,6 +144,34 @@ suite('fling-player/fling_player', function() {
       loadingUI.hidden = false;
       flingPlayer.showLoading(false);
       assert.equal(loadingUI.hidden, true);
+    });
+
+    test('should show initial message', function () {
+      initialMsg.classList.add('fade-out');
+      flingPlayer.showInitialMessage(true);
+      assert.isFalse(initialMsg.classList.contains('fade-out'));
+    });
+
+    test('should show initial message for the min duration', function (done) {
+      var minDuration = flingPlayer.INITIAL_MSG_MIN_DISPLAY_TIME_MS;
+      initialMsg.classList.add('fade-out');
+      flingPlayer.showInitialMessage(true);
+      flingPlayer.showInitialMessage(false);
+
+      setTimeout(() => {
+        assert.isFalse(
+          initialMsg.classList.contains('fade-out'),
+          'Not show initial message for the min duration'
+        );
+      }, minDuration / 2);
+
+      setTimeout(() => {
+        assert.isTrue(
+          initialMsg.classList.contains('fade-out'),
+          'Not hide initial message after the min duration'
+        );
+        done();
+      }, minDuration);
     });
 
     test('should set play button to palying state', function () {

@@ -17,7 +17,7 @@
   MockPresentationConnection.prototype = {
 
     mOpen : function () {
-      console.log('MockPresentationConnection#mOpen');
+      // console.log('MockPresentationConnection#mOpen');
       this.state = connectionState.connected;
       if (typeof this.onstatechange == 'function') {
         this.onstatechange(new Event('statechange'));
@@ -76,7 +76,7 @@
 
     mInit : function (connection) {
       if (!this._inited) {
-        console.log('MockPsentationReceiver#mInit');
+        // console.log('MockPsentationReceiver#mInit');
         this._inited = true;
         this._connection = connection;
         if (typeof this.onconnectionavailable == 'function') {
@@ -102,7 +102,7 @@
 
     mInit : function () {
       if (!this._inited) {
-        console.log('MockPresentation#mInit');
+        // console.log('MockPresentation#mInit');
         this._inited = true;
         this.receiver.mInit(new MockPresentationConnection());
       }
