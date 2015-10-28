@@ -44,11 +44,33 @@ article, section, video {
 }
 
 #loading-section span{
-  color: white;
+  color: #fff;
   line-height: 5rem;
   font-size: 2.4rem;
   font-style: italic;
   display: inline-block;
+}
+
+#initial-message-section {
+  width: auto;
+  height: 11rem;
+  line-height: 11rem;
+  border-radius: 5.5rem;
+  padding: 0 6rem;
+  top: auto;
+  bottom: 30rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  color: #fff;
+  font-size: 5rem;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 1;
+  transition: all 1s ease;
+}
+
+#initial-message-section.fade-out {
+  opacity: 0;
 }
 
 .control-panel {

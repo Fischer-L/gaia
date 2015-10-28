@@ -11,6 +11,7 @@
   var uiID = {
     player : 'player',
     loadingUI : 'loading-section',
+    initialMsg : 'initial-message-section',
     controlPanel : 'video-control-panel',
     backwardButton : 'backward-button',
     playButton : 'play-button',
@@ -46,6 +47,7 @@
   proto.SEEK_ON_LONG_KEY_PRESS_MS = 5000;
   proto.SEEK_ON_KEY_PRESS_NORMAL_STEP_SEC = 10;
   proto.SEEK_ON_KEY_PRESS_LARGE_STEP_SEC = 30;
+  proto.INITIAL_MSG_MIN_DISPLAY_TIME_MS = 2000;
 
   proto.init = function () {
 
@@ -53,8 +55,10 @@
     this._seekOnKeyPressDirection = null; // 'backward' or 'forward'
     this._seekOnKeyPressStartTime = null; // in ms
     this._hideControlsTimer = null;
+    this._initialMsgStartTime = null; // in ms
 
     this._loadingUI = $(uiID.loadingUI);
+    this._initialMsg = $(uiID.initialMsg);
     this._controlPanel = $(uiID.controlPanel);
     this._backwardButton = $(uiID.backwardButton);
     this._playButton = $(uiID.playButton);
@@ -130,6 +134,23 @@
 
   proto.showLoading = function (loading) {
     this._loadingUI.hidden = !loading;
+  };
+
+  proto.showInitialMessage = function (bool) {
+    if (bool) {
+      this._initialMsgStartTime = (new Date()).getTime();
+      this._initialMsg.classList.remove('fade-out');
+    } else {
+      var displayDuration = (new Date()).getTime() - this._initialMsgStartTime;
+      var gap = this.INITIAL_MSG_MIN_DISPLAY_TIME_MS - displayDuration;
+      // Make sure that the initial message has beed displayed
+      // for at least the min secs
+      if (gap > 0) {
+        setTimeout(() => this.showInitialMessage(false), gap);
+      } else {
+        this._initialMsg.classList.add('fade-out');
+      }
+    }
   };
 
   /**
@@ -358,7 +379,7 @@
 
       case 'playing':
         this.showLoading(false);
-        // TODO: Hide 'Starting video cast from ...'
+        this.showInitialMessage(false);
         this._connector.reportStatus('buffered', data);
         this._connector.reportStatus('playing', data);
       break;
@@ -390,7 +411,7 @@
   proto.onLoadRequest = function (e) {
     this.resetUI();
     this.showLoading(true);
-    // TODO: Diplay 'Starting video cast from ...'
+    this.showInitialMessage(true);
     this._player.load(e.url);
     this.play();
   };
@@ -532,7 +553,7 @@
                'H264_test5_voice_mp4_480x360.mp4'
           ];
           var m = castingMsgTemplate.get().load;
-          m.url = videos[0];
+          m.url = videos[2];
           mockPresentation.mCastMsgToReceiver(m);
         }.bind(mockPresentation);
 
