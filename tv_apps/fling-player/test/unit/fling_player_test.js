@@ -17,9 +17,7 @@ requireApp('fling-player/js/fling_player.js');
 
 suite('fling-player/fling_player', function() {
 
-  var flingPlayer,
-      mockVideo,
-      mockPresentation,
+  var videoPlayer, connector, flingPlayer, mockVideo, mockPresentation,
       loadingUI,
       initialMsg,
       controlPanel,
@@ -85,26 +83,24 @@ suite('fling-player/fling_player', function() {
     durationTime = document.getElementById(durationTime.id);
 
     mockPresentation = new MockPresentation();
-
-    mockVideo = new MockVideoElement({
-      duration : 600,
-      currentTime : 0
-    });
-
-    flingPlayer = new FlingPlayer(
-      new VideoPlayer(mockVideo),
-      new Connector(mockPresentation)
-    );
+    mockVideo = new MockVideoElement({duration : 600, currentTime : 0});
+    connector = new Connector(mockPresentation);
+    videoPlayer = new VideoPlayer(mockVideo);
+    flingPlayer = new FlingPlayer(videoPlayer, connector);
 
     mockPresentation.mInit();
-    setTimeout(() => { // Presentation start is async so let's wait a little bit
-      flingPlayer.init();
+    flingPlayer.init();
+    connector.on('connected', () => {
       done();
-    }, 200);
+    });
+    // The default system timeout is 10000ms.
+    // Too long and not necessary so shorten it.
+    this.timeout(500);
   });
 
   teardown(function() {
     document.body.removeChild(loadingUI);
+    document.body.removeChild(initialMsg);
     document.body.removeChild(controlPanel);
     document.body.removeChild(backwardButton);
     document.body.removeChild(playButton);
@@ -115,7 +111,7 @@ suite('fling-player/fling_player', function() {
     document.body.removeChild(durationTime);
   });
 
-  suite('UI handling', function () {
+  suite('UI handling', function () { //return; // TMP
 
     test('should reset UI', function (done) {
       playButton.setAttribute('data-icon', 'fling-player-pause');
@@ -124,26 +120,26 @@ suite('fling-player/fling_player', function() {
 
       flingPlayer.resetUI();
 
-      setTimeout(() => {
+      requestAnimationFrame(() => {
         assert.equal(playButton.getAttribute('data-icon'), 'fling-player-play');
         assert.equal(elapsedTime.textContent, '00:00', 'elapsedTime');
         assert.equal(durationTime.textContent, '00:00', 'durationTime');
         assert.equal(elapsedTimeBar.style.width, '0%', 'elapsedTimeBar');
         assert.equal(bufferedTimeBar.style.width, '0%', 'bufferedTimeBar');
         done();
-      }, 1000);
+      });
     });
 
     test('should show loading UI', function () {
       loadingUI.hidden = true;
       flingPlayer.showLoading(true);
-      assert.equal(loadingUI.hidden, false);
+      assert.isFalse(loadingUI.hidden);
     });
 
     test('should hide loading UI', function () {
       loadingUI.hidden = false;
       flingPlayer.showLoading(false);
-      assert.equal(loadingUI.hidden, true);
+      assert.isTrue(loadingUI.hidden);
     });
 
     test('should show initial message', function () {
@@ -152,87 +148,91 @@ suite('fling-player/fling_player', function() {
       assert.isFalse(initialMsg.classList.contains('fade-out'));
     });
 
-    test('should show initial message for the min duration', function (done) {
-      var minDuration = flingPlayer.INITIAL_MSG_MIN_DISPLAY_TIME_MS;
-      initialMsg.classList.add('fade-out');
-      flingPlayer.showInitialMessage(true);
-      flingPlayer.showInitialMessage(false);
+    test('should show initial message for the min duration and then hide it',
+         function (done) {
+           var minDuration = flingPlayer.INITIAL_MSG_MIN_DISPLAY_TIME_MS;
+           initialMsg.classList.add('fade-out');
+           flingPlayer.showInitialMessage(true);
+           flingPlayer.showInitialMessage(false);
 
-      setTimeout(() => {
-        assert.isFalse(
-          initialMsg.classList.contains('fade-out'),
-          'Not show initial message for the min duration'
-        );
-      }, minDuration / 2);
+           setTimeout(() => {
+             assert.isFalse(
+               initialMsg.classList.contains('fade-out'),
+               'Not show initial message for the min duration'
+             );
+           }, minDuration / 2);
 
-      setTimeout(() => {
-        assert.isTrue(
-          initialMsg.classList.contains('fade-out'),
-          'Not hide initial message after the min duration'
-        );
-        done();
-      }, minDuration);
-    });
+           setTimeout(() => {
+             assert.isTrue(
+               initialMsg.classList.contains('fade-out'),
+               'Not hide initial message after the min duration'
+             );
+             done();
+           }, minDuration + 1);
+         }
+    );
 
     test('should set play button to palying state', function () {
-      playButton.setAttribute('data-icon', 'fling-player-playing');
+      playButton.setAttribute('data-icon', 'unknown-state');
       flingPlayer.setPlayButtonState('playing');
       assert.equal(playButton.getAttribute('data-icon'), 'fling-player-pause');
     });
 
     test('should set play button to paused state', function () {
-      playButton.setAttribute('data-icon', 'fling-player-pause');
+      playButton.setAttribute('data-icon', 'unknown-state');
       flingPlayer.setPlayButtonState('paused');
       assert.equal(playButton.getAttribute('data-icon'), 'fling-player-play');
     });
 
-    test('should show control panel', function (done) {
+    test('should show control panel constantly', function (done) {
       controlPanel.classList.add('fade-out');
       flingPlayer.showControlPanel();
 
       assert.isFalse(
-        controlPanel.classList.contains('fade-out'), 'Class not updated'
+        controlPanel.classList.contains('fade-out'), 'Not show control panel'
       );
       assert.isFalse(
-        flingPlayer.isControlPanelHiding(), 'Wrong isControlPanelHiding'
+        flingPlayer.isControlPanelHiding(), 'Not report correct state'
       );
 
       setTimeout(() => {
         assert.isFalse(
           controlPanel.classList.contains('fade-out'),
-          'Class should not be updated afterwards'
+          'Not show control panel constantly'
         );
         assert.isFalse(
           flingPlayer.isControlPanelHiding(),
-          'Wrong isControlPanelHiding afterwards'
+          'Not report correct state constantly'
         );
         done();
-      }, flingPlayer.CONTROL_PANEL_HIDE_DELAY_MS + 200);
+      }, flingPlayer.CONTROL_PANEL_HIDE_DELAY_MS + 1);
     });
 
-    test('should show control panel and hide automatically later',
+    test('should show control panel and hide it automatically later',
          function (done) {
             controlPanel.classList.add('fade-out');
             flingPlayer.showControlPanel(true);
 
             assert.isFalse(
-              controlPanel.classList.contains('fade-out'), 'Class not updated'
+              controlPanel.classList.contains('fade-out'),
+              'Not show control panel'
             );
             assert.isFalse(
-              flingPlayer.isControlPanelHiding(), 'Wrong isControlPanelHiding'
+              flingPlayer.isControlPanelHiding(),
+              'Not report correct state'
             );
 
             setTimeout(() => {
               assert.isTrue(
                 controlPanel.classList.contains('fade-out'),
-                'Class should be updated afterwards'
+                'Not hide control panel automatically later'
               );
               assert.isTrue(
                 flingPlayer.isControlPanelHiding(),
-                'Wrong isControlPanelHiding afterwards'
+                'Not report correct state later'
               );
               done();
-            }, flingPlayer.CONTROL_PANEL_HIDE_DELAY_MS + 200);
+            }, flingPlayer.CONTROL_PANEL_HIDE_DELAY_MS + 1);
           }
     );
 
@@ -241,10 +241,10 @@ suite('fling-player/fling_player', function() {
       flingPlayer.hideControlPanel(true);
 
       assert.isTrue(
-        controlPanel.classList.contains('fade-out'), 'Class not updated'
+        controlPanel.classList.contains('fade-out'), 'Not hide control panel'
       );
       assert.isTrue(
-        flingPlayer.isControlPanelHiding(), 'Wrong isControlPanelHiding'
+        flingPlayer.isControlPanelHiding(), 'Not report correct state'
       );
     });
 
@@ -254,24 +254,24 @@ suite('fling-player/fling_player', function() {
 
       assert.isFalse(
         controlPanel.classList.contains('fade-out'),
-        'Class should be not updated'
+        'Should not hide control panel immediately'
       );
       assert.isFalse(
         flingPlayer.isControlPanelHiding(),
-        'Wrong isControlPanelHiding'
+        'Not report correct state'
       );
 
       setTimeout(() => {
         assert.isTrue(
           controlPanel.classList.contains('fade-out'),
-          'Class should be updated afterwards'
+          'Not hide control panel later'
         );
         assert.isTrue(
           flingPlayer.isControlPanelHiding(),
-          'Wrong isControlPanelHiding afterwards'
+          'Not report correct state later'
         );
         done();
-      }, flingPlayer.CONTROL_PANEL_HIDE_DELAY_MS + 200);
+      }, flingPlayer.CONTROL_PANEL_HIDE_DELAY_MS + 1);
     });
 
     test('should move time bar', function (done) {
@@ -281,7 +281,7 @@ suite('fling-player/fling_player', function() {
       flingPlayer.moveTimeBar('elapsed', mockVideo.duration * 0.1);
       flingPlayer.moveTimeBar('buffered', mockVideo.duration * 0.1);
 
-      setTimeout(() => {
+      requestAnimationFrame(() => {
         assert.equal(
           elapsedTimeBar.style.width, '10%', 'Wrong elapsed time bar'
         );
@@ -289,7 +289,7 @@ suite('fling-player/fling_player', function() {
           bufferedTimeBar.style.width, '10%', 'Wrong buffered time bar'
         );
         done();
-      }, 1000);
+      });
     });
 
     test('should not move time bar with negative time', function (done) {
@@ -299,7 +299,7 @@ suite('fling-player/fling_player', function() {
       flingPlayer.moveTimeBar('elapsed', -1);
       flingPlayer.moveTimeBar('buffered', -1);
 
-      setTimeout(() => {
+      requestAnimationFrame(() => {
         assert.equal(
           elapsedTimeBar.style.width, '10%', 'Wrong elapsed time bar'
         );
@@ -307,7 +307,7 @@ suite('fling-player/fling_player', function() {
           bufferedTimeBar.style.width, '10%', 'Wrong buffered time bar'
         );
         done();
-      }, 1000);
+      });
     });
 
     test('should not move time bar with NaN time', function (done) {
@@ -317,7 +317,7 @@ suite('fling-player/fling_player', function() {
       flingPlayer.moveTimeBar('elapsed', NaN);
       flingPlayer.moveTimeBar('buffered', NaN);
 
-      setTimeout(() => {
+      requestAnimationFrame(() => {
         assert.equal(
           elapsedTimeBar.style.width, '10%', 'Wrong elapsed time bar'
         );
@@ -325,7 +325,7 @@ suite('fling-player/fling_player', function() {
           bufferedTimeBar.style.width, '10%', 'Wrong buffered time bar'
         );
         done();
-      }, 1000);
+      });
     });
 
     test('should not move time bar with time bigger than duration',
@@ -336,7 +336,7 @@ suite('fling-player/fling_player', function() {
             flingPlayer.moveTimeBar('elapsed', mockVideo.duration + 1);
             flingPlayer.moveTimeBar('buffered', mockVideo.duration + 1);
 
-            setTimeout(() => {
+            requestAnimationFrame(() => {
               assert.equal(
                 elapsedTimeBar.style.width, '10%', 'Wrong elapsed time bar'
               );
@@ -344,11 +344,11 @@ suite('fling-player/fling_player', function() {
                 bufferedTimeBar.style.width, '10%', 'Wrong buffered time bar'
               );
               done();
-            }, 1000);
+            });
          }
     );
 
-    test('should write time info with the right format', function () { // TODO
+    test('should write elapsed time info with the right format', function () {
       var times = [
         {
           secs : 0,
@@ -395,26 +395,57 @@ suite('fling-player/fling_player', function() {
       });
     });
 
-    test('should write elapsed time info', function () {
-      var time = 60 * 25 + 5;
-      var info = '25:05';
-      mockVideo.duration = time + 1;
-      flingPlayer.writeTimeInfo('elapsed', time);
-      assert.equal(elapsedTime.textContent, info);
-    });
+    test('should write duration time info with the right format', function () {
+      var times = [
+        {
+          secs : 0,
+          format : '00:00'
+        },
+        {
+          secs : 5,
+          format : '00:05'
+        },
+        {
+          secs : 59,
+          format : '00:59'
+        },
+        {
+          secs : 60 * 1 + 5,
+          format : '01:05'
+        },
+        {
+          secs : 60 * 59 + 59,
+          format : '59:59'
+        },
+        {
+          secs : 3600 * 1 + 60 * 1 + 5,
+          format : '01:01:05'
+        },
+        {
+          secs : 3600 * 10 + 60 * 59 + 59,
+          format : '10:59:59'
+        },
+        {
+          secs : 3600 * 99 + 60 * 59 + 59,
+          format : '99:59:59'
+        },
+        {
+          secs : flingPlayer.MAX_DISPLAYED_VIDEO_TIME_SEC + 1,
+          format : '99:59:59'
+        }
+      ];
 
-    test('should write duration time info', function () {
-      var info = '25:05';
-      mockVideo.duration = 60 * 25 + 5;
-      flingPlayer.writeTimeInfo('duration', mockVideo.duration);
-      assert.equal(durationTime.textContent, info);
+      times.forEach((t) => {
+        mockVideo.duration = t.secs;
+        flingPlayer.writeTimeInfo('duration', mockVideo.duration);
+        assert.equal(durationTime.textContent, t.format);
+      });
     });
-
 
     test('should not write illegal time', function () {
       var illegals;
-      mockVideo.duration = 10;
 
+      mockVideo.duration = 10;
       flingPlayer.writeTimeInfo('elapsed', mockVideo.duration);
       flingPlayer.writeTimeInfo('duration', mockVideo.duration);
 
@@ -430,10 +461,10 @@ suite('fling-player/fling_player', function() {
     });
   });
 
-  suite('Video handling', function () {
+  suite('Video handling', function () { //return; // TMP
 
     test('should play', function () {
-      var spyOnPlay = sinon.spy(flingPlayer._player, 'play');
+      var spyOnPlay = sinon.spy(videoPlayer, 'play');
       var spyOnBtn = sinon.spy(flingPlayer, 'setPlayButtonState');
 
       flingPlayer.play();
@@ -446,7 +477,7 @@ suite('fling-player/fling_player', function() {
     });
 
     test('should pause', function () {
-      var spyOnPause = sinon.spy(flingPlayer._player, 'pause');
+      var spyOnPause = sinon.spy(videoPlayer, 'pause');
       var spyOnBtn = sinon.spy(flingPlayer, 'setPlayButtonState');
 
       flingPlayer.pause();
@@ -460,7 +491,7 @@ suite('fling-player/fling_player', function() {
 
     test('should seek', function () {
       var time = 30;
-      var spyOnSeek = sinon.spy(flingPlayer._player, 'seek');
+      var spyOnSeek = sinon.spy(videoPlayer, 'seek');
       var spyOnMoveTimeBar = sinon.spy(flingPlayer, 'moveTimeBar');
       var spyOnWriteTimeInfo = sinon.spy(flingPlayer, 'writeTimeInfo');
       var spyOnShowControlPanel = sinon.spy(flingPlayer, 'showControlPanel');
@@ -486,7 +517,7 @@ suite('fling-player/fling_player', function() {
     });
   });
 
-  suite('Video event handling', function () {
+  suite('Video event handling', function () { //return; // TMP
 
     var data, spyOnReportStatus;
 
@@ -518,11 +549,11 @@ suite('fling-player/fling_player', function() {
     });
 
     test('should handle timeupdate event', function () {
-      var spyOnUpdate = sinon.spy(flingPlayer, '_updateControlPanel');
-      var spyOnWriteTimeBar = sinon.spy(flingPlayer, 'moveTimeBar');
-      var spyOnWriteTimeInfo = sinon.spy(flingPlayer, 'writeTimeInfo');
-      var current = flingPlayer._player.getRoundedCurrentTime();
       var bufEnd = mockVideo.buffered.end(0);
+      var current = videoPlayer.getRoundedCurrentTime();
+      var spyOnWriteTimeBar = sinon.spy(flingPlayer, 'moveTimeBar');
+      var spyOnUpdate = sinon.spy(flingPlayer, '_updateControlPanel');
+      var spyOnWriteTimeInfo = sinon.spy(flingPlayer, 'writeTimeInfo');
 
       mockVideo.fireEvent(new Event('timeupdate'));
 
@@ -561,12 +592,18 @@ suite('fling-player/fling_player', function() {
 
     test('should handle playing event', function () {
       var spyOnShowLoading = sinon.spy(flingPlayer, 'showLoading');
+      var spyOnShowInitialMessage =
+              sinon.spy(flingPlayer, 'showInitialMessage');
 
       mockVideo.fireEvent(new Event('playing'));
 
       assert.isTrue(
         spyOnShowLoading.withArgs(false).calledOnce,
         'Not hide loading UI'
+      );
+      assert.isTrue(
+        spyOnShowInitialMessage.withArgs(false).calledOnce,
+        'Not hide initial msg'
       );
       assert.isTrue(
         spyOnReportStatus.withArgs('buffered', data).calledOnce,
@@ -595,12 +632,18 @@ suite('fling-player/fling_player', function() {
 
     test('should handle ended event', function () {
       var spyOnShowControlPanel = sinon.spy(flingPlayer, 'showControlPanel');
+      var spyOnSetPlayButtonState =
+              sinon.spy(flingPlayer, 'setPlayButtonState');
 
       mockVideo.fireEvent(new Event('ended'));
 
       assert.isTrue(
         spyOnShowControlPanel.withArgs().calledOnce,
         'Not show control panel'
+      );
+      assert.isTrue(
+        spyOnSetPlayButtonState.withArgs('paused').calledOnce,
+        'Not set play button to paused state'
       );
       assert.isTrue(
         spyOnReportStatus.withArgs('stopped', data).calledOnce,
@@ -646,7 +689,7 @@ suite('fling-player/fling_player', function() {
     });
   });
 
-  suite('Remote request event handling', function () {
+  suite('Remote request event handling', function () { //return; // TMP
 
     var msg;
 
@@ -655,9 +698,9 @@ suite('fling-player/fling_player', function() {
     });
 
     test('should handle load request', function () {
-      var spyOnPlayerLoad = sinon.spy(flingPlayer._player, 'load');
       var spyOnPlay = sinon.spy(flingPlayer, 'play');
       var spyOnResetUI = sinon.spy(flingPlayer, 'resetUI');
+      var spyOnPlayerLoad = sinon.spy(videoPlayer, 'load');
       var spyOnShowLoadingSpy = sinon.spy(flingPlayer, 'showLoading');
 
       mockPresentation.mCastMsgToReceiver(msg.load);
