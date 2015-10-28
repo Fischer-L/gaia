@@ -12,10 +12,34 @@
    *        shall be independent to each other.
    * - type: String. Indicate the message type.
    * - other extra properties depending on the type
+   *
+   * For example, the message of loading request from a controller may be like:
+   * {
+   *    'seq': 3,
+   *    'type': 'load',
+   *    'url': 'http://www.example.com/foo.ogg'
+   * }
    */
   var castingMessage = {};
 
   castingMessage.type = Object.freeze({
+    /**
+     * Represent info of device.
+     * The extra message properties:
+     *   - deviceName: String. The device name.
+     */
+    info: {
+      name: 'info',
+      sanitizeMsg: function (msg) {
+
+        if (typeof msg.deviceName != 'string') {
+          throw new Error('Ilegal device name = ' + msg.deviceName +
+            ' in casting message of type = ' + this.name);
+        }
+        return msg;
+      }
+    },
+
     /**
      * Represent acknowledgement of message receiving.
      * The extra message properties:
