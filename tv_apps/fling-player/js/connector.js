@@ -36,7 +36,7 @@
       return;
     }
 
-    mDBG.log('Connector#init');
+    // mDBG.log('Connector#init');
     this._isInit = true;
 
     this._presentation.receiver.getConnection().then(
@@ -54,11 +54,12 @@
       return;
     }
 
-    mDBG.log('Connector#_initConnection');
-    mDBG.log('this._connection = ', connection);
+    // mDBG.log('Connector#_initConnection');
+    // mDBG.log('this._connection = ', connection);
+    this._connection = connection;
     this._isInitConnection = true;
     this.fire('connected');
-    this._connection = connection;
+
     this._connection.onmessage = this.onConnectionMessage.bind(this);
     this._connection.onstatechange = this.onConnectionStateChange.bind(this);
   };
@@ -72,8 +73,8 @@
       return;
     }
 
-    mDBG.log('Connector#sendMsg');
-    mDBG.log('msg = ', msg);
+    // mDBG.log('Connector#sendMsg');
+    // mDBG.log('msg = ', msg);
     this._connection.send(castingMessage.stringify(msg));
   };
 
@@ -82,7 +83,7 @@
       return;
     }
 
-    mDBG.log('Connector#replyACK');
+    // mDBG.log('Connector#replyACK');
 
     var reply = {
           'type': 'ack',
@@ -130,8 +131,8 @@
       return;
     }
 
-    mDBG.log('Connector#handleRemoteMessage');
-    mDBG.log('msg = ', msg);
+    // mDBG.log('Connector#handleRemoteMessage');
+    // mDBG.log('msg = ', msg);
 
     var err;
     try {
@@ -182,11 +183,11 @@
       return;
     }
 
-    mDBG.log('Connector#onConnectionMessage');
+    // mDBG.log('Connector#onConnectionMessage');
 
     var messages = castingMessage.parse(e.data);
 
-    mDBG.log('messages = ', messages);
+    // mDBG.log('messages = ', messages);
 
     messages.sort((a, b) => { // Make sure message sequence
       return a.seq - b.seq;
@@ -200,8 +201,8 @@
       return;
     }
 
-    mDBG.log('Connector#onConnectionStateChange');
-    mDBG.log('State = ', this._connection.state);
+    // mDBG.log('Connector#onConnectionStateChange');
+    // mDBG.log('State = ', this._connection.state);
     // TODO: How to do when presentation session is closed or terminated
   };
 

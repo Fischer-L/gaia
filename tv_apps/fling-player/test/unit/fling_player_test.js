@@ -17,7 +17,11 @@ requireApp('fling-player/js/fling_player.js');
 
 suite('fling-player/fling_player', function() {
 
-  var videoPlayer, connector, flingPlayer, mockVideo, mockPresentation,
+  var videoPlayer,
+      connector,
+      flingPlayer,
+      mockVideo,
+      mockPresentation,
       loadingUI,
       initialMsg,
       controlPanel,
@@ -30,57 +34,39 @@ suite('fling-player/fling_player', function() {
       durationTime;
 
   setup(function (done) {
-
-    loadingUI = document.createElement('div');
+    loadingUI = document.body.appendChild(document.createElement('div'));
     loadingUI.id = 'loading-section';
-    document.body.appendChild(loadingUI);
-    loadingUI = document.getElementById(loadingUI.id);
 
-    initialMsg = document.createElement('div');
+    initialMsg = document.body.appendChild(document.createElement('div'));
     initialMsg.id = 'initial-message-section';
-    document.body.appendChild(initialMsg);
-    initialMsg = document.getElementById(initialMsg.id);
+    initialMsg.classList.add('fade-out');
 
-    controlPanel = document.createElement('div');
+    controlPanel = document.body.appendChild(document.createElement('div'));
     controlPanel.id = 'video-control-panel';
     controlPanel.classList.add('fade-out');
-    document.body.appendChild(controlPanel);
-    controlPanel = document.getElementById(controlPanel.id);
 
-    backwardButton = document.createElement('button');
+    backwardButton = document.body.appendChild(
+      document.createElement('button')
+    );
     backwardButton.id = 'backward-button';
-    document.body.appendChild(backwardButton);
-    backwardButton = document.getElementById(backwardButton.id);
 
-    playButton = document.createElement('button');
+    playButton = document.body.appendChild(document.createElement('button'));
     playButton.id = 'play-button';
-    document.body.appendChild(playButton);
-    playButton = document.getElementById(playButton.id);
 
-    forwardButton = document.createElement('button');
+    forwardButton = document.body.appendChild(document.createElement('button'));
     forwardButton.id = 'forward-button';
-    document.body.appendChild(forwardButton);
-    forwardButton = document.getElementById(forwardButton.id);
 
-    bufferedTimeBar = document.createElement('div');
+    bufferedTimeBar = document.body.appendChild(document.createElement('div'));
     bufferedTimeBar.id = 'buffered-time-bar';
-    document.body.appendChild(bufferedTimeBar);
-    bufferedTimeBar = document.getElementById(bufferedTimeBar.id);
 
-    elapsedTimeBar = document.createElement('div');
+    elapsedTimeBar = document.body.appendChild(document.createElement('div'));
     elapsedTimeBar.id = 'elapsed-time-bar';
-    document.body.appendChild(elapsedTimeBar);
-    elapsedTimeBar = document.getElementById(elapsedTimeBar.id);
 
-    elapsedTime = document.createElement('div');
+    elapsedTime = document.body.appendChild(document.createElement('div'));
     elapsedTime.id = 'elapsed-time';
-    document.body.appendChild(elapsedTime);
-    elapsedTime = document.getElementById(elapsedTime.id);
 
-    durationTime = document.createElement('div');
+    durationTime = document.body.appendChild(document.createElement('div'));
     durationTime.id = 'duration-time';
-    document.body.appendChild(durationTime);
-    durationTime = document.getElementById(durationTime.id);
 
     mockPresentation = new MockPresentation();
     mockVideo = new MockVideoElement({duration : 600, currentTime : 0});
@@ -91,24 +77,13 @@ suite('fling-player/fling_player', function() {
     mockPresentation.mInit();
     flingPlayer.init();
     connector.on('connected', () => {
+      mockVideo.fireEvent(new Event('loadedmetadata'));
       done();
     });
-    // The default system timeout is 10000ms.
-    // Too long and not necessary so shorten it.
-    this.timeout(500);
   });
 
   teardown(function() {
-    document.body.removeChild(loadingUI);
-    document.body.removeChild(initialMsg);
-    document.body.removeChild(controlPanel);
-    document.body.removeChild(backwardButton);
-    document.body.removeChild(playButton);
-    document.body.removeChild(forwardButton);
-    document.body.removeChild(bufferedTimeBar);
-    document.body.removeChild(elapsedTimeBar);
-    document.body.removeChild(elapsedTime);
-    document.body.removeChild(durationTime);
+    document.body.innerHTML = '';
   });
 
   suite('UI handling', function () { //return; // TMP
@@ -498,6 +473,10 @@ suite('fling-player/fling_player', function() {
 
       flingPlayer.seek(time);
 
+      assert.equal(
+        mockVideo.currentTime, time,
+        'Not change video currentTime'
+      );
       assert.isTrue(
         spyOnSeek.withArgs(time).calledOnce,
         'Not seek'
@@ -759,134 +738,166 @@ suite('fling-player/fling_player', function() {
 
   suite('User control handling', function () {
 
-    test('should show control panel on demand from user', function () {
+    var KEY = {};
+    KEY.LEFT = {};
+    KEY.LEFT.key =
+    KEY.LEFT.code =
+    KEY.LEFT.keyIdentifier = 'Left';
+    KEY.LEFT.which =
+    KEY.LEFT.keyCode = 37;
+
+    KEY.RIGHT = {};
+    KEY.RIGHT.key =
+    KEY.RIGHT.code =
+    KEY.RIGHT.keyIdentifier = 'Right';
+    KEY.RIGHT.which =
+    KEY.RIGHT.keyCode = 39;
+
+    KEY.ENTER = {};
+    KEY.ENTER.key =
+    KEY.ENTER.code =
+    KEY.ENTER.keyIdentifier = 'Enter';
+    KEY.ENTER.which =
+    KEY.ENTER.keyCode = 13;
+
+    /**
+     * @param {string} type 'keydown', 'keypress', 'keyup'
+     */
+    function dispatchKeyEvent(type, key, callback) {
+      var e = new Event(type);
+      e.key = key.key;
+      e.code = key.code;
+      e.keyIdentifier = key.keyIdentifier;
+      e.which = key.which;
+      e.keyCode = key.keyCode;
+      window.addEventListener(type, function handle() {
+        window.removeEventListener(type, handle);
+        if (typeof callback == 'function') {
+          callback();
+        }
+      });
+      window.dispatchEvent(e);
+    }
+
+    test('should show control panel on keyup', function (done) {
       var spyOnShowControlPanel = sinon.spy(flingPlayer, 'showControlPanel');
-      flingPlayer.onDemandingControlPanel();
-      assert.isTrue(
-        spyOnShowControlPanel.withArgs(true).calledOnce,
-        'NOt show control panel'
-      );
+      dispatchKeyEvent('keyup', KEY.ENTER, () => {
+        assert.isTrue(
+          spyOnShowControlPanel.withArgs(true).calledOnce,
+          'Not show control panel'
+        );
+        done();
+      });
     });
 
-    test('should not react to user control before showing control panel',
-         function () {
+    test('should not play/pause/seek before showing control panel',
+          function (done) {
             var spyOnPlay = sinon.spy(flingPlayer, 'play');
             var spyOnSeek = sinon.spy(flingPlayer, 'seek');
             var spyOnPause = sinon.spy(flingPlayer, 'pause');
-            var spyOnStopSeek = sinon.spy(flingPlayer, '_stopSeekOnKeyPress');
-            var spyOnStartSeek = sinon.spy(flingPlayer, '_startSeekOnKeyPress');
 
-            flingPlayer.onKeyEnterDown();
-            flingPlayer.onKeyEnterUp();
-
-            assert.isFalse(
-              spyOnPlay.calledOnce,
-              'Should not play'
-            );
-            assert.isFalse(
-              spyOnSeek.calledOnce,
-              'Should not seek'
-            );
-            assert.isFalse(
-              spyOnPause.calledOnce,
-              'Should not pause'
-            );
-            assert.isFalse(
-              spyOnStopSeek.calledOnce,
-              'Should not call _stopSeekOnKeyPress'
-            );
-            assert.isFalse(
-              spyOnStartSeek.calledOnce,
-              'Should not call _startSeekOnKeyPress'
-            );
-         }
+            dispatchKeyEvent('keydown', KEY.ENTER, () => {
+              dispatchKeyEvent('keypress', KEY.ENTER, () => {
+                dispatchKeyEvent('keyup', KEY.ENTER, () => {
+                  assert.equal(spyOnPlay.callCount, 0, 'Should not play');
+                  assert.equal(spyOnSeek.callCount, 0, 'Should not play');
+                  assert.equal(spyOnPause.callCount, 0, 'Should not play');
+                  done();
+                });
+              });
+            });
+          }
     );
 
-    test('should seek forward on enter key down from user', function () {
+    test('should seek forward on enter key down from user', function (done) {
+      var t = 20;
       var spyOnSeek = sinon.spy(flingPlayer, 'seek');
-      var spyOnStartSeek = sinon.spy(flingPlayer, '_startSeekOnKeyPress');
 
+      mockVideo.currentTime = t;
       flingPlayer.showControlPanel();
-      flingPlayer._keyNav.focusOn(forwardButton);
-      flingPlayer.onKeyEnterDown();
 
-      assert.isTrue(
-        spyOnStartSeek.withArgs('forward').calledOnce,
-        'Not start forward seeking on key press'
-      );
-      assert.isTrue(
-        spyOnSeek.calledOnce,
-        'Not seek'
-      );
+      dispatchKeyEvent('keydown', KEY.RIGHT, () => {
+        dispatchKeyEvent('keydown', KEY.ENTER, () => {
+          assert.isTrue(spyOnSeek.calledOnce, 'Not seek');
+          assert.isTrue(spyOnSeek.args[0] > t, 'Not seek forward');
+        });
+        done();
+      });
     });
 
-    test('should seek backward on enter key down from user', function () {
+    test('should seek backward on enter key down from user', function (done) {
+      var t = 20;
       var spyOnSeek = sinon.spy(flingPlayer, 'seek');
-      var spyOnStartSeek = sinon.spy(flingPlayer, '_startSeekOnKeyPress');
 
+      mockVideo.currentTime = t;
       flingPlayer.showControlPanel();
-      flingPlayer._keyNav.focusOn(backwardButton);
-      flingPlayer.onKeyEnterDown();
 
-      assert.isTrue(
-        spyOnStartSeek.withArgs('backward').calledOnce,
-        'Not start backward seeking on key press'
-      );
-      assert.isTrue(
-        spyOnSeek.calledOnce,
-        'Not seek'
-      );
+      dispatchKeyEvent('keydown', KEY.LEFT, () => {
+        dispatchKeyEvent('keydown', KEY.ENTER, () => {
+          assert.isTrue(spyOnSeek.calledOnce, 'Not seek');
+          assert.isTrue(spyOnSeek.args[0] < t, 'Not seek backward');
+        });
+        done();
+      });
     });
 
     test('should stop seeking forward on enter key up from user',
-         function () {
+         function (done) {
             var spyOnStopSeek = sinon.spy(flingPlayer, '_stopSeekOnKeyPress');
 
             flingPlayer.showControlPanel();
-            flingPlayer._keyNav.focusOn(forwardButton);
-            flingPlayer.onKeyEnterUp();
 
-            assert.isTrue(
-              spyOnStopSeek.calledOnce,
-              'Not stop seeking on key press'
-            );
+            dispatchKeyEvent('keydown', KEY.RIGHT, () => {
+              dispatchKeyEvent('keyup', KEY.ENTER, () => {
+                assert.isTrue(
+                  spyOnStopSeek.calledOnce,
+                  'Not stop seeking on key press'
+                );
+                done();
+              });
+            });
          }
     );
 
     test('should stop seeking backward on enter key up from user',
-         function () {
+         function (done) {
             var spyOnStopSeek = sinon.spy(flingPlayer, '_stopSeekOnKeyPress');
 
             flingPlayer.showControlPanel();
-            flingPlayer._keyNav.focusOn(backwardButton);
-            flingPlayer.onKeyEnterUp();
 
-            assert.isTrue(
-              spyOnStopSeek.calledOnce,
-              'Not stop seeking on key press'
-            );
+            dispatchKeyEvent('keydown', KEY.LEFT, () => {
+              dispatchKeyEvent('keyup', KEY.ENTER, () => {
+                assert.isTrue(
+                  spyOnStopSeek.calledOnce,
+                  'Not stop seeking on key press'
+                );
+              });
+              done();
+            });
          }
     );
 
-    test('should play on enter key up from user', function () {
+    test('should play on enter key up from user', function (done) {
       var spyOnPlay = sinon.spy(flingPlayer, 'play');
 
       flingPlayer.showControlPanel();
-      flingPlayer._keyNav.focusOn(playButton);
-      flingPlayer.onKeyEnterUp();
 
-      assert.isTrue(spyOnPlay.calledOnce, 'Not play');
+      dispatchKeyEvent('keyup', KEY.ENTER, () => {
+        assert.isTrue(spyOnPlay.calledOnce, 'Not play');
+        done();
+      });
     });
 
-    test('should pause on enter key up from user', function () {
+    test('should pause on enter key up from user', function (done) {
       var spyOnPause = sinon.spy(flingPlayer, 'pause');
 
-      flingPlayer.play();
       flingPlayer.showControlPanel();
-      flingPlayer._keyNav.focusOn(playButton);
-      flingPlayer.onKeyEnterUp();
+      flingPlayer.play();
 
-      assert.isTrue(spyOnPause.calledOnce, 'Not pause');
+      dispatchKeyEvent('keyup', KEY.ENTER, () => {
+        assert.isTrue(spyOnPause.calledOnce, 'Not pause');
+        done();
+      });
     });
   });
 });
