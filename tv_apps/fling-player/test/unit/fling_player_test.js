@@ -15,7 +15,7 @@ requireApp('fling-player/js/video_player.js');
 requireApp('fling-player/js/connector.js');
 requireApp('fling-player/js/fling_player.js');
 
-suite('fling-player/fling_player', function() {
+suite('fling-player/fling_player', function () {
 
   var videoPlayer,
       connector,
@@ -82,11 +82,18 @@ suite('fling-player/fling_player', function() {
     });
   });
 
-  teardown(function() {
+  teardown(function () {
     document.body.innerHTML = '';
   });
 
-  suite('UI handling', function () { //return; // TMP
+  suite('UI handling', function () {
+
+    function waitForUIUpdate(callback) {
+      // Updating the time bar is thorugh the requestAnimationFrame call
+      // so we use the requestAnimationFrame call
+      // to wait for syncing up with UI update.
+      requestAnimationFrame(callback);
+    }
 
     test('should reset UI', function (done) {
       playButton.setAttribute('data-icon', 'fling-player-pause');
@@ -95,7 +102,7 @@ suite('fling-player/fling_player', function() {
 
       flingPlayer.resetUI();
 
-      requestAnimationFrame(() => {
+      waitForUIUpdate(() => {
         assert.equal(playButton.getAttribute('data-icon'), 'fling-player-play');
         assert.equal(elapsedTime.textContent, '00:00', 'elapsedTime');
         assert.equal(durationTime.textContent, '00:00', 'durationTime');
@@ -256,7 +263,7 @@ suite('fling-player/fling_player', function() {
       flingPlayer.moveTimeBar('elapsed', mockVideo.duration * 0.1);
       flingPlayer.moveTimeBar('buffered', mockVideo.duration * 0.1);
 
-      requestAnimationFrame(() => {
+      waitForUIUpdate(() => {
         assert.equal(
           elapsedTimeBar.style.width, '10%', 'Wrong elapsed time bar'
         );
@@ -274,7 +281,7 @@ suite('fling-player/fling_player', function() {
       flingPlayer.moveTimeBar('elapsed', -1);
       flingPlayer.moveTimeBar('buffered', -1);
 
-      requestAnimationFrame(() => {
+      waitForUIUpdate(() => {
         assert.equal(
           elapsedTimeBar.style.width, '10%', 'Wrong elapsed time bar'
         );
@@ -292,7 +299,7 @@ suite('fling-player/fling_player', function() {
       flingPlayer.moveTimeBar('elapsed', NaN);
       flingPlayer.moveTimeBar('buffered', NaN);
 
-      requestAnimationFrame(() => {
+      waitForUIUpdate(() => {
         assert.equal(
           elapsedTimeBar.style.width, '10%', 'Wrong elapsed time bar'
         );
@@ -311,7 +318,7 @@ suite('fling-player/fling_player', function() {
             flingPlayer.moveTimeBar('elapsed', mockVideo.duration + 1);
             flingPlayer.moveTimeBar('buffered', mockVideo.duration + 1);
 
-            requestAnimationFrame(() => {
+            waitForUIUpdate(() => {
               assert.equal(
                 elapsedTimeBar.style.width, '10%', 'Wrong elapsed time bar'
               );
@@ -436,7 +443,7 @@ suite('fling-player/fling_player', function() {
     });
   });
 
-  suite('Video handling', function () { //return; // TMP
+  suite('Video handling', function () {
 
     test('should play', function () {
       var spyOnPlay = sinon.spy(videoPlayer, 'play');
@@ -496,7 +503,7 @@ suite('fling-player/fling_player', function() {
     });
   });
 
-  suite('Video event handling', function () { //return; // TMP
+  suite('Video event handling', function () {
 
     var data, spyOnReportStatus;
 
@@ -668,7 +675,7 @@ suite('fling-player/fling_player', function() {
     });
   });
 
-  suite('Remote request event handling', function () { //return; // TMP
+  suite('Remote request event handling', function () {
 
     var msg;
 
@@ -763,7 +770,7 @@ suite('fling-player/fling_player', function() {
     /**
      * @param {string} type 'keydown', 'keypress', 'keyup'
      */
-    function dispatchKeyEvent(type, key, callback) {
+    function fireKeyEvent(type, key, callback) {
       var e = new Event(type);
       e.key = key.key;
       e.code = key.code;
@@ -781,7 +788,7 @@ suite('fling-player/fling_player', function() {
 
     test('should show control panel on keyup', function (done) {
       var spyOnShowControlPanel = sinon.spy(flingPlayer, 'showControlPanel');
-      dispatchKeyEvent('keyup', KEY.ENTER, () => {
+      fireKeyEvent('keyup', KEY.ENTER, () => {
         assert.isTrue(
           spyOnShowControlPanel.withArgs(true).calledOnce,
           'Not show control panel'
@@ -796,12 +803,12 @@ suite('fling-player/fling_player', function() {
             var spyOnSeek = sinon.spy(flingPlayer, 'seek');
             var spyOnPause = sinon.spy(flingPlayer, 'pause');
 
-            dispatchKeyEvent('keydown', KEY.ENTER, () => {
-              dispatchKeyEvent('keypress', KEY.ENTER, () => {
-                dispatchKeyEvent('keyup', KEY.ENTER, () => {
-                  assert.equal(spyOnPlay.callCount, 0, 'Should not play');
-                  assert.equal(spyOnSeek.callCount, 0, 'Should not play');
-                  assert.equal(spyOnPause.callCount, 0, 'Should not play');
+            fireKeyEvent('keydown', KEY.ENTER, () => {
+              fireKeyEvent('keypress', KEY.ENTER, () => {
+                fireKeyEvent('keyup', KEY.ENTER, () => {
+                  assert.isFalse(spyOnPlay.called, 'Should not play');
+                  assert.isFalse(spyOnSeek.called, 'Should not play');
+                  assert.isFalse(spyOnPause.called, 'Should not play');
                   done();
                 });
               });
@@ -816,10 +823,10 @@ suite('fling-player/fling_player', function() {
       mockVideo.currentTime = t;
       flingPlayer.showControlPanel();
 
-      dispatchKeyEvent('keydown', KEY.RIGHT, () => {
-        dispatchKeyEvent('keydown', KEY.ENTER, () => {
-          assert.isTrue(spyOnSeek.calledOnce, 'Not seek');
-          assert.isTrue(spyOnSeek.args[0] > t, 'Not seek forward');
+      fireKeyEvent('keydown', KEY.RIGHT, () => {
+        fireKeyEvent('keydown', KEY.ENTER, () => {
+          assert.isTrue(spyOnSeek.called, 'Not seek');
+          assert.isTrue(spyOnSeek.firstCall.args[0] > t, 'Not seek forward');
         });
         done();
       });
@@ -832,10 +839,10 @@ suite('fling-player/fling_player', function() {
       mockVideo.currentTime = t;
       flingPlayer.showControlPanel();
 
-      dispatchKeyEvent('keydown', KEY.LEFT, () => {
-        dispatchKeyEvent('keydown', KEY.ENTER, () => {
-          assert.isTrue(spyOnSeek.calledOnce, 'Not seek');
-          assert.isTrue(spyOnSeek.args[0] < t, 'Not seek backward');
+      fireKeyEvent('keydown', KEY.LEFT, () => {
+        fireKeyEvent('keydown', KEY.ENTER, () => {
+          assert.isTrue(spyOnSeek.called, 'Not seek');
+          assert.isTrue(spyOnSeek.firstCall.args[0] < t, 'Not seek backward');
         });
         done();
       });
@@ -843,17 +850,25 @@ suite('fling-player/fling_player', function() {
 
     test('should stop seeking forward on enter key up from user',
          function (done) {
-            var spyOnStopSeek = sinon.spy(flingPlayer, '_stopSeekOnKeyPress');
+            var spyOnSeek = sinon.spy(flingPlayer, 'seek');
 
             flingPlayer.showControlPanel();
 
-            dispatchKeyEvent('keydown', KEY.RIGHT, () => {
-              dispatchKeyEvent('keyup', KEY.ENTER, () => {
-                assert.isTrue(
-                  spyOnStopSeek.calledOnce,
-                  'Not stop seeking on key press'
-                );
-                done();
+            fireKeyEvent('keydown', KEY.RIGHT, () => {
+              fireKeyEvent('keydown', KEY.ENTER, () => {
+                // Simulate to key down for 1s, so fire key up after 1s
+                setTimeout(() => {
+                  var count = spyOnSeek.callCount;
+                  fireKeyEvent('keyup', KEY.ENTER, () => {
+                    // The call count should not increase
+                    // after keyup event is fired because we stop seeking
+                    assert.equal(
+                      count, spyOnSeek.callCount,
+                      'Not stop seeking on key press'
+                    );
+                    done();
+                  });
+                }, 1000);
               });
             });
          }
@@ -861,18 +876,26 @@ suite('fling-player/fling_player', function() {
 
     test('should stop seeking backward on enter key up from user',
          function (done) {
-            var spyOnStopSeek = sinon.spy(flingPlayer, '_stopSeekOnKeyPress');
+            var spyOnSeek = sinon.spy(flingPlayer, 'seek');
 
             flingPlayer.showControlPanel();
 
-            dispatchKeyEvent('keydown', KEY.LEFT, () => {
-              dispatchKeyEvent('keyup', KEY.ENTER, () => {
-                assert.isTrue(
-                  spyOnStopSeek.calledOnce,
-                  'Not stop seeking on key press'
-                );
+            fireKeyEvent('keydown', KEY.LEFT, () => {
+              fireKeyEvent('keydown', KEY.ENTER, () => {
+                // Simulate to key down for 1s, so fire key up after 1s
+                setTimeout(() => {
+                  var count = spyOnSeek.callCount;
+                  fireKeyEvent('keyup', KEY.ENTER, () => {
+                    // The call count should not increase
+                    // after keyup event is fired because we stop seeking
+                    assert.equal(
+                      count, spyOnSeek.callCount,
+                      'Not stop seeking on key press'
+                    );
+                    done();
+                  });
+                }, 1000);
               });
-              done();
             });
          }
     );
@@ -882,7 +905,7 @@ suite('fling-player/fling_player', function() {
 
       flingPlayer.showControlPanel();
 
-      dispatchKeyEvent('keyup', KEY.ENTER, () => {
+      fireKeyEvent('keyup', KEY.ENTER, () => {
         assert.isTrue(spyOnPlay.calledOnce, 'Not play');
         done();
       });
@@ -894,7 +917,7 @@ suite('fling-player/fling_player', function() {
       flingPlayer.showControlPanel();
       flingPlayer.play();
 
-      dispatchKeyEvent('keyup', KEY.ENTER, () => {
+      fireKeyEvent('keyup', KEY.ENTER, () => {
         assert.isTrue(spyOnPause.calledOnce, 'Not pause');
         done();
       });
