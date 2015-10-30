@@ -136,8 +136,11 @@
     this._loadingUI.hidden = !loading;
   };
 
-  proto.showInitialMessage = function (bool) {
-    if (bool) {
+  /**
+   * @param {boolean} on True to toggle on and false to toggle off
+   */
+  proto.toggleInitialMessage = function (on) {
+    if (on) {
       this._initialMsgStartTime = (new Date()).getTime();
       this._initialMsg.classList.remove('fade-out');
     } else {
@@ -146,7 +149,7 @@
       // Make sure that the initial message has beed displayed
       // for at least the min secs
       if (gap > 0) {
-        setTimeout(() => this.showInitialMessage(false), gap);
+        setTimeout(() => this.toggleInitialMessage(false), gap);
       } else {
         this._initialMsg.classList.add('fade-out');
       }
@@ -297,6 +300,7 @@
       bufStart = buf.start(i);
       if (bufStart <= current && current <= bufEnd) {
         this.moveTimeBar('buffered', bufEnd);
+        break;
       }
     }
   };
@@ -379,7 +383,7 @@
 
       case 'playing':
         this.showLoading(false);
-        this.showInitialMessage(false);
+        this.toggleInitialMessage(false);
         this._connector.reportStatus('buffered', data);
         this._connector.reportStatus('playing', data);
       break;
@@ -411,7 +415,7 @@
   proto.onLoadRequest = function (e) {
     this.resetUI();
     this.showLoading(true);
-    this.showInitialMessage(true);
+    this.toggleInitialMessage(true);
     this._player.load(e.url);
     this.play();
   };

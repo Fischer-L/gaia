@@ -66,7 +66,7 @@ article, section, video {
   text-align: center;
   background-color: rgba(0, 0, 0, 0.5);
   opacity: 1;
-  transition: all 1s ease;
+  transition: opacity 1s ease;
 }
 
 #initial-message-section.fade-out {
@@ -90,8 +90,8 @@ article, section, video {
   height: 8rem;
   border-radius: 4rem;
   left: 34.8rem;
-  right: 0rem;
-  top: 0rem;
+  right: 0;
+  top: 0;
   position: absolute;
   display: flex;
   flex-direction: row;
@@ -100,8 +100,8 @@ article, section, video {
 
 #time-progress {
   height: 8rem;
-  left: 0px;
-  right: 0px;
+  left: 0;
+  right: 0;
   flex-grow: 1;
 }
 
@@ -115,13 +115,13 @@ article, section, video {
 }
 
 #elapsed-time-bar {
-  width: 0%;
+  width: 0;
   top: 2.8rem;
   background: #71c9f0;
 }
 
 #buffered-time-bar {
-  width: 0%;
+  width: 0;
   top: 3.4rem;
   background: #fff;
 }
@@ -147,7 +147,7 @@ article, section, video {
 #video-control-buttons {
   width: 31.8rem;
   height: 8rem;
-  margin-right: 0rem;
+  margin-right: 0;
   display: inline-block;
   position: relative;
 }

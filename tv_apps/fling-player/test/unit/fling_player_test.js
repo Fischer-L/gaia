@@ -119,7 +119,7 @@ suite('fling-player/fling_player', function() {
 
     test('should show initial message', function () {
       initialMsg.classList.add('fade-out');
-      flingPlayer.showInitialMessage(true);
+      flingPlayer.toggleInitialMessage(true);
       assert.isFalse(initialMsg.classList.contains('fade-out'));
     });
 
@@ -127,8 +127,8 @@ suite('fling-player/fling_player', function() {
          function (done) {
            var minDuration = flingPlayer.INITIAL_MSG_MIN_DISPLAY_TIME_MS;
            initialMsg.classList.add('fade-out');
-           flingPlayer.showInitialMessage(true);
-           flingPlayer.showInitialMessage(false);
+           flingPlayer.toggleInitialMessage(true);
+           flingPlayer.toggleInitialMessage(false);
 
            setTimeout(() => {
              assert.isFalse(
@@ -571,8 +571,8 @@ suite('fling-player/fling_player', function() {
 
     test('should handle playing event', function () {
       var spyOnShowLoading = sinon.spy(flingPlayer, 'showLoading');
-      var spyOnShowInitialMessage =
-              sinon.spy(flingPlayer, 'showInitialMessage');
+      var spyOnToggleInitialMessage =
+              sinon.spy(flingPlayer, 'toggleInitialMessage');
 
       mockVideo.fireEvent(new Event('playing'));
 
@@ -581,7 +581,7 @@ suite('fling-player/fling_player', function() {
         'Not hide loading UI'
       );
       assert.isTrue(
-        spyOnShowInitialMessage.withArgs(false).calledOnce,
+        spyOnToggleInitialMessage.withArgs(false).calledOnce,
         'Not hide initial msg'
       );
       assert.isTrue(
