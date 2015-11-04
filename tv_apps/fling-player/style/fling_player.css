@@ -60,6 +60,7 @@ article, section, video {
   top: auto;
   bottom: 30rem;
   left: 50%;
+  margin-right: -50%;
   transform: translate(-50%, 0);
   color: #fff;
   font-size: 5rem;
