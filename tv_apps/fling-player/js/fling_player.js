@@ -570,6 +570,8 @@
           var videos = [
             'http://media.w3.org/2010/05/sintel/trailer.webm',
             'http://video.webmfiles.org/elephants-dream.webm',
+            'http://people.mozilla.org/~mfinkle/casting/' +
+                'Mobile-launch-greatday640.mp4',
             'http://download.wavetlan.com/SVV/Media/HTTP/H264/Other_Media/' +
                'H264_test5_voice_mp4_480x360.mp4'
           ];
