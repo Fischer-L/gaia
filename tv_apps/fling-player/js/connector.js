@@ -27,6 +27,8 @@
     this._lastSeqReceived = -1; // The sequence of the last message received
     this._isInit = false;
     this._isInitConnection = false;
+    this._controllingDeviceInfo = null;
+    this._deviceInfoResolvers = [];
   }
 
   var proto = evt(Connector.prototype);
@@ -76,6 +78,20 @@
     // mDBG.log('Connector#sendMsg');
     // mDBG.log('msg = ', msg);
     this._connection.send(castingMessage.stringify(msg));
+  };
+
+  proto.getControllingDeviceInfo = function () {
+    var resolve;
+    var p = new Promise((res, rej) => {
+      resolve = res;
+    });
+
+    if (this._controllingDeviceInfo) {
+      resolve(this._controllingDeviceInfo);
+    } else {
+      this._deviceInfoResolvers.push(resolve);
+    }
+    return p;
   };
 
   proto.replyACK = function (msg, error) {
@@ -168,6 +184,26 @@
               time);
           }
           this.fire('seekRequest', { time : time });
+        break;
+
+        case 'device-info':
+          var resolve;
+
+          if (!this._controllingDeviceInfo) {
+            this._controllingDeviceInfo = {};
+          }
+          this._controllingDeviceInfo.displayName = msg.displayName;
+
+          do {
+            resolve = this._deviceInfoResolvers.shift();
+            try {
+              if (typeof resolve == 'function') {
+                resolve(this._controllingDeviceInfo);
+              }
+            } catch (e2) {
+              mDBG.error(e2);
+            }
+          } while (resolve);
         break;
       }
     } catch (e) {

@@ -415,9 +415,26 @@
   proto.onLoadRequest = function (e) {
     this.resetUI();
     this.showLoading(true);
-    this.toggleInitialMessage(true);
     this._player.load(e.url);
     this.play();
+    this._connector.getControllingDeviceInfo()
+                   .then((info) => {
+                      var msg = this._initialMsg.textContent;
+                      var name = 'device';
+                      if (info.displayName &&
+                          typeof info.displayName == 'string'
+                      ) {
+                        name = info.displayName;
+                      }
+
+                      this._initialMsg.textContent =
+                          msg.replace('{{ device }}', name);
+
+                      this.toggleInitialMessage(true);
+                      if (this._player.isPlaying()) {
+                        this.toggleInitialMessage(false); // hide later
+                      }
+                   });
   };
 
   proto.onPlayRequest = function () {
@@ -503,7 +520,7 @@
     // TMP DEL
     if (mDBG.isDBG() && 1) {
 
-      var env_testOnB2G = false;
+      var env_testOnB2G = 1;
 
       var initForTest = function () {
 

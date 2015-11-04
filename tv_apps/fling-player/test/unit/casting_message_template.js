@@ -4,6 +4,11 @@
   var castingMsgTemplate = {
     get : function () {
       return {
+        'device-info' : {
+          type : 'device-info',
+          seq : 1,
+          displayName : 'displayName'
+        },
         ack : {
           type : 'ack',
           seq : 1
