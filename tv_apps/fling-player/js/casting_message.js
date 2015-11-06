@@ -23,17 +23,20 @@
   var castingMessage = {};
 
   castingMessage.type = Object.freeze({
+
     /**
-     * Represent info of device.
+     * Represent the device info.
      * The extra message properties:
-     *   - deviceName: String. The device name.
+     *   - displayName: String. The device display name
      */
-    info: {
-      name: 'info',
+    'device-info': {
+      name: 'device-info',
       sanitizeMsg: function (msg) {
 
-        if (typeof msg.deviceName != 'string') {
-          throw new Error('Ilegal device name = ' + msg.deviceName +
+        if (msg.displayName !== undefined &&
+            typeof msg.displayName != 'string'
+        ) {
+          throw new Error('Ilegal display name = ' + msg.displayName +
             ' in casting message of type = ' + this.name);
         }
         return msg;
@@ -185,9 +188,10 @@
     mDBG.log('castingMessage#parse');
     mDBG.log('Parsing : ', txt);
 
-    var data = '[' + txt.replace('}{', '},{') + ']';
-    var msgs = JSON.parse(data);
+    var data = '[' + txt.replace(/}{/g, '},{') + ']';
+    mDBG.log('Transformed : ', data);
 
+    var msgs = JSON.parse(data);
     mDBG.log('Parsed : ', msgs);
 
     return msgs.map(m => this.sanitizeMsg(m));

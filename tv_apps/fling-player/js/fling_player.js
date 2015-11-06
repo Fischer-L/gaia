@@ -1,6 +1,8 @@
 /* global VideoPlayer, Connector, mDBG, KeyNavigationAdapter,
           SimpleKeyNavigation
  */
+ /* global MockVideoElement, MockPresentation, castingMsgTemplate
+ */
 (function(exports) {
   'use strict';
 
@@ -222,9 +224,9 @@
    */
   proto.moveTimeBar = function (type, sec) {
 
-    mDBG.log('FlingPlayer#moveTimeBar');
-    mDBG.log('Move type ', type);
-    mDBG.log('Move to ', sec);
+    // mDBG.log('FlingPlayer#moveTimeBar');
+    // mDBG.log('Move type ', type);
+    // mDBG.log('Move to ', sec);
 
     var timeBar = this[`_${type}TimeBar`];
     var duration = this._player.getRoundedDuration();
@@ -241,7 +243,7 @@
     }
 
     requestAnimationFrame(() => {
-      mDBG.log('Move to sec / duration = %d / %d', sec, duration);
+      // mDBG.log('Move to sec / duration = %d / %d', sec, duration);
       timeBar.style.width = (100 * sec / duration) + '%';
     });
   };
@@ -411,11 +413,32 @@
   };
 
   proto.onLoadRequest = function (e) {
+    mDBG.log('FlingPlayer#onLoadRequest');
     this.resetUI();
     this.showLoading(true);
-    this.toggleInitialMessage(true);
     this._player.load(e.url);
     this.play();
+    this._connector.getControllingDeviceInfo()
+                   .then((info) => {
+                      var msg = this._initialMsg.textContent;
+                      var name = 'device';
+                      if (info.displayName &&
+                          typeof info.displayName == 'string'
+                      ) {
+                        name = info.displayName;
+                        mDBG.log(
+                          'Contorlling Device Info - displayName = ' + name
+                        );
+                      }
+
+                      this._initialMsg.textContent =
+                          msg.replace('{{ device }}', name);
+
+                      this.toggleInitialMessage(true);
+                      if (this._player.isPlaying()) {
+                        this.toggleInitialMessage(false); // hide later
+                      }
+                   });
   };
 
   proto.onPlayRequest = function () {
@@ -432,7 +455,7 @@
 
   proto.onKeyEnterDown = function () {
 
-    mDBG.log('FlingPlayer#onKeyEnterDown');
+    // mDBG.log('FlingPlayer#onKeyEnterDown');
 
     if (this.isControlPanelHiding()) {
       mDBG.log('The control panel is hiding so no action is taken.');
@@ -442,7 +465,7 @@
     var focused = this._keyNav.getFocusedElement();
     if (focused) {
 
-      mDBG.log('control focused = ', focused);
+      // mDBG.log('control focused = ', focused);
 
       switch (focused.id) {
 
@@ -459,7 +482,7 @@
   };
 
   proto.onKeyEnterUp = function () {
-    mDBG.log('FlingPlayer#onKeyEnterUp');
+    // mDBG.log('FlingPlayer#onKeyEnterUp');
 
     if (this.isControlPanelHiding()) {
       mDBG.log('The control panel is hiding so no action is taken.');
@@ -469,7 +492,7 @@
     var focused = this._keyNav.getFocusedElement();
     if (focused) {
 
-      mDBG.log('control focused = ', focused);
+      // mDBG.log('control focused = ', focused);
 
       switch (focused.id) {
 
@@ -490,13 +513,120 @@
   };
 
   proto.onDemandingControlPanel = function () {
-    mDBG.log('FlingPlayer#onDemandingControlPanel');
+    // mDBG.log('FlingPlayer#onDemandingControlPanel');
     this.showControlPanel(true);
   };
 
   // Event handling end
 
   window.addEventListener('load', function() {
+
+    // TMP DEL
+    if (mDBG.isDBG() && 0) {
+
+      var env_testOnB2G = 0;
+
+      var initForTest = function () {
+
+        var fp, mockVideo, mockPresentation;
+
+        mockVideo = new MockVideoElement({
+          duration : 600,
+          currentTime : 0
+        });
+        mockVideo = document.getElementById(uiID.player);
+        mockVideo.handleEvent = function (e) {
+          console.log('------ Video event : ' + e.type);
+          switch (e.type) {
+            case 'timeupdate':
+              console.log('---------- Current Time : ' + mockVideo.currentTime);
+            break;
+          }
+        }.bind(mockVideo);
+        for (var p in mockVideo) {
+          if (p.indexOf('on') === 0) {
+            p = p.substr(2);
+            switch (p) {
+              case 'click':
+              case 'blur':
+              case 'focus':
+              case 'keyup':
+              case 'keydown':
+              case 'keypress':
+              case 'mouseup':
+              case 'mousedown':
+              case 'mouseenter':
+              case 'mouseover':
+              case 'mousemove':
+              case 'mouseout':
+              case 'mouseleave':
+              case 'progress':
+              case 'timeupdate':
+                break;
+              default:
+                mockVideo.addEventListener(p, mockVideo);
+            }
+          }
+        }
+
+        mockPresentation = new MockPresentation();
+        mockPresentation.mLoad = function () {
+          var videos = [
+            'http://media.w3.org/2010/05/sintel/trailer.webm',
+            'http://video.webmfiles.org/elephants-dream.webm',
+            'http://people.mozilla.org/~mfinkle/casting/' +
+                'Mobile-launch-greatday640.mp4',
+            'http://download.wavetlan.com/SVV/Media/HTTP/H264/Other_Media/' +
+               'H264_test5_voice_mp4_480x360.mp4'
+          ];
+          var m = castingMsgTemplate.get().load;
+          m.url = videos[0];
+          mockPresentation.mCastMsgToReceiver(m);
+        }.bind(mockPresentation);
+
+        fp = new FlingPlayer(
+          new VideoPlayer(mockVideo),
+          new Connector(mockPresentation)
+        );
+        fp.init();
+
+        window.fp = fp;
+        window.mockVideo = mockVideo;
+        window.mockPresentation = mockPresentation;
+
+        if (document.visibilityState === 'hidden') {
+          navigator.mozApps.getSelf().onsuccess = function(evt) {
+            var app = evt.target.result;
+            if (app) {
+              app.launch();
+            }
+          };
+        }
+      };
+
+      var scripts = [
+        'test/unit/mock_presentation.js',
+        'test/unit/mock_video_element.js',
+        'test/unit/casting_message_template.js'
+      ];
+
+      scripts.waited = scripts.length;
+      scripts.forEach((s) => {
+        var script = document.createElement('script');
+        script.onload = function () {
+          --scripts.waited;
+          if (!scripts.waited) {
+            console.log('scripts.waited = ' + scripts.waited);
+            initForTest();
+          }
+        };
+        script.src = env_testOnB2G ? 'js/' + s : s;
+        document.head.appendChild(script);
+      });
+
+      return;
+    }
+    // TMP DEL end
 
     window.fp = new FlingPlayer(
       new VideoPlayer($(uiID.player)),
