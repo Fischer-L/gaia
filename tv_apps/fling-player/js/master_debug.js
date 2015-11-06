@@ -60,6 +60,6 @@
     }
   };
 
-  window.mDBG = new MasterDebug(false);
+  window.mDBG = new MasterDebug(true);
 
 })(window);
