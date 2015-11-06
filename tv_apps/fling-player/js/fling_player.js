@@ -521,8 +521,6 @@
     // TMP DEL
     if (mDBG.isDBG() && 1) {
 
-      var env_testOnB2G = 0;
-
       var initForTest = function () {
 
         var fp, mockVideo, mockPresentation;
@@ -535,9 +533,10 @@
         mockVideo.handleEvent = function (e) {
           console.log('------ Video event : ' + e.type);
           switch (e.type) {
-            case 'timeupdate':
-              console.log('---------- Current Time : ' + mockVideo.currentTime);
-            break;
+            // case 'timeupdate':
+            //   console.log('---------- Current Time : ' +
+            //                mockVideo.currentTime);
+            // break;
           }
         }.bind(mockVideo);
         for (var p in mockVideo) {
@@ -576,8 +575,18 @@
             'http://download.wavetlan.com/SVV/Media/HTTP/H264/Other_Media/' +
                'H264_test5_voice_mp4_480x360.mp4'
           ];
-          var m = castingMsgTemplate.get().load;
+          var m, tmplt = castingMsgTemplate.get();
+
+          m = tmplt.load;
           m.url = videos[2];
+          mockPresentation.mCastMsgToReceiver(m);
+
+          m = tmplt['device-info'];
+          ++m.seq;
+          mockPresentation.mCastMsgToReceiver(m);
+
+          m = tmplt.play;
+          ++m.seq;
           mockPresentation.mCastMsgToReceiver(m);
         }.bind(mockPresentation);
 
@@ -602,9 +611,9 @@
       };
 
       var scripts = [
-        'test/unit/mock_presentation.js',
-        'test/unit/mock_video_element.js',
-        'test/unit/casting_message_template.js'
+        'mock_presentation.js',
+        'mock_video_element.js',
+        'casting_message_template.js'
       ];
 
       scripts.waited = scripts.length;
@@ -617,7 +626,7 @@
             initForTest();
           }
         };
-        script.src = env_testOnB2G ? 'js/' + s : s;
+        script.src = 'js/TMP/' + s;
         document.head.appendChild(script);
       });
 
