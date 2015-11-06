@@ -383,6 +383,7 @@
 
       case 'playing':
         this.showLoading(false);
+        this.hideControlPanel();
         this.toggleInitialMessage(false);
         this._connector.reportStatus('buffered', data);
         this._connector.reportStatus('playing', data);
@@ -394,7 +395,7 @@
       break;
 
       case 'pause':
-        this.showControlPanel(true);
+        this.showControlPanel();
         this._connector.reportStatus('stopped', data);
       break;
 
@@ -520,7 +521,7 @@
     // TMP DEL
     if (mDBG.isDBG() && 1) {
 
-      var env_testOnB2G = 1;
+      var env_testOnB2G = 0;
 
       var initForTest = function () {
 

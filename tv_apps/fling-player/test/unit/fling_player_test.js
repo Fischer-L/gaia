@@ -643,7 +643,7 @@ suite('fling-player/fling_player', function () {
       mockVideo.fireEvent(new Event('pause'));
 
       assert.isTrue(
-        spyOnShowControlPanel.withArgs(true).calledOnce,
+        spyOnShowControlPanel.withArgs().calledOnce,
         'Not show control panel'
       );
       assert.isTrue(
