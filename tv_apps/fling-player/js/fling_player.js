@@ -208,8 +208,12 @@
       if (!this.isControlPanelHiding()) {
         this._keyNav.pause();
         this._controlPanel.classList.add('fade-out');
+        setTimeout(() => {
+          if (this.isControlPanelHiding()) {
+            this._keyNav.focusOn(this._playButton);
+          }
+        }, 60000);
       }
-
     } else {
 
       this._hideControlsTimer = setTimeout(() => {
