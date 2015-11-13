@@ -585,28 +585,31 @@
         }
 
         mockPresentation = new MockPresentation();
-        mockPresentation.mLoad = function () {
+        mockPresentation.mSeq = 0;
+        mockPresentation.mLoad = function (idx = 2) {
           var videos = [
             'http://media.w3.org/2010/05/sintel/trailer.webm',
             'http://video.webmfiles.org/elephants-dream.webm',
             'http://people.mozilla.org/~mfinkle/casting/' +
                 'Mobile-launch-greatday640.mp4',
-            'http://download.wavetlan.com/SVV/Media/HTTP/H264/Other_Media/' +
-               'H264_test5_voice_mp4_480x360.mp4'
+            'http://fischer-l.github.io/gaea/fling-player/test_video.webm'
           ];
-          var m, tmplt = castingMsgTemplate.get();
+          var m, msgs = [], tmplt = castingMsgTemplate.get();
 
           m = tmplt.load;
-          m.url = videos[2];
-          mockPresentation.mCastMsgToReceiver(m);
+          m.url = videos[idx];
+          m.seq = mockPresentation.mSeq++;
+          msgs.push(m);
 
           m = tmplt['device-info'];
-          ++m.seq;
-          mockPresentation.mCastMsgToReceiver(m);
+          m.seq = mockPresentation.mSeq++;
+          msgs.push(m);
 
           m = tmplt.play;
-          ++m.seq;
-          mockPresentation.mCastMsgToReceiver(m);
+          m.seq = mockPresentation.mSeq++;
+          msgs.push(m);
+
+          mockPresentation.mCastMsgToReceiver(msgs);
         }.bind(mockPresentation);
 
         fp = new FlingPlayer(
@@ -618,6 +621,10 @@
         window.fp = fp;
         window.mockVideo = mockVideo;
         window.mockPresentation = mockPresentation;
+        window.mockPresentation.mInit();
+        setTimeout(() => {
+          window.mockPresentation.mLoad();
+        }, 50);
 
         if (document.visibilityState === 'hidden') {
           navigator.mozApps.getSelf().onsuccess = function(evt) {
