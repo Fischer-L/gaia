@@ -51,6 +51,7 @@
 
   proto.init = function () {
 
+    this._autoPlayOnSeeked = true;
     this._seekOnKeyPressTimer = null;
     this._seekOnKeyPressDirection = null; // 'backward' or 'forward'
     this._seekOnKeyPressStartTime = null; // in ms
@@ -130,6 +131,7 @@
     this.writeTimeInfo('elapsed', 0);
     this.writeTimeInfo('duration', 0);
     this.setPlayButtonState('paused');
+    this._keyNav.focusOn(this._playButton);
   };
 
   proto.showLoading = function (loading) {
@@ -351,11 +353,18 @@
     }
   };
 
-  proto.seek = function (sec) {
+  proto.seek = function (sec, opt) {
+    if (!(opt instanceof Object)) {
+      opt = {
+        autoPlayOnSeeked: true,
+        autoHideControlPanel: true
+      };
+    }
     this._player.seek(sec);
     this.moveTimeBar('elapsed', sec);
     this.writeTimeInfo('elapsed', sec);
-    this.showControlPanel(true);
+    this._autoPlayOnSeeked = !!opt.autoPlayOnSeeked;
+    this.showControlPanel(!!opt.autoHideControlPanel);
   };
 
   // Video handling end
@@ -394,7 +403,9 @@
       break;
 
       case 'seeked':
-        this.play();
+        if (this._autoPlayOnSeeked) {
+          this.play();
+        }
         this._connector.reportStatus('seeked', data);
       break;
 
@@ -404,8 +415,12 @@
       break;
 
       case 'ended':
-        this.showControlPanel();
-        this.setPlayButtonState('paused'); // Make sure state changed at ending
+        this.resetUI();
+        this.writeTimeInfo('duration', this._player.getRoundedDuration());
+        this.seek(0, { // Go back to the very 1st frame on ended
+          autoPlayOnSeeked: false,
+          autoHideControlPanel: false
+        });
         this._connector.reportStatus('stopped', data);
       break;
 
