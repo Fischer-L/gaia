@@ -112,15 +112,16 @@
   };
 
   proto._initPlayer = function () {
+    var video = this._player.getVideo();
     this._player.init();
-    this._player.addEventListener('loadedmetadata', this);
-    this._player.addEventListener('timeupdate', this);
-    this._player.addEventListener('waiting', this);
-    this._player.addEventListener('playing', this);
-    this._player.addEventListener('seeked', this);
-    this._player.addEventListener('pause', this);
-    this._player.addEventListener('ended', this);
-    this._player.addEventListener('error', this);
+    video.addEventListener('loadedmetadata', this);
+    video.addEventListener('timeupdate', this);
+    video.addEventListener('waiting', this);
+    video.addEventListener('playing', this);
+    video.addEventListener('seeked', this);
+    video.addEventListener('pause', this);
+    video.addEventListener('ended', this);
+    video.addEventListener('error', this);
   };
 
   // UI handling
@@ -415,9 +416,20 @@
       break;
 
       case 'ended':
+        // Stop updating the controal panel and prevent from showing loading UI.
+        // Restore these actions once back to the very 1st frame.
+        var handle = () => {
+          this._player.getVideo().addEventListener('waiting', this);
+          this._player.getVideo().addEventListener('timeupdate', this);
+          this._player.getVideo().removeEventListener('seeked', handle);
+        };
+        this._player.getVideo().addEventListener('seeked', handle);
+        this._player.getVideo().removeEventListener('waiting', this);
+        this._player.getVideo().removeEventListener('timeupdate', this);
+        // Go back to the very 1st frame on ended and reset the control panel
         this.resetUI();
         this.writeTimeInfo('duration', this._player.getRoundedDuration());
-        this.seek(0, { // Go back to the very 1st frame on ended
+        this.seek(0, {
           autoPlayOnSeeked: false,
           autoHideControlPanel: false
         });

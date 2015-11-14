@@ -192,9 +192,19 @@
     mDBG.log('Transformed : ', data);
 
     var msgs = JSON.parse(data);
-    mDBG.log('Parsed : ', msgs);
+    mDBG.log('JSON Parsed : ', msgs);
 
-    return msgs.map(m => this.sanitizeMsg(m));
+    var results = [];
+    msgs.forEach((m) => {
+      try {
+        results.push(this.sanitizeMsg(m));
+      } catch (e) {
+        mDBG.error(e);
+      }
+    });
+    mDBG.log('Sanitized : ', results);
+
+    return results;
   };
 
   /**
@@ -202,8 +212,12 @@
    * @return {String} the messsage txt to sent
    */
   castingMessage.stringify = function (content) {
-    this.sanitizeMsg(content);
-    return JSON.stringify(content);
+    try {
+      return JSON.stringify(this.sanitizeMsg(content));
+    } catch (e) {
+      mDBG.error(e);
+      return '';
+    }
   };
 
   exports.castingMessage = castingMessage;

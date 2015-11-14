@@ -70,14 +70,20 @@
     return this._isInit && this._isInitConnection;
   };
 
-  proto.sendMsg = function (msg) {
+  proto.sendMsg = function (msg, onSent) {
     if (!this.isConnected()) {
       return;
     }
 
     // mDBG.log('Connector#sendMsg');
     // mDBG.log('msg = ', msg);
-    this._connection.send(castingMessage.stringify(msg));
+    var txt = castingMessage.stringify(msg);
+    if (txt) {
+      this._connection.send(txt);
+      if (typeof onSent == 'function') {
+        onSent();
+      }
+    }
   };
 
   proto.getControllingDeviceInfo = function () {
@@ -116,7 +122,7 @@
   /**
    * @return {number} The sequence of the status msg reported
    */
-  proto.reportStatus = function (status, data) {
+  proto.reportStatus = function (status, data, onReported) {
     if (!this.isConnected()) {
       return;
     }
@@ -125,7 +131,7 @@
 
     var msg = {
       'type': 'status',
-      'seq': ++this._lastSeqSent,
+      'seq': this._lastSeqSent + 1,
       'status': status,
       'time': data.time
     };
@@ -138,8 +144,12 @@
       msg.detail = data.detail;
     }
 
-    this.sendMsg(msg);
-    return this._lastSeqSent;
+    this.sendMsg(msg, () => {
+      ++this._lastSeqSent;
+      if (typeof onReported == 'function') {
+        onReported(this._lastSeqSent);
+      }
+    });
   };
 
   proto.handleRemoteMessage = function (msg) {
@@ -218,18 +228,13 @@
     if (!this.isConnected()) {
       return;
     }
-
     // mDBG.log('Connector#onConnectionMessage');
-
     var messages = castingMessage.parse(e.data);
-
     // mDBG.log('messages = ', messages);
-
     messages.sort((a, b) => { // Make sure message sequence
       return a.seq - b.seq;
     });
-
-    messages.forEach(message => this.handleRemoteMessage(message));
+      messages.forEach(message => this.handleRemoteMessage(message));
   };
 
   proto.onConnectionStateChange = function () {
