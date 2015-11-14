@@ -48,6 +48,7 @@
   proto.SEEK_ON_KEY_PRESS_NORMAL_STEP_SEC = 10;
   proto.SEEK_ON_KEY_PRESS_LARGE_STEP_SEC = 30;
   proto.INITIAL_MSG_MIN_DISPLAY_TIME_MS = 2000;
+  proto.REFOCUS_PLAY_BUTTON_AFTER_HIDDING_SEC = 60000;
 
   proto.init = function () {
 
@@ -215,7 +216,7 @@
           if (this.isControlPanelHiding()) {
             this._keyNav.focusOn(this._playButton);
           }
-        }, 60000);
+        }, this.REFOCUS_PLAY_BUTTON_AFTER_HIDDING_SEC);
       }
     } else {
 
