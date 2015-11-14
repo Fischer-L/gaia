@@ -73,68 +73,104 @@ suite('fling-player/Connector', function() {
       );
     }
 
-    setup(function () {
+    setup(function (done) {
       spy = sinon.spy(connector, 'sendMsg');
       msg = castingMsgTemplate.get().statusBuffering;
-      prevSeq = connector.reportStatus(msg.status, { time : msg.time });
+      connector.reportStatus(msg.status, { time : msg.time }, (seq) => {
+        prevSeq = seq;
+        done();
+      });
     });
 
-    test('should report status of buffering', function () {
+    test('should report status of buffering', function (done) {
       msg = castingMsgTemplate.get().statusBuffering;
-      currSeq = connector.reportStatus(msg.status, { time : msg.time });
-      assertReportStatus(spy, msg, prevSeq, currSeq);
+      connector.reportStatus(msg.status, { time : msg.time }, (seq) => {
+        currSeq = seq;
+        assertReportStatus(spy, msg, prevSeq, currSeq);
+        done();
+      });
     });
 
-    test('should report status of loaded', function () {
+    test('should report status of loaded', function (done) {
       msg = castingMsgTemplate.get().statusLoaded;
-      currSeq = connector.reportStatus(msg.status, { time : msg.time });
-      assertReportStatus(spy, msg, prevSeq, currSeq);
+      connector.reportStatus(msg.status, { time : msg.time }, (seq) => {
+        currSeq = seq;
+        assertReportStatus(spy, msg, prevSeq, currSeq);
+        done();
+      });
     });
 
-    test('should report status of buffered', function () {
+    test('should report status of buffered', function (done) {
       msg = castingMsgTemplate.get().statusBuffered;
-      currSeq = connector.reportStatus(msg.status, { time : msg.time });
-      assertReportStatus(spy, msg, prevSeq, currSeq);
+      connector.reportStatus(msg.status, { time : msg.time }, (seq) => {
+        currSeq = seq;
+        assertReportStatus(spy, msg, prevSeq, currSeq);
+        done();
+      });
     });
 
-    test('should report status of playing', function () {
+    test('should report status of playing', function (done) {
       msg = castingMsgTemplate.get().statusPlaying;
-      currSeq = connector.reportStatus(msg.status, { time : msg.time });
-      assertReportStatus(spy, msg, prevSeq, currSeq);
+      connector.reportStatus(msg.status, { time : msg.time }, (seq) => {
+        currSeq = seq;
+        assertReportStatus(spy, msg, prevSeq, currSeq);
+        done();
+      });
     });
 
-    test('should report status of seeked', function () {
+    test('should report status of seeked', function (done) {
       msg = castingMsgTemplate.get().statusSeeked;
-      currSeq = connector.reportStatus(msg.status, { time : msg.time });
-      assertReportStatus(spy, msg, prevSeq, currSeq);
+      connector.reportStatus(msg.status, { time : msg.time }, (seq) => {
+        currSeq = seq;
+        assertReportStatus(spy, msg, prevSeq, currSeq);
+        done();
+      });
     });
 
-    test('should report status of stopped', function () {
+    test('should report status of stopped', function (done) {
       msg = castingMsgTemplate.get().statusStopped;
-      currSeq = connector.reportStatus(msg.status, { time : msg.time });
-      assertReportStatus(spy, msg, prevSeq, currSeq);
+      connector.reportStatus(msg.status, { time : msg.time }, (seq) => {
+        currSeq = seq;
+        assertReportStatus(spy, msg, prevSeq, currSeq);
+        done();
+      });
     });
 
-    test('should report status of error', function () {
+    test('should report status of error', function (done) {
       msg = castingMsgTemplate.get().statusError;
-      currSeq = connector.reportStatus(msg.status, {
+      connector.reportStatus(msg.status, {
         time : msg.time,
         error : msg.error
+      }, (seq) => {
+        currSeq = seq;
+        assertReportStatus(spy, msg, prevSeq, currSeq);
+        done();
       });
-      assertReportStatus(spy, msg, prevSeq, currSeq);
     });
 
-    test('should not report status of unknown', function () {
-      msg = castingMsgTemplate.get().statusPlaying;
-      msg.status = 'unknown';
-      expect(() => connector.reportStatus(msg.status, { time : msg.time }))
-            .to.throw(/Ilegal status/);
+    test('should not report status of unknown', function (done) {
+      presentation.receiver.getConnection().then(function (conn) {
+        var spyOnReported = sinon.spy();
+        var spyOnConnSend = sinon.spy(conn, 'send');
+        msg = castingMsgTemplate.get().statusPlaying;
+        msg.status = 'unknown';
+        connector.reportStatus(msg.status, { time : msg.time }, spyOnReported);
+        assert.isFalse(spyOnReported.called, 'Should not report');
+        assert.isFalse(spyOnConnSend.called, 'Should not call conn.send');
+        done();
+      });
     });
 
-    test('should not report status without time', function () {
-      msg = castingMsgTemplate.get().statusPlaying;
-      expect(() => connector.reportStatus(msg.status, {}))
-            .to.throw(/Ilegal time/);
+    test('should not report status without time', function (done) {
+      presentation.receiver.getConnection().then(function (conn) {
+        var spyOnReported = sinon.spy();
+        var spyOnConnSend = sinon.spy(conn, 'send');
+        msg = castingMsgTemplate.get().statusPlaying;
+        connector.reportStatus(msg.status, {}, spyOnReported);
+        assert.isFalse(spyOnReported.called, 'Should not report');
+        assert.isFalse(spyOnConnSend.called, 'Should not call conn.send');
+        done();
+      });
     });
   });
 
@@ -255,62 +291,6 @@ suite('fling-player/Connector', function() {
       });
     });
 
-    test('should not handle unknown request message', function () {
-      msg = castingMsgTemplate.get().pause;
-      msg.type = 'unknown';
-      expect(() => presentation.mCastMsgToReceiver(msg))
-            .to.throw(/Unknown type of casting message/);
-      assertNotHandled(spy, msg);
-      assertRequestCallCount({
-        loadRequestCount : 0,
-        playRequestCount : 0,
-        seekRequestCount : 0,
-        pauseRequestCount : 0
-      });
-    });
-
-    test('should not handle load message without url', function () {
-      msg = castingMsgTemplate.get().load;
-      delete msg.url;
-      expect(() => presentation.mCastMsgToReceiver(msg))
-            .to.throw(/Ilegal url/);
-      assertNotHandled(spy, msg);
-      assertRequestCallCount({
-        loadRequestCount : 0,
-        playRequestCount : 0,
-        seekRequestCount : 0,
-        pauseRequestCount : 0
-      });
-    });
-
-    test('should not fire seekRequest without seeking time', function () {
-      msg = castingMsgTemplate.get().seek;
-      delete msg.time;
-      expect(() => presentation.mCastMsgToReceiver(msg))
-            .to.throw(/Ilegal time/);
-      assertNotHandled(spy, msg);
-      assertRequestCallCount({
-        loadRequestCount : 0,
-        playRequestCount : 0,
-        seekRequestCount : 0,
-        pauseRequestCount : 0
-      });
-    });
-
-    test('should not handle seekRequest with seeking time of NaN', function () {
-      msg = castingMsgTemplate.get().seek;
-      msg.time = NaN;
-      expect(() => presentation.mCastMsgToReceiver(msg))
-            .to.throw(/Ilegal time/);
-      assertNotHandled(spy, msg);
-      assertRequestCallCount({
-        loadRequestCount : 0,
-        playRequestCount : 0,
-        seekRequestCount : 0,
-        pauseRequestCount : 0
-      });
-    });
-
     test('should fire multiple request messages at once', function () {
       var msgs = [
         castingMsgTemplate.get().load,
@@ -330,6 +310,63 @@ suite('fling-player/Connector', function() {
         pauseRequestCount : 1
       });
       assert.isTrue(spyOnLoadRequest.calledWithExactly({ url : msgs[0].url }));
+    });
+
+    test('should not handle unknown request message', function () {
+      var msgs = [
+        castingMsgTemplate.get().pause,
+        castingMsgTemplate.get().play,
+        castingMsgTemplate.get().play
+      ];
+      msgs[0].seq = 10000;
+      msgs[1].seq = 1 + msgs[0].seq;
+      msgs[2].seq = 1 + msgs[1].seq;
+      msgs[1].type = 'unknown';
+      presentation.mCastMsgToReceiver(msgs);
+
+      assert.equal(spy.callCount, 2);
+      assertRequestCallCount({
+        loadRequestCount : 0,
+        playRequestCount : 1,
+        seekRequestCount : 0,
+        pauseRequestCount : 1
+      });
+    });
+
+    test('should not handle load message without url', function () {
+      msg = castingMsgTemplate.get().load;
+      delete msg.url;
+      assertNotHandled(spy, msg);
+      assertRequestCallCount({
+        loadRequestCount : 0,
+        playRequestCount : 0,
+        seekRequestCount : 0,
+        pauseRequestCount : 0
+      });
+    });
+
+    test('should not fire seekRequest without seeking time', function () {
+      msg = castingMsgTemplate.get().seek;
+      delete msg.time;
+      assertNotHandled(spy, msg);
+      assertRequestCallCount({
+        loadRequestCount : 0,
+        playRequestCount : 0,
+        seekRequestCount : 0,
+        pauseRequestCount : 0
+      });
+    });
+
+    test('should not handle seekRequest with seeking time of NaN', function () {
+      msg = castingMsgTemplate.get().seek;
+      msg.time = NaN;
+      assertNotHandled(spy, msg);
+      assertRequestCallCount({
+        loadRequestCount : 0,
+        playRequestCount : 0,
+        seekRequestCount : 0,
+        pauseRequestCount : 0
+      });
     });
   });
 });

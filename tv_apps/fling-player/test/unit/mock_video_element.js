@@ -55,6 +55,17 @@
     listeners.push(listener);
   };
 
+  proto.removeEventListener = function (type, listener) {
+    var listeners = this._events[type];
+    if (listeners) {
+      var i = listeners.indexOf(listener);
+      if (i >= 0) {
+        this._events[type] = listeners.slice(0, i)
+                                      .concat(listeners.slice(i + 1));
+      }
+    }
+  };
+
   proto.removeAttribute = function (attr) {
     this[attr] = '';
   };

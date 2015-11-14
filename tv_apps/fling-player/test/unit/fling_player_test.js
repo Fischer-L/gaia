@@ -103,11 +103,11 @@ suite('fling-player/fling_player', function () {
       flingPlayer.resetUI();
 
       waitForUIUpdate(() => {
-        assert.equal(playButton.getAttribute('data-icon'), 'fling-player-play');
         assert.equal(elapsedTime.textContent, '00:00', 'elapsedTime');
         assert.equal(durationTime.textContent, '00:00', 'durationTime');
         assert.equal(elapsedTimeBar.style.width, '0%', 'elapsedTimeBar');
         assert.equal(bufferedTimeBar.style.width, '0%', 'bufferedTimeBar');
+        assert.equal(playButton.getAttribute('data-icon'), 'fling-player-play');
         done();
       });
     });
@@ -617,23 +617,54 @@ suite('fling-player/fling_player', function () {
     });
 
     test('should handle ended event', function () {
-      var spyOnShowControlPanel = sinon.spy(flingPlayer, 'showControlPanel');
-      var spyOnSetPlayButtonState =
-              sinon.spy(flingPlayer, 'setPlayButtonState');
+      var spyOnSeek = sinon.spy(flingPlayer, 'seek');
+      var spyOnResetUI = sinon.spy(flingPlayer, 'resetUI');
+      var spyOnWriteTimeInfo = sinon.spy(flingPlayer, 'writeTimeInfo');
+      var spyOnAddEventListener = sinon.spy(mockVideo, 'addEventListener');
+      var spyOnRemoveEventListener =
+            sinon.spy(mockVideo, 'removeEventListener');
 
       mockVideo.fireEvent(new Event('ended'));
 
       assert.isTrue(
-        spyOnShowControlPanel.withArgs().calledOnce,
-        'Not show control panel'
+        spyOnSeek.withArgs(0, {
+          autoPlayOnSeeked: false, autoHideControlPanel: false
+        }).calledOnce,
+        'Not seek back to the 1st frame'
       );
       assert.isTrue(
-        spyOnSetPlayButtonState.withArgs('paused').calledOnce,
-        'Not set play button to paused state'
+        spyOnResetUI.withArgs().calledOnce,
+        'Not reset UI'
+      );
+      assert.isTrue(
+        spyOnWriteTimeInfo.withArgs(
+          'duration', videoPlayer.getRoundedDuration()
+        ).calledOnce,
+        'Not write duration info'
       );
       assert.isTrue(
         spyOnReportStatus.withArgs('stopped', data).calledOnce,
         'Not report correct status'
+      );
+      assert.isTrue(
+        spyOnRemoveEventListener.calledWith('waiting'),
+        'Not prevent from showing loading UI when waiting'
+      );
+      assert.isTrue(
+        spyOnRemoveEventListener.calledWith('timeupdate'),
+        'Not stop updating control panel'
+      );
+
+      mockVideo.fireEvent(new Event('seeked'));
+
+
+      assert.isTrue(
+        spyOnAddEventListener.calledWith('waiting'),
+        'Not restore to show waiting UI when waiting'
+      );
+      assert.isTrue(
+        spyOnAddEventListener.calledWith('timeupdate'),
+        'Not restore to update control panel'
       );
     });
 
