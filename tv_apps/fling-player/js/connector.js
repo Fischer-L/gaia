@@ -38,12 +38,17 @@
       return;
     }
 
-    // mDBG.log('Connector#init');
+    mDBG.log('Connector#init');
+    if (!this._presentation) {
+      throw new Error('Init connection without the presentation object.');
+    }
+
     this._isInit = true;
 
     this._presentation.receiver.getConnection().then(
       this._initConnection.bind(this)
     );
+
     this._presentation.receiver.onconnectionavailable = (e) => {
       this._presentation.receiver.getConnection().then(
         this._initConnection.bind(this)
@@ -52,12 +57,14 @@
   };
 
   proto._initConnection = function (connection) {
+
     if (this._isInitConnection) {
       return;
     }
 
-    // mDBG.log('Connector#_initConnection');
-    // mDBG.log('this._connection = ', connection);
+    mDBG.log('Connector#_initConnection');
+    mDBG.log('this._connection = ', connection);
+    mDBG.log('this._connection.binaryType = ', connection.binaryType);
     this._connection = connection;
     this._isInitConnection = true;
     this.fire('connected');
@@ -71,13 +78,13 @@
   };
 
   proto.sendMsg = function (msg) {
-    if (!this.isConnected()) {
-      return;
-    }
-
-    // mDBG.log('Connector#sendMsg');
-    // mDBG.log('msg = ', msg);
+    mDBG.log('Connector#sendMsg');
+    mDBG.log('msg = ', msg);
     this._connection.send(castingMessage.stringify(msg));
+    var txt = castingMessage.stringify(msg);
+    if (txt) {
+      this._connection.send(txt);
+    }
   };
 
   proto.getControllingDeviceInfo = function () {
@@ -219,7 +226,8 @@
       return;
     }
 
-    // mDBG.log('Connector#onConnectionMessage');
+    mDBG.log('Connector#onConnectionMessage');
+    mDBG.log('this._connection.binaryType = ', this._connection.binaryType);
 
     var messages = castingMessage.parse(e.data);
 

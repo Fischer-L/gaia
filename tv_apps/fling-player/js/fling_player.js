@@ -48,9 +48,11 @@
   proto.SEEK_ON_KEY_PRESS_NORMAL_STEP_SEC = 10;
   proto.SEEK_ON_KEY_PRESS_LARGE_STEP_SEC = 30;
   proto.INITIAL_MSG_MIN_DISPLAY_TIME_MS = 2000;
+  proto.REFOCUS_PLAY_BUTTON_AFTER_HIDDING_SEC = 60000;
 
   proto.init = function () {
 
+    this._autoPlayOnSeeked = true;
     this._seekOnKeyPressTimer = null;
     this._seekOnKeyPressDirection = null; // 'backward' or 'forward'
     this._seekOnKeyPressStartTime = null; // in ms
@@ -111,15 +113,16 @@
   };
 
   proto._initPlayer = function () {
+    var video = this._player.getVideo();
     this._player.init();
-    this._player.addEventListener('loadedmetadata', this);
-    this._player.addEventListener('timeupdate', this);
-    this._player.addEventListener('waiting', this);
-    this._player.addEventListener('playing', this);
-    this._player.addEventListener('seeked', this);
-    this._player.addEventListener('pause', this);
-    this._player.addEventListener('ended', this);
-    this._player.addEventListener('error', this);
+    video.addEventListener('loadedmetadata', this);
+    video.addEventListener('timeupdate', this);
+    video.addEventListener('waiting', this);
+    video.addEventListener('playing', this);
+    video.addEventListener('seeked', this);
+    video.addEventListener('pause', this);
+    video.addEventListener('ended', this);
+    video.addEventListener('error', this);
   };
 
   // UI handling
@@ -130,6 +133,7 @@
     this.writeTimeInfo('elapsed', 0);
     this.writeTimeInfo('duration', 0);
     this.setPlayButtonState('paused');
+    this._keyNav.focusOn(this._playButton);
   };
 
   proto.showLoading = function (loading) {
@@ -208,8 +212,12 @@
       if (!this.isControlPanelHiding()) {
         this._keyNav.pause();
         this._controlPanel.classList.add('fade-out');
+        setTimeout(() => {
+          if (this.isControlPanelHiding()) {
+            this._keyNav.focusOn(this._playButton);
+          }
+        }, this.REFOCUS_PLAY_BUTTON_AFTER_HIDDING_SEC);
       }
-
     } else {
 
       this._hideControlsTimer = setTimeout(() => {
@@ -347,11 +355,18 @@
     }
   };
 
-  proto.seek = function (sec) {
+  proto.seek = function (sec, opt) {
+    if (!(opt instanceof Object)) {
+      opt = {
+        autoPlayOnSeeked: true,
+        autoHideControlPanel: true
+      };
+    }
     this._player.seek(sec);
     this.moveTimeBar('elapsed', sec);
     this.writeTimeInfo('elapsed', sec);
-    this.showControlPanel(true);
+    this._autoPlayOnSeeked = !!opt.autoPlayOnSeeked;
+    this.showControlPanel(!!opt.autoHideControlPanel);
   };
 
   // Video handling end
@@ -383,24 +398,42 @@
 
       case 'playing':
         this.showLoading(false);
+        this.hideControlPanel();
         this.toggleInitialMessage(false);
         this._connector.reportStatus('buffered', data);
         this._connector.reportStatus('playing', data);
       break;
 
       case 'seeked':
-        this.play();
+        if (this._autoPlayOnSeeked) {
+          this.play();
+        }
         this._connector.reportStatus('seeked', data);
       break;
 
       case 'pause':
-        this.showControlPanel(true);
+        this.showControlPanel();
         this._connector.reportStatus('stopped', data);
       break;
 
       case 'ended':
-        this.showControlPanel();
-        this.setPlayButtonState('paused'); // Make sure state changed at ending
+        // Stop updating the controal panel and prevent from showing loading UI.
+        // Restore these actions once back to the very 1st frame.
+        var handle = () => {
+          this._player.getVideo().addEventListener('waiting', this);
+          this._player.getVideo().addEventListener('timeupdate', this);
+          this._player.getVideo().removeEventListener('seeked', handle);
+        };
+        this._player.getVideo().addEventListener('seeked', handle);
+        this._player.getVideo().removeEventListener('waiting', this);
+        this._player.getVideo().removeEventListener('timeupdate', this);
+        // Go back to the very 1st frame on ended and reset the control panel
+        this.resetUI();
+        this.writeTimeInfo('duration', this._player.getRoundedDuration());
+        this.seek(0, {
+          autoPlayOnSeeked: false,
+          autoHideControlPanel: false
+        });
         this._connector.reportStatus('stopped', data);
       break;
 
@@ -413,7 +446,6 @@
   };
 
   proto.onLoadRequest = function (e) {
-    mDBG.log('FlingPlayer#onLoadRequest');
     this.resetUI();
     this.showLoading(true);
     this._player.load(e.url);
@@ -426,9 +458,6 @@
                           typeof info.displayName == 'string'
                       ) {
                         name = info.displayName;
-                        mDBG.log(
-                          'Contorlling Device Info - displayName = ' + name
-                        );
                       }
 
                       this._initialMsg.textContent =
