@@ -551,7 +551,7 @@
   window.addEventListener('load', function() {
 
     // TMP DEL
-    if (mDBG.isDBG() && 0) {
+    if (mDBG.isDBG() && 1) {
 
       var env_testOnB2G = 0;
 
@@ -609,7 +609,7 @@
                'H264_test5_voice_mp4_480x360.mp4'
           ];
           var m = castingMsgTemplate.get().load;
-          m.url = videos[0];
+          m.url = videos[2];
           mockPresentation.mCastMsgToReceiver(m);
         }.bind(mockPresentation);
 

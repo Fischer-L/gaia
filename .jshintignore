@@ -84,6 +84,7 @@ tv_apps/tv-deck/bower_components/**
 tv_apps/tv-epg/bower_components/**
 tv_apps/remote-control/bower_components/**
 tv_apps/remote-control-client/bower_components/**
+tv_apps/fling-player/js/TMP/**
 tests/atoms/remote_date.js
 tests/atoms/screenshot.js
 tests/jsmarionette/client/marionette-client/docs/**
