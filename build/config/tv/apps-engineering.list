@@ -20,3 +20,4 @@ apps/keyboard
 outoftree_apps/*
 dev_apps/test-agent
 dev_apps/uitest
+external-apps/*

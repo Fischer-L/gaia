@@ -35,5 +35,5 @@ dev_apps/music-oga
 apps/settings/test/fixtures/addon1
 apps/settings/test/fixtures/addon2
 apps/settings/test/fixtures/addon3
-
 distros/raptor/apps/test-startup-limit
+external-apps/*
