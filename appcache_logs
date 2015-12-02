@@ -1,0 +1,83 @@
+webapps_abserver/< shell.js
+  @949:
+    - Called from Services.obs.notifyObservers(null, "webapps-launch", JSON.stringify(appClone)); @ 1684, Webapps.jsm
+    json = {
+      appStatus: 1,
+      basePath: '/data/local/webapps',
+      id: '{5a746095-a70b-a540-9cac-516f9797105a}',
+      eTag: '27b-51bcd61d2bdc0',
+      kind: 'hosted-appcache',
+      manifestURL: '"https://bits.wikimedia.org/WikipediaMobileFirefoxOS/manifest.webapp',
+      name: 'Wikipedia',
+      origin: "https://bits.wikimedia.org"
+    }
+  @957:
+    - aManifest = {
+      "appcache_path":"/WikipediaMobileFirefoxOS/app.appcache",
+      "name":"Wikipedia",
+      "default_locale":"en",
+      "icons":{...},
+      launch_path: '/WikipediaMobileFirefoxOS/',
+      name: 'Wikipedia',
+      ...
+    }
+  @960:
+    - manifest = {
+      _baseURI: {
+        asciiSpec: "https://bits.wikimedia.org/WikipediaMobileFirefoxOS/manifest.webapp",
+        host: "bits.wikimedia.org",
+        hostPort: "bits.wikimedia.org",
+        path: '/WikipediaMobileFirefoxOS/manifest.webapp',
+        prePath: "https://bits.wikimedia.org",
+        spec: 'https://bits.wikimedia.org/WikipediaMobileFirefoxOS/manifest.webapp',
+        specIgnoringRef: 'https://bits.wikimedia.org/WikipediaMobileFirefoxOS/manifest.webapp'
+      },
+      _localeRoot: {
+        appcache_path: '/WikipediaMobileFirefoxOS/app.appcache',
+        launch_path: '/WikipediaMobileFirefox4930,OS/',
+        ...
+      },
+      _manifest: {
+        appcache_path: '/WikipediaMobileFirefoxOS/app.appcache',
+        launch_path: '/WikipediaMobileFirefoxOS/',
+        ....
+      },
+      _manifestURL: {
+        asciiSpec: "https://bits.wikimedia.org/WikipediaMobileFirefoxOS/manifest.webapp",
+        host: "bits.wikimedia.org",
+        hostPort: "bits.wikimedia.org",
+        path: '/WikipediaMobileFirefoxOS/manifest.webapp',
+        prePath: "https://bits.wikimedia.org",
+        spec: 'https://bits.wikimedia.org/WikipediaMobileFirefoxOS/manifest.webapp',
+        specIgnoringRef: 'https://bits.wikimedia.org/WikipediaMobileFirefoxOS/manifest.webapp',
+        ...
+      }
+    }
+  @964:
+    - manifest.fullLaunchPath(json.startPoint) => "https://bits.wikimedia.org/WikipediaMobileFirefoxOS/
+
+
+
+  OfflineCacheInstaller.jsm
+    237, 184, 174, 153, 144, 73
+
+  Webapps.jsm
+    1274, 1653, 1643, 1646, 200, 507, 509, 5020, 2000, 2099, 2155, 2165, 1747, 2201, 4918, 3020
+
+  Webapp.js
+    871, 575, 418, 335, 46, 740, 756
+
+  shell.js
+    957
+
+  app_transition_controller.js
+    102, 172
+
+  app_window_factory.js
+    103
+
+  app_window_manager
+    363, 385
+
+  AppsUtils.jsm
+    46, 240
