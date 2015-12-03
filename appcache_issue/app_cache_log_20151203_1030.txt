@@ -1,0 +1,912 @@
+12-02 21:35:30.129: D/QCamera3HWI(8644): static int8_t qcamera::QCamera3HardwareInterface::lookupFwkName(const qcamera::QCamera3HardwareInterface::QCameraMap*, int, int): Cannot find matching framework type
+12-02 21:35:30.129: D/QCamera3HWI(8644): static int8_t qcamera::QCamera3HardwareInterface::lookupFwkName(const qcamera::QCamera3HardwareInterface::QCameraMap*, int, int): Cannot find matching framework type
+12-02 21:35:30.129: E/mm-camera-intf(8644): mm_camera_open: dev name = /dev/video2, cam_idx = 2
+12-02 21:35:30.129: E/mm-camera-sensor(198): module_sensor_start_session:577 session 2
+12-02 21:35:30.149: I/GeckoConsole(8643): Failed to load native module at path '/system/b2g/components/libtest656331.so': (80004005) dlopen failed: library "/system/b2g/components/libtest656331.so" not found
+12-02 21:35:30.149: I/GeckoConsole(8643): Failed to load native module at path '/system/b2g/components/libtestcompnoaslr.so': (80004005) dlopen failed: library "/system/b2g/components/libtestcompnoaslr.so" not found
+12-02 21:35:30.149: I/GeckoConsole(8643): Failed to load native module at path '/system/b2g/components/libtestcomponent.so': (80004005) dlopen failed: library "/system/b2g/components/libtestcomponent.so" not found
+12-02 21:35:30.149: D/qdutils(8643): DEBUG_CALC_FPS: 0
+12-02 21:35:30.149: D/qdutils(8643): period: 10
+12-02 21:35:30.149: D/qdutils(8643): ignorethresh_us: 500000
+12-02 21:35:30.359: E/mm-camera-sensor(198): module_sensor_init_session:471 ois device is not supported
+12-02 21:35:30.359: I/mm-camera(198): gyro_module_start_session: Enter
+12-02 21:35:30.359: I/mm-camera(198): gyro_module_start_session: Init DSPS
+12-02 21:35:30.359: I/mm-camera(198): gyro_module_start_session: Exit successful
+12-02 21:35:30.359: I/mm-camera(198): gyro_module_get_port: Exit successful
+12-02 21:35:30.359: E/mm-camera(198): cpp_module_start_session:352, info: starting session 2
+12-02 21:35:30.379: E/mm-camera(198): cpp_thread_func:55: cpp_thread entering the polling loop...
+12-02 21:35:30.379: E/mm-camera(198): cpp_module_start_session:422, info: cpp_thread created.
+12-02 21:35:30.379: E/mm-camera(198): cpp_module_start_session:425, info: session 2 started.
+12-02 21:35:30.379: E/mm-camera(198): c2d_module_start_session:246, info: starting session 2
+12-02 21:35:30.379: E/mm-camera(198): c2d_module_start_session:284, info: c2d_thread created.
+12-02 21:35:30.389: E/mm-camera(198): c2d_module_start_session:306, info: session 2 started.
+12-02 21:35:30.389: E/mm-camera-sensor(198): module_module_set_session_data:2435 max delay 2 report dSelay 1
+12-02 21:35:30.389: E/mm-camera(198): module_faceproc_set_session_data:1826] Per frame control 2 1
+12-02 21:35:30.389: E/mm-camera(198): c2d_thread_func:39: c2d_thread entering the polling loop...
+12-02 21:35:30.389: E/mm-camera-intf(8644): mm_camera_open:  opened, break out while loop
+12-02 21:35:30.389: E/mm-camera(198): mct_pipeline_process_set:command=800000b
+12-02 21:35:30.389: E/mm-camera(198): mct_pipeline_get_stream: no children
+12-02 21:35:30.389: E/mm-camera(198): mct_pipeline_process_set:1370: Couldn't find stream
+12-02 21:35:30.389: E/mm-camera-sensor(198): module_sensor_stop_session:630 session 2
+12-02 21:35:30.399: I/Gecko(8643): [8643] WARNING: NS_ENSURE_TRUE(lowMemFd != -1) failed: file ../../../../gecko-dev/widget/gonk/GonkMemoryPressureMonitoring.cpp, line 130
+12-02 21:35:30.479: E/mm-camera(198): stats_module_stop_session: list =0xb7a4ff60, remove port =0xb7a458d8 name=stats_sink from module=0xb7a33778, name=stats
+12-02 21:35:30.479: E/mm-camera(198): stats_module_stop_session: 1 port =0xb7a458d8 name=stats_sink 
+12-02 21:35:30.479: E/mm-camera(198): stats_module_stop_session: 2 port =0xb7a458d8 name=stats_sink 
+12-02 21:35:30.479: I/mm-camera(198): gyro_module_stop_session: Enter
+12-02 21:35:30.479: I/mm-camera(198): gyro_module_stop_session: Deinit DSPS
+12-02 21:35:30.479: I/mm-camera(198): gyro_module_stop_session: Exit successful
+12-02 21:35:30.479: E/mm-camera(198): stats_module_stop_session: 3 port =0xb7a458d8 name=stats_sink 
+12-02 21:35:30.479: E/mm-camera(198): cpp_module_stop_session:453, info: stopping session 2 ...
+12-02 21:35:30.479: E/mm-camera(198): cpp_thread_process_pipe_message:359, CPP_THREAD_MSG_ABORT: cpp_thread exiting..
+12-02 21:35:30.489: E/mm-camera(198): cpp_module_stop_session:495, info: session 2 stopped.
+12-02 21:35:30.489: E/mm-camera(198): c2d_module_stop_session:322, info: stopping session 2 ...
+12-02 21:35:30.489: E/mm-camera(198): c2d_module_stop_session:327, info: stopping c2d_thread...
+12-02 21:35:30.489: E/mm-camera(198): c2d_module_post_msg_to_thread:381, msg.type=1
+12-02 21:35:30.489: E/mm-camera(198): c2d_thread_process_pipe_message:503, C2D_THREAD_MSG_ABORT: c2d_thread exiting..
+12-02 21:35:30.489: E/mm-camera(198): c2d_module_stop_session:339, closing c2d subdev...
+12-02 21:35:30.489: E/mm-camera(198): c2d_module_stop_session:361, info: session 2 stopped.
+12-02 21:35:30.489: D/QCamera3HWI(8644): static int8_t qcamera::QCamera3HardwareInterface::lookupFwkName(const qcamera::QCamera3HardwareInterface::QCameraMap*, int, int): Cannot find matching framework type
+12-02 21:35:30.489: D/QCamera3HWI(8644): static int8_t qcamera::QCamera3HardwareInterface::lookupFwkName(const qcamera::QCamera3HardwareInterface::QCameraMap*, int, int): Cannot find matching framework type
+12-02 21:35:30.489: D/QCamera3HWI(8644): static int8_t qcamera::QCamera3HardwareInterface::lookupFwkName(const qcamera::QCamera3HardwareInterface::QCameraMap*, int, int): Cannot find matching framework type
+12-02 21:35:30.489: D/QCamera3HWI(8644): static int8_t qcamera::QCamera3HardwareInterface::lookupFwkName(const qcamera::QCamera3HardwareInterface::QCameraMap*, int, int): Cannot find matching framework type
+12-02 21:35:30.489: D/QCamera3HWI(8644): static int8_t qcamera::QCamera3HardwareInterface::lookupFwkName(const qcamera::QCamera3HardwareInterface::QCameraMap*, int, int): Cannot find matching framework type
+12-02 21:35:30.489: D/QCamera3HWI(8644): static int8_t qcamera::QCamera3HardwareInterface::lookupFwkName(const qcamera::QCamera3HardwareInterface::QCameraMap*, int, int): Cannot find matching framework type
+12-02 21:35:30.489: D/QCamera3HWI(8644): static int8_t qcamera::QCamera3HardwareInterface::lookupFwkName(const qcamera::QCamera3HardwareInterface::QCameraMap*, int, int): Cannot find matching framework type
+12-02 21:35:30.489: D/QCamera3HWI(8644): static int8_t qcamera::QCamera3HardwareInterface::lookupFwkName(const qcamera::QCamera3HardwareInterface::QCameraMap*, int, int): Cannot find matching framework type
+12-02 21:35:30.489: I/CameraService(8644): Loaded "QCamera Module" camera module
+12-02 21:35:30.489: I/AudioPolicyManagerBase(8644): loadAudioPolicyConfig() loaded /system/etc/audio_policy.conf
+12-02 21:35:30.499: D/audio_hw_primary(8644): adev_open: enter
+12-02 21:35:30.589: D/(8644): [ACDB Command]->SW Minor/Major version mismatch warning /etc/Bluetooth_cal.acdb
+12-02 21:35:30.589: D/(8644): [ACDB Command]->ACDB Sw Major = 2, ACDB Sw Minor = 0
+12-02 21:35:30.589: D/(8644): [ACDB Command]->ACDB File Major = 1, ACDB File Minor = 3
+12-02 21:35:30.589: D/(8644): [ACDB Command]->SW Minor/Major version mismatch warning /etc/General_cal.acdb
+12-02 21:35:30.589: D/(8644): [ACDB Command]->ACDB Sw Major = 2, ACDB Sw Minor = 0
+12-02 21:35:30.589: D/(8644): [ACDB Command]->ACDB File Major = 1, ACDB File Minor = 3
+12-02 21:35:30.589: D/(8644): [ACDB Command]->SW Minor/Major version mismatch warning /etc/Global_cal.acdb
+12-02 21:35:30.589: D/(8644): [ACDB Command]->ACDB Sw Major = 2, ACDB Sw Minor = 0
+12-02 21:35:30.589: D/(8644): [ACDB Command]->ACDB File Major = 1, ACDB File Minor = 3
+12-02 21:35:30.589: D/(8644): [ACDB Command]->SW Minor/Major version mismatch warning /etc/Handset_cal.acdb
+12-02 21:35:30.589: D/(8644): [ACDB Command]->ACDB Sw Major = 2, ACDB Sw Minor = 0
+12-02 21:35:30.589: D/(8644): [ACDB Command]->ACDB File Major = 1, ACDB File Minor = 3
+12-02 21:35:30.589: D/(8644): [ACDB Command]->SW Minor/Major version mismatch warning /etc/Hdmi_cal.acdb
+12-02 21:35:30.589: D/(8644): [ACDB Command]->ACDB Sw Major = 2, ACDB Sw Minor = 0
+12-02 21:35:30.589: D/(8644): [ACDB Command]->ACDB File Major = 1, ACDB File Minor = 3
+12-02 21:35:30.589: D/(8644): [ACDB Command]->SW Minor/Major version mismatch warning /etc/Headset_cal.acdb
+12-02 21:35:30.589: D/(8644): [ACDB Command]->ACDB Sw Major = 2, ACDB Sw Minor = 0
+12-02 21:35:30.589: D/(8644): [ACDB Command]->ACDB File Major = 1, ACDB File Minor = 3
+12-02 21:35:30.589: D/(8644): [ACPH]->Online service registered with ACPH
+12-02 21:35:30.589: E/Diag_Lib(8644):  Diag_LSM_Init: Failed to open handle to diag driver, error = 2
+12-02 21:35:30.589: E/Diag_Lib(8644):  diagpkt_tbl_reg: Registration failed.
+12-02 21:35:30.589: D/(8644): [ACPH]->ACPH init success
+12-02 21:35:30.589: D/(8644): [ACPH]->DSP RTC service registered with ACPH
+12-02 21:35:30.599: D/(8644): [ACPH]->ADIE RTC service registered with ACPH
+12-02 21:35:30.599: D/(8644): ACDBFILE_MGR: Property for the pid 00012E47 not found
+12-02 21:35:30.599: D/(8644): ACDB_COMMAND: Failed to fetch the property info for pid 00012E47 
+12-02 21:35:30.599: E/ACDB-LOADER(8644): Error: ACDB get adm topologies returned = -18
+12-02 21:35:30.599: D/(8644): ACDBFILE_MGR: Property for the pid 00012E48 not found
+12-02 21:35:30.599: D/(8644): ACDB_COMMAND: Failed to fetch the property info for pid 00012E48 
+12-02 21:35:30.599: E/ACDB-LOADER(8644): Error: ACDB get asm topologies returned = -18
+12-02 21:35:30.609: D/(8644): Failed to fetch the lookup information of the device 00000067 
+12-02 21:35:30.609: E/ACDB-LOADER(8644): Error: ACDB ANC returned = -1
+12-02 21:35:30.609: I/AudioFlinger(8644): loadHwModule() Loaded primary audio interface from QCOM Audio HAL (audio) handle 1
+12-02 21:35:30.609: I/AudioFlinger(8644): HAL output buffer size 240 frames, normal mix buffer size 960 frames
+12-02 21:35:30.609: I/AudioMixer(8644): found effect "Multichannel Downmix To Stereo" from The Android Open Source Project
+12-02 21:35:30.609: E/MonoPipe(8644): Failed to fetch local time frequency when constructing a MonoPipe (res = -32).  getNextWriteTimestamp calls will be non-functional
+12-02 21:35:30.609: I/AudioFlinger(8644): Using module 1 has the primary audio interface
+12-02 21:35:30.609: I/AudioFlinger(8644): AudioFlinger's thread 0xb5e18008 ready to run
+12-02 21:35:30.609: W/AudioFlinger(8644): Thread AudioOut_2 cannot connect to the power manager service
+12-02 21:35:30.609: D/audio_hw_primary(8644): out_set_parameters: enter: usecase(1: low-latency-playback) kvpairs: routing=2
+12-02 21:35:30.609: W/AudioFlinger(8644): Thread AudioOut_2 cannot connect to the power manager service
+12-02 21:35:30.609: W/AudioFlinger(8644): Thread AudioOut_2 cannot connect to the power manager service
+12-02 21:35:30.609: E/AudioFlinger(8644): no wake lock to update!
+12-02 21:35:30.609: I/AudioFlinger(8644): HAL output buffer size 960 frames, normal mix buffer size 960 frames
+12-02 21:35:30.609: I/AudioMixer(8644): found effect "Multichannel Downmix To Stereo" from The Android Open Source Project
+12-02 21:35:30.609: I/AudioFlinger(8644): AudioFlinger's thread 0xb5baa008 ready to run
+12-02 21:35:30.609: W/AudioFlinger(8644): Thread AudioOut_3 cannot connect to the power manager service
+12-02 21:35:30.609: W/AudioFlinger(8644): Thread AudioOut_3 cannot connect to the power manager service
+12-02 21:35:30.609: D/audio_hw_primary(8644): out_set_parameters: enter: usecase(0: deep-buffer-playback) kvpairs: routing=2
+12-02 21:35:30.609: W/AudioFlinger(8644): Thread AudioOut_3 cannot connect to the power manager service
+12-02 21:35:30.609: E/AudioFlinger(8644): no wake lock to update!
+12-02 21:35:30.609: I/audio_a2dp_hw(8644): adev_open:  adev_open in A2dp_hw module
+12-02 21:35:30.609: I/AudioFlinger(8644): loadHwModule() Loaded a2dp audio interface from A2DP Audio HW HAL (audio) handle 4
+12-02 21:35:30.609: I/AudioFlinger(8644): loadHwModule() Loaded usb audio interface from USB audio HW HAL (audio) handle 5
+12-02 21:35:30.609: I/r_submix(8644): adev_open(name=audio_hw_if)
+12-02 21:35:30.609: I/r_submix(8644): adev_init_check()
+12-02 21:35:30.609: I/AudioFlinger(8644): loadHwModule() Loaded r_submix audio interface from Wifi Display audio HAL (audio) handle 6
+12-02 21:35:30.609: I/AudioPolicyService(8644): Loaded audio policy from LEGACY Audio Policy HAL (audio_policy)
+12-02 21:35:30.709: I/Gecko(8643): [8643] WARNING: Failed to create Addons Manager.: file /home/fischer/Projects/gecko-dev/toolkit/xre/nsXREDirProvider.cpp, line 883
+12-02 21:35:31.529: I/VolumeManager(8643): changing state from 'Uninitialized' to 'Starting'
+12-02 21:35:31.529: I/VolumeManager(8643): Connected to vold
+12-02 21:35:31.529: I/VolumeManager(8643): Volume sdcard (1): changing state from Init to Mounted @ '/mnt/shell/emulated/0' (1 observers) mountGeneration = 1, locked = 0
+12-02 21:35:31.529: I/VolumeManager(8643): READY: Volume: sdcard (1) is Mounted and inserted @ /mnt/shell/emulated/0 gen 1 locked 0
+12-02 21:35:31.529: I/VolumeManager(8643): READY:   Sharing x Mounting n Formating n Unmounting n
+12-02 21:35:31.529: I/VolumeManager(8643): changing state from 'Starting' to 'Volumes Ready'
+12-02 21:35:31.539: I/AutoMounter(8643): UpdateState: ums:A0C0E0 mtp:A1C0E0 mode:0 usb:1 tryToShare:0 state:IDLE
+12-02 21:35:31.539: I/AutoMounter(8643): UpdateState: Volume sdcard is Mounted and inserted @ /mnt/shell/emulated/0 gen 1 locked 0 sharing x
+12-02 21:35:31.609: I/Gecko(8643): MobileConnectionService: init complete
+12-02 21:35:31.789: I/Gecko(8643): 1449110131794	Marionette	INFO	Marionette enabled via build flag and pref
+12-02 21:35:33.539: I/Gecko(8643): 1449110133548	Marionette	INFO	Listening on port 2828
+12-02 21:35:33.699: V/EventHub(8643): Opening device: /dev/input/event5
+12-02 21:35:33.699: V/EventHub(8643): Created descriptor: raw=:0000:0000:name:msm8974-taiko-mtp-snd-card Headset Jack, cooked=c8e3782483b4837ead6602e20483c46ff801112c
+12-02 21:35:33.699: V/EventHub(8643): add device 1: /dev/input/event5
+12-02 21:35:33.699: V/EventHub(8643):   bus:        0000
+12-02 21:35:33.699: V/EventHub(8643):   vendor      0000
+12-02 21:35:33.699: V/EventHub(8643):   product     0000
+12-02 21:35:33.699: V/EventHub(8643):   version     0000
+12-02 21:35:33.699: V/EventHub(8643):   name:       "msm8974-taiko-mtp-snd-card Headset Jack"
+12-02 21:35:33.699: V/EventHub(8643):   location:   "ALSA"
+12-02 21:35:33.699: V/EventHub(8643):   unique id:  ""
+12-02 21:35:33.699: V/EventHub(8643):   descriptor: "c8e3782483b4837ead6602e20483c46ff801112c"
+12-02 21:35:33.699: V/EventHub(8643):   driver:     v1.0.1
+12-02 21:35:33.699: D/EventHub(8643): No input device configuration file found for device 'msm8974-taiko-mtp-snd-card Headset Jack'.
+12-02 21:35:33.699: I/EventHub(8643): New device: id=1, fd=63, path='/dev/input/event5', name='msm8974-taiko-mtp-snd-card Headset Jack', classes=0x80, configuration='', keyLayout='', keyCharacterMap='', builtinKeyboard=false, usingSuspendBlockIoctl=true, usingClockIoctl=true
+12-02 21:35:33.699: V/EventHub(8643): Opening device: /dev/input/event4
+12-02 21:35:33.699: V/EventHub(8643): Created descriptor: raw=:0000:0000:name:msm8974-taiko-mtp-snd-card Button Jack, cooked=96fe62b244c555351ec576b282232e787fb42bab
+12-02 21:35:33.699: V/EventHub(8643): add device 2: /dev/input/event4
+12-02 21:35:33.699: V/EventHub(8643):   bus:        0000
+12-02 21:35:33.699: V/EventHub(8643):   vendor      0000
+12-02 21:35:33.699: V/EventHub(8643):   product     0000
+12-02 21:35:33.699: V/EventHub(8643):   version     0000
+12-02 21:35:33.699: V/EventHub(8643):   name:       "msm8974-taiko-mtp-snd-card Button Jack"
+12-02 21:35:33.699: V/EventHub(8643):   location:   "ALSA"
+12-02 21:35:33.699: V/EventHub(8643):   unique id:  ""
+12-02 21:35:33.699: V/EventHub(8643):   descriptor: "96fe62b244c555351ec576b282232e787fb42bab"
+12-02 21:35:33.699: V/EventHub(8643):   driver:     v1.0.1
+12-02 21:35:33.699: D/EventHub(8643): No input device configuration file found for device 'msm8974-taiko-mtp-snd-card Button Jack'.
+12-02 21:35:33.699: I/libsensor1(8643): sensor1_init_once: Setting log level to 4
+12-02 21:35:33.699: I/qcom_sensors_hal(8643): hal_init: Setting log level to 4
+12-02 21:35:33.709: W/EventHub(8643): Unable to disable kernel key repeat for /dev/input/event4: Function not implemented
+12-02 21:35:33.709: I/EventHub(8643): New device: id=2, fd=61, path='/dev/input/event4', name='msm8974-taiko-mtp-snd-card Button Jack', classes=0x1, configuration='', keyLayout='/system/usr/keylayout/msm8974-taiko-mtp-snd-card_Button_Jack.kl', keyCharacterMap='/system/usr/keychars/msm8974-taiko-mtp-snd-card_Button_Jack.kcm', builtinKeyboard=false, usingSuspendBlockIoctl=true, usingClockIoctl=true
+12-02 21:35:33.709: V/EventHub(8643): Opening device: /dev/input/event3
+12-02 21:35:33.709: V/EventHub(8643): Created descriptor: raw=:0001:0001:, cooked=485d69228e24f5e46da1598745890b214130dbc4
+12-02 21:35:33.709: V/EventHub(8643): add device 3: /dev/input/event3
+12-02 21:35:33.709: V/EventHub(8643):   bus:        0000
+12-02 21:35:33.709: V/EventHub(8643):   vendor      0001
+12-02 21:35:33.709: V/EventHub(8643):   product     0001
+12-02 21:35:33.709: V/EventHub(8643):   version     0001
+12-02 21:35:33.709: V/EventHub(8643):   name:       "hs_detect"
+12-02 21:35:33.709: V/EventHub(8643):   location:   ""
+12-02 21:35:33.709: V/EventHub(8643):   unique id:  ""
+12-02 21:35:33.709: V/EventHub(8643):   descriptor: "485d69228e24f5e46da1598745890b214130dbc4"
+12-02 21:35:33.709: V/EventHub(8643):   driver:     v1.0.1
+12-02 21:35:33.709: D/EventHub(8643): No input device configuration file found for device 'hs_detect'.
+12-02 21:35:33.709: W/EventHub(8643): Unable to disable kernel key repeat for /dev/input/event3: Function not implemented
+12-02 21:35:33.709: I/EventHub(8643): New device: id=3, fd=72, path='/dev/input/event3', name='hs_detect', classes=0x81, configuration='', keyLayout='/system/usr/keylayout/hs_detect.kl', keyCharacterMap='/system/usr/keychars/hs_detect.kcm', builtinKeyboard=false, usingSuspendBlockIoctl=true, usingClockIoctl=true
+12-02 21:35:33.709: V/EventHub(8643): Opening device: /dev/input/event1
+12-02 21:35:33.709: V/EventHub(8643): Created descriptor: raw=:0000:0000:name:touch_dev, cooked=4e2720e99bd2b59adae8529881343531fff7c98e
+12-02 21:35:33.709: V/EventHub(8643): add device 4: /dev/input/event1
+12-02 21:35:33.709: V/EventHub(8643):   bus:        0000
+12-02 21:35:33.709: V/EventHub(8643):   vendor      0000
+12-02 21:35:33.709: V/EventHub(8643):   product     0000
+12-02 21:35:33.709: V/EventHub(8643):   version     0000
+12-02 21:35:33.709: V/EventHub(8643):   name:       "touch_dev"
+12-02 21:35:33.709: V/EventHub(8643):   location:   ""
+12-02 21:35:33.709: V/EventHub(8643):   unique id:  ""
+12-02 21:35:33.709: V/EventHub(8643):   descriptor: "4e2720e99bd2b59adae8529881343531fff7c98e"
+12-02 21:35:33.709: V/EventHub(8643):   driver:     v1.0.1
+12-02 21:35:33.709: I/EventHub(8643): New device: id=4, fd=73, path='/dev/input/event1', name='touch_dev', classes=0x14, configuration='/system/usr/idc/touch_dev.idc', keyLayout='', keyCharacterMap='', builtinKeyboard=false, usingSuspendBlockIoctl=true, usingClockIoctl=true
+12-02 21:35:33.709: V/EventHub(8643): Opening device: /dev/input/event0
+12-02 21:35:33.709: V/EventHub(8643): Created descriptor: raw=:0000:0000:name:qpnp_pon, cooked=fb60d4f4370f5dbe8267b63d38dea852987571ab
+12-02 21:35:33.709: V/EventHub(8643): add device 5: /dev/input/event0
+12-02 21:35:33.709: V/EventHub(8643):   bus:        0000
+12-02 21:35:33.709: V/EventHub(8643):   vendor      0000
+12-02 21:35:33.709: V/EventHub(8643):   product     0000
+12-02 21:35:33.709: V/EventHub(8643):   version     0000
+12-02 21:35:33.709: V/EventHub(8643):   name:       "qpnp_pon"
+12-02 21:35:33.709: V/EventHub(8643):   location:   "qpnp_pon/input0"
+12-02 21:35:33.709: V/EventHub(8643):   unique id:  ""
+12-02 21:35:33.709: V/EventHub(8643):   descriptor: "fb60d4f4370f5dbe8267b63d38dea852987571ab"
+12-02 21:35:33.709: V/EventHub(8643):   driver:     v1.0.1
+12-02 21:35:33.709: D/EventHub(8643): No input device configuration file found for device 'qpnp_pon'.
+12-02 21:35:33.709: W/EventHub(8643): Unable to disable kernel key repeat for /dev/input/event0: Function not implemented
+12-02 21:35:33.709: I/EventHub(8643): New device: id=5, fd=74, path='/dev/input/event0', name='qpnp_pon', classes=0x1, configuration='', keyLayout='/system/usr/keylayout/qpnp_pon.kl', keyCharacterMap='/system/usr/keychars/qpnp_pon.kcm', builtinKeyboard=false, usingSuspendBlockIoctl=true, usingClockIoctl=true
+12-02 21:35:33.709: V/EventHub(8643): Opening device: /dev/input/event2
+12-02 21:35:33.709: V/EventHub(8643): Created descriptor: raw=:0001:0001:, cooked=485d69228e24f5e46da1598745890b214130dbc4
+12-02 21:35:33.709: V/EventHub(8643): add device 6: /dev/input/event2
+12-02 21:35:33.709: V/EventHub(8643):   bus:        0019
+12-02 21:35:33.709: V/EventHub(8643):   vendor      0001
+12-02 21:35:33.709: V/EventHub(8643):   product     0001
+12-02 21:35:33.709: V/EventHub(8643):   version     0100
+12-02 21:35:33.709: V/EventHub(8643):   name:       "gpio-keys"
+12-02 21:35:33.709: V/EventHub(8643):   location:   "gpio-keys/input0"
+12-02 21:35:33.709: V/EventHub(8643):   unique id:  ""
+12-02 21:35:33.709: V/EventHub(8643):   descriptor: "485d69228e24f5e46da1598745890b214130dbc4"
+12-02 21:35:33.709: V/EventHub(8643):   driver:     v1.0.1
+12-02 21:35:33.709: D/EventHub(8643): No input device configuration file found for device 'gpio-keys'.
+12-02 21:35:33.709: W/EventHub(8643): Unable to disable kernel key repeat for /dev/input/event2: Function not implemented
+12-02 21:35:33.709: I/EventHub(8643): New device: id=6, fd=75, path='/dev/input/event2', name='gpio-keys', classes=0x81, configuration='', keyLayout='/system/usr/keylayout/gpio-keys.kl', keyCharacterMap='/system/usr/keychars/gpio-keys.kcm', builtinKeyboard=false, usingSuspendBlockIoctl=true, usingClockIoctl=true
+12-02 21:35:33.709: V/EventHub(8643): Created descriptor: raw=:0000:0000:uniqueId:<virtual>name:Virtual, cooked=a718a782d34bc767f4689c232d64d527998ea7fd
+12-02 21:35:33.719: V/EventHub(8643): Reporting device opened: id=-1, name=<virtual>
+12-02 21:35:33.719: V/EventHub(8643): Reporting device opened: id=6, name=/dev/input/event2
+12-02 21:35:33.719: V/EventHub(8643): Reporting device opened: id=5, name=/dev/input/event0
+12-02 21:35:33.719: V/EventHub(8643): Reporting device opened: id=4, name=/dev/input/event1
+12-02 21:35:33.719: V/EventHub(8643): Reporting device opened: id=3, name=/dev/input/event3
+12-02 21:35:33.719: V/EventHub(8643): Reporting device opened: id=2, name=/dev/input/event4
+12-02 21:35:33.719: V/EventHub(8643): Reporting device opened: id=1, name=/dev/input/event5
+12-02 21:35:33.719: I/InputReader(8643): Device added: id=-1, name='Virtual', sources=0x00000301
+12-02 21:35:33.719: I/InputReader(8643): Device added: id=6, name='gpio-keys', sources=0x80000101
+12-02 21:35:33.719: I/InputReader(8643): Device added: id=5, name='qpnp_pon', sources=0x00000101
+12-02 21:35:33.719: I/InputReader(8643): Device reconfigured: id=4, name='touch_dev', size 1080x1920, orientation 0, mode 1, display id 0
+12-02 21:35:33.719: I/InputReader(8643): Device added: id=4, name='touch_dev', sources=0x00001002
+12-02 21:35:33.719: I/InputReader(8643): Device added: id=3, name='hs_detect', sources=0x80000101
+12-02 21:35:33.719: I/InputReader(8643): Device added: id=2, name='msm8974-taiko-mtp-snd-card Button Jack', sources=0x00000101
+12-02 21:35:33.719: I/InputReader(8643): Device added: id=1, name='msm8974-taiko-mtp-snd-card Headset Jack', sources=0x80000000
+12-02 21:35:33.809: I/HWComposer(8643): Creating new instance
+12-02 21:35:33.809: I/qdhwcomposer(8643): hwc_registerProcs
+12-02 21:35:33.809: I/qdhwcomposer(8643): Initializing UEVENT Thread
+12-02 21:35:33.809: I/qdhwcomposer(8643): Initializing VSYNC Thread
+12-02 21:35:33.809: I/qdhwcomposer(8643): vsync_loop: Reading vsync for dpy=0 from /sys/class/graphics/fb0/vsync_event
+12-02 21:35:33.809: I/qdhwcomposer(8643): vsync_loop: Reading vsync for dpy=1 from /sys/class/graphics/fb1/vsync_event
+12-02 21:35:33.809: I/Gecko(8643): ++DOCSHELL 0xadfc4000 == 1 [pid = 8643] [id = 1]
+12-02 21:35:33.819: I/Gecko(8643): ++DOMWINDOW == 1 (0xadfc4400) [pid = 8643] [serial = 1] [outer = 0x0]
+12-02 21:35:33.819: I/Gecko(8643): ++DOMWINDOW == 2 (0xadfc5000) [pid = 8643] [serial = 2] [outer = 0xadfc4400]
+12-02 21:35:34.439: I/Gecko(8643): [8643] WARNING: NS_ENSURE_SUCCESS(rv, rv) failed with result 0x80520012: file /home/fischer/Projects/gecko-dev/extensions/cookie/nsPermissionManager.cpp, line 2609
+12-02 21:35:34.619: I/GeckoDump(8643): Error getting tracking ID [Exception... "Component returned failure code: 0x8000ffff (NS_ERROR_UNEXPECTED) [nsIPrefBranch.getIntPref]"  nsresult: "0x8000ffff (NS_ERROR_UNEXPECTED)"  location: "JS frame :: chrome://b2g/content/settings.js :: setUpdateTrackingId :: line 294"  data: no]
+12-02 21:35:35.399: I/Gecko(8643): AlarmService: init()
+12-02 21:35:35.399: I/Gecko(8643): AlarmService: _restoreAlarmsFromDb()
+12-02 21:35:35.589: W/GeckoConsole(8643): [JavaScript Warning: "Empty string passed to getElementById()." {file: "chrome://b2g/content/shell.html" line: 0}]
+12-02 21:35:36.619: I/Gecko(8643): [8643] WARNING: NS_ENSURE_TRUE(startupCache) failed: file /home/fischer/Projects/gecko-dev/dom/xbl/nsXBLDocumentInfo.cpp, line 199
+12-02 21:35:36.619: I/Gecko(8643): [8643] WARNING: NS_ENSURE_TRUE(startupCache) failed: file /home/fischer/Projects/gecko-dev/dom/xbl/nsXBLDocumentInfo.cpp, line 267
+12-02 21:35:36.669: I/Gecko(8643): [Parent 8643] WARNING: Unable to printf the requested string due to error.: file /home/fischer/Projects/gecko-dev/ipc/chromium/src/base/string_util.cc, line 427
+12-02 21:35:36.669: I/Gecko(8643): [Parent 8643] WARNING: Unable to printf the requested string due to error.: file /home/fischer/Projects/gecko-dev/ipc/chromium/src/base/string_util.cc, line 427
+12-02 21:35:36.669: I/Gecko(8643): [Parent 8643] WARNING: Unable to printf the requested string due to error.: file /home/fischer/Projects/gecko-dev/ipc/chromium/src/base/string_util.cc, line 427
+12-02 21:35:36.669: I/Gecko(8643): [Parent 8643] WARNING: Unable to printf the requested string due to error.: file /home/fischer/Projects/gecko-dev/ipc/chromium/src/base/string_util.cc, line 427
+12-02 21:35:36.959: I/Gecko(8666): [Child 8666] WARNING: '!compMgr', file /home/fischer/Projects/gecko-dev/xpcom/glue/nsComponentManagerUtils.cpp, line 63
+12-02 21:35:36.959: I/Gecko(8666): [Child 8666] WARNING: NS_ENSURE_TRUE(InitStaticMembers()) failed: file /home/fischer/Projects/gecko-dev/modules/libpref/Preferences.cpp, line 1355
+12-02 21:35:39.299: I/Gecko(8643): ###!!! [Parent][OnMaybeDequeueOne] Error: Channel closing: too late to send/recv, messages will be lost
+12-02 21:35:39.339: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:39.349: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xac61b790 (native @ 0xadf24080)]
+12-02 21:35:39.349: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/bluetooth.gaiamobile.org
+12-02 21:35:39.349: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xac6b1940 (native @ 0xadf24110)]
+12-02 21:35:39.349: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/bluetooth.gaiamobile.org/resources_metadata.json
+12-02 21:35:39.349: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xac61b790 (native @ 0xadf24080)]
+12-02 21:35:39.349: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/bluetooth.gaiamobile.org/cache
+12-02 21:35:39.349: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:39.529: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:39.529: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaeb4b5e0 (native @ 0xac634080)]
+12-02 21:35:39.529: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/bookmark.gaiamobile.org
+12-02 21:35:39.529: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaeb4b6d0 (native @ 0xadf24c50)]
+12-02 21:35:39.529: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/bookmark.gaiamobile.org/resources_metadata.json
+12-02 21:35:39.529: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaeb4b5e0 (native @ 0xac634080)]
+12-02 21:35:39.529: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/bookmark.gaiamobile.org/cache
+12-02 21:35:39.529: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:39.649: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:39.649: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaebb7a30 (native @ 0xac634a10)]
+12-02 21:35:39.649: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/calendar.gaiamobile.org
+12-02 21:35:39.649: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaebb7eb0 (native @ 0xadf25160)]
+12-02 21:35:39.649: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/calendar.gaiamobile.org/resources_metadata.json
+12-02 21:35:39.649: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaebb7a30 (native @ 0xac634a10)]
+12-02 21:35:39.649: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/calendar.gaiamobile.org/cache
+12-02 21:35:39.649: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:39.779: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:39.779: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaf207d30 (native @ 0xac635280)]
+12-02 21:35:39.779: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/callscreen.gaiamobile.org
+12-02 21:35:39.779: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaf20a400 (native @ 0xadf255e0)]
+12-02 21:35:39.779: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/callscreen.gaiamobile.org/resources_metadata.json
+12-02 21:35:39.779: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaf207d30 (native @ 0xac635280)]
+12-02 21:35:39.779: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/callscreen.gaiamobile.org/cache
+12-02 21:35:39.779: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:39.919: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:39.919: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xab6a3970 (native @ 0xac635af0)]
+12-02 21:35:39.919: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/camera.gaiamobile.org
+12-02 21:35:39.919: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xab6a3a30 (native @ 0xadf25820)]
+12-02 21:35:39.919: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/camera.gaiamobile.org/resources_metadata.json
+12-02 21:35:39.919: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xab6a3970 (native @ 0xac635af0)]
+12-02 21:35:39.919: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/camera.gaiamobile.org/cache
+12-02 21:35:39.919: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:40.089: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:40.089: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xab191d90 (native @ 0xac73e2c0)]
+12-02 21:35:40.089: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/clock.gaiamobile.org
+12-02 21:35:40.089: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xab191e20 (native @ 0xadf259d0)]
+12-02 21:35:40.089: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/clock.gaiamobile.org/resources_metadata.json
+12-02 21:35:40.089: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xab191d90 (native @ 0xac73e2c0)]
+12-02 21:35:40.089: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/clock.gaiamobile.org/cache
+12-02 21:35:40.089: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:40.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:40.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaada03d0 (native @ 0xac73e620)]
+12-02 21:35:40.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/communications.gaiamobile.org
+12-02 21:35:40.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaada0490 (native @ 0xac73ece0)]
+12-02 21:35:40.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/communications.gaiamobile.org/resources_metadata.json
+12-02 21:35:40.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaada03d0 (native @ 0xac73e620)]
+12-02 21:35:40.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/communications.gaiamobile.org/cache
+12-02 21:35:40.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:40.419: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:40.419: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaaaa4820 (native @ 0xac73f0d0)]
+12-02 21:35:40.419: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/costcontrol.gaiamobile.org
+12-02 21:35:40.419: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaaaa48e0 (native @ 0xac73f5e0)]
+12-02 21:35:40.419: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/costcontrol.gaiamobile.org/resources_metadata.json
+12-02 21:35:40.419: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaaaa4820 (native @ 0xac73f0d0)]
+12-02 21:35:40.419: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/costcontrol.gaiamobile.org/cache
+12-02 21:35:40.419: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:40.579: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:40.579: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xae309100 (native @ 0xac73f940)]
+12-02 21:35:40.579: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/default_theme.gaiamobile.org
+12-02 21:35:40.579: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xae3091c0 (native @ 0xac73fee0)]
+12-02 21:35:40.579: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/default_theme.gaiamobile.org/resources_metadata.json
+12-02 21:35:40.579: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xae309100 (native @ 0xac73f940)]
+12-02 21:35:40.579: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/default_theme.gaiamobile.org/cache
+12-02 21:35:40.579: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:40.699: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:40.699: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xae762a00 (native @ 0xadf25b80)]
+12-02 21:35:40.699: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/download.gaiamobile.org
+12-02 21:35:40.699: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xae762a90 (native @ 0xadf25ca0)]
+12-02 21:35:40.699: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/download.gaiamobile.org/resources_metadata.json
+12-02 21:35:40.699: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xae762a00 (native @ 0xadf25b80)]
+12-02 21:35:40.699: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/download.gaiamobile.org/cache
+12-02 21:35:40.699: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:40.839: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:40.839: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xae31d0a0 (native @ 0xadf25ee0)]
+12-02 21:35:40.839: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/email.gaiamobile.org
+12-02 21:35:40.839: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xae31d0d0 (native @ 0xadf25f70)]
+12-02 21:35:40.839: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/email.gaiamobile.org/resources_metadata.json
+12-02 21:35:40.839: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xae31d0a0 (native @ 0xadf25ee0)]
+12-02 21:35:40.839: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/email.gaiamobile.org/cache
+12-02 21:35:40.839: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:41.039: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:41.039: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaaab4790 (native @ 0xae1ffaf0)]
+12-02 21:35:41.039: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/emergency-call.gaiamobile.org
+12-02 21:35:41.069: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaaab4850 (native @ 0xae4c4350)]
+12-02 21:35:41.069: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/emergency-call.gaiamobile.org/resources_metadata.json
+12-02 21:35:41.069: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaaab4790 (native @ 0xae1ffaf0)]
+12-02 21:35:41.069: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/emergency-call.gaiamobile.org/cache
+12-02 21:35:41.069: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:41.249: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:41.249: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xab1c4970 (native @ 0xae32b350)]
+12-02 21:35:41.249: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/findmydevice.gaiamobile.org
+12-02 21:35:41.249: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xab1c4a30 (native @ 0xae4c4bc0)]
+12-02 21:35:41.249: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/findmydevice.gaiamobile.org/resources_metadata.json
+12-02 21:35:41.249: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xab1c4970 (native @ 0xae32b350)]
+12-02 21:35:41.249: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/findmydevice.gaiamobile.org/cache
+12-02 21:35:41.249: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:41.499: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:41.499: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaadc3130 (native @ 0xae32b6b0)]
+12-02 21:35:41.499: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/fl.gaiamobile.org
+12-02 21:35:41.499: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaadc3160 (native @ 0xae32bbc0)]
+12-02 21:35:41.499: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/fl.gaiamobile.org/resources_metadata.json
+12-02 21:35:41.499: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaadc3130 (native @ 0xae32b6b0)]
+12-02 21:35:41.499: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/fl.gaiamobile.org/cache
+12-02 21:35:41.499: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:41.659: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:41.659: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa9c4460 (native @ 0xae32bf20)]
+12-02 21:35:41.659: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/fm.gaiamobile.org
+12-02 21:35:41.659: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa9c4490 (native @ 0xae32c430)]
+12-02 21:35:41.659: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/fm.gaiamobile.org/resources_metadata.json
+12-02 21:35:41.659: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa9c4460 (native @ 0xae32bf20)]
+12-02 21:35:41.659: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/fm.gaiamobile.org/cache
+12-02 21:35:41.659: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:41.819: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:41.819: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa9e3ee0 (native @ 0xae32c790)]
+12-02 21:35:41.819: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/ftu.gaiamobile.org
+12-02 21:35:41.819: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa9e3f70 (native @ 0xae32cca0)]
+12-02 21:35:41.819: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/ftu.gaiamobile.org/resources_metadata.json
+12-02 21:35:41.819: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa9e3ee0 (native @ 0xae32c790)]
+12-02 21:35:41.819: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/ftu.gaiamobile.org/cache
+12-02 21:35:41.819: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:41.999: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:41.999: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa817400 (native @ 0xae364080)]
+12-02 21:35:41.999: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/gallery.gaiamobile.org
+12-02 21:35:41.999: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa817490 (native @ 0xae364590)]
+12-02 21:35:41.999: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/gallery.gaiamobile.org/resources_metadata.json
+12-02 21:35:41.999: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa817400 (native @ 0xae364080)]
+12-02 21:35:41.999: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/gallery.gaiamobile.org/cache
+12-02 21:35:41.999: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:42.179: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:42.179: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa842910 (native @ 0xae3648f0)]
+12-02 21:35:42.179: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/homescreen.gaiamobile.org
+12-02 21:35:42.179: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa8429d0 (native @ 0xae364e00)]
+12-02 21:35:42.179: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/homescreen.gaiamobile.org/resources_metadata.json
+12-02 21:35:42.179: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa842910 (native @ 0xae3648f0)]
+12-02 21:35:42.179: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/homescreen.gaiamobile.org/cache
+12-02 21:35:42.179: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:42.339: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:42.339: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xabaddac0 (native @ 0xae365670)]
+12-02 21:35:42.339: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/keyboard.gaiamobile.org
+12-02 21:35:42.339: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xabaddb50 (native @ 0xae36e1a0)]
+12-02 21:35:42.339: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/keyboard.gaiamobile.org/resources_metadata.json
+12-02 21:35:42.339: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xabaddac0 (native @ 0xae365670)]
+12-02 21:35:42.339: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/keyboard.gaiamobile.org/cache
+12-02 21:35:42.339: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:42.519: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:42.519: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaaaf3a00 (native @ 0xae36e350)]
+12-02 21:35:42.519: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/marketplace.firefox.com
+12-02 21:35:42.519: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaaaf3a90 (native @ 0xae36e3e0)]
+12-02 21:35:42.519: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/marketplace.firefox.com/resources_metadata.json
+12-02 21:35:42.519: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaaaf3a00 (native @ 0xae36e350)]
+12-02 21:35:42.519: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/marketplace.firefox.com/cache
+12-02 21:35:42.529: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:42.709: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:42.709: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaaab8bb0 (native @ 0xae36e500)]
+12-02 21:35:42.709: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/music.gaiamobile.org
+12-02 21:35:42.709: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaaab8c40 (native @ 0xae36e590)]
+12-02 21:35:42.709: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/music.gaiamobile.org/resources_metadata.json
+12-02 21:35:42.709: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaaab8bb0 (native @ 0xae36e500)]
+12-02 21:35:42.709: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/music.gaiamobile.org/cache
+12-02 21:35:42.709: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:42.909: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:42.909: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa8ea370 (native @ 0xae36e6b0)]
+12-02 21:35:42.909: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/network-alerts.gaiamobile.org
+12-02 21:35:42.909: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa8ea430 (native @ 0xae36e740)]
+12-02 21:35:42.909: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/network-alerts.gaiamobile.org/resources_metadata.json
+12-02 21:35:42.909: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa8ea370 (native @ 0xae36e6b0)]
+12-02 21:35:42.909: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/network-alerts.gaiamobile.org/cache
+12-02 21:35:42.909: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:43.099: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:43.099: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa70cee0 (native @ 0xae36e7d0)]
+12-02 21:35:43.099: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/operatorvariant.gaiamobile.org
+12-02 21:35:43.099: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa70cfa0 (native @ 0xae36e860)]
+12-02 21:35:43.099: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/operatorvariant.gaiamobile.org/resources_metadata.json
+12-02 21:35:43.099: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa70cee0 (native @ 0xae36e7d0)]
+12-02 21:35:43.099: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/operatorvariant.gaiamobile.org/cache
+12-02 21:35:43.099: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:43.679: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:43.679: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa733d90 (native @ 0xab621080)]
+12-02 21:35:43.679: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/pdfjs.gaiamobile.org
+12-02 21:35:43.679: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa733e20 (native @ 0xab621110)]
+12-02 21:35:43.679: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/pdfjs.gaiamobile.org/resources_metadata.json
+12-02 21:35:43.679: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa733d90 (native @ 0xab621080)]
+12-02 21:35:43.679: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/pdfjs.gaiamobile.org/cache
+12-02 21:35:43.679: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:43.839: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:43.839: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaada0dc0 (native @ 0xab6212c0)]
+12-02 21:35:43.839: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/ringtones.gaiamobile.org
+12-02 21:35:43.839: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaada0f70 (native @ 0xab621470)]
+12-02 21:35:43.839: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/ringtones.gaiamobile.org/resources_metadata.json
+12-02 21:35:43.839: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaada0dc0 (native @ 0xab6212c0)]
+12-02 21:35:43.839: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/ringtones.gaiamobile.org/cache
+12-02 21:35:43.839: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:44.019: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:44.019: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xac7d4f40 (native @ 0xab621620)]
+12-02 21:35:44.019: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/search.gaiamobile.org
+12-02 21:35:44.019: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xac7e65e0 (native @ 0xab6217d0)]
+12-02 21:35:44.019: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/search.gaiamobile.org/resources_metadata.json
+12-02 21:35:44.019: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xac7d4f40 (native @ 0xab621620)]
+12-02 21:35:44.019: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/search.gaiamobile.org/cache
+12-02 21:35:44.019: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:44.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:44.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xae7fd2b0 (native @ 0xab621980)]
+12-02 21:35:44.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/settings.gaiamobile.org
+12-02 21:35:44.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xae7fd6d0 (native @ 0xab621a10)]
+12-02 21:35:44.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/settings.gaiamobile.org/resources_metadata.json
+12-02 21:35:44.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xae7fd2b0 (native @ 0xab621980)]
+12-02 21:35:44.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/settings.gaiamobile.org/cache
+12-02 21:35:44.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:44.489: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:44.499: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xab1c3fd0 (native @ 0xab621c50)]
+12-02 21:35:44.499: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/sharedtest.gaiamobile.org
+12-02 21:35:44.499: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaf2ec0a0 (native @ 0xab621e00)]
+12-02 21:35:44.499: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/sharedtest.gaiamobile.org/resources_metadata.json
+12-02 21:35:44.499: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xab1c3fd0 (native @ 0xab621c50)]
+12-02 21:35:44.499: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/sharedtest.gaiamobile.org/cache
+12-02 21:35:44.499: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:44.679: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:44.679: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaf4a7b50 (native @ 0xab621fb0)]
+12-02 21:35:44.679: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/sms.gaiamobile.org
+12-02 21:35:44.679: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaf4a7be0 (native @ 0xab622160)]
+12-02 21:35:44.679: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/sms.gaiamobile.org/resources_metadata.json
+12-02 21:35:44.679: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaf4a7b50 (native @ 0xab621fb0)]
+12-02 21:35:44.679: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/sms.gaiamobile.org/cache
+12-02 21:35:44.679: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:44.879: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:44.879: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xac70a760 (native @ 0xab622310)]
+12-02 21:35:44.879: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/sync.gaiamobile.org
+12-02 21:35:44.879: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xac70a7f0 (native @ 0xab6223a0)]
+12-02 21:35:44.879: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/sync.gaiamobile.org/resources_metadata.json
+12-02 21:35:44.879: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xac70a760 (native @ 0xab622310)]
+12-02 21:35:44.879: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/sync.gaiamobile.org/cache
+12-02 21:35:44.879: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:45.059: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:45.059: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xae345280 (native @ 0xab6224c0)]
+12-02 21:35:45.059: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/system.gaiamobile.org
+12-02 21:35:45.059: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xae345310 (native @ 0xab622550)]
+12-02 21:35:45.059: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/system.gaiamobile.org/resources_metadata.json
+12-02 21:35:45.059: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xae345280 (native @ 0xab6224c0)]
+12-02 21:35:45.059: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/system.gaiamobile.org/cache
+12-02 21:35:45.059: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:45.329: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:45.329: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xab11eaf0 (native @ 0xab622670)]
+12-02 21:35:45.329: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/verticalhome.gaiamobile.org
+12-02 21:35:45.329: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xab11ebb0 (native @ 0xab622790)]
+12-02 21:35:45.329: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/verticalhome.gaiamobile.org/resources_metadata.json
+12-02 21:35:45.329: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xab11eaf0 (native @ 0xab622670)]
+12-02 21:35:45.329: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/verticalhome.gaiamobile.org/cache
+12-02 21:35:45.329: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:45.539: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:45.539: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaba78c40 (native @ 0xab622940)]
+12-02 21:35:45.539: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/video.gaiamobile.org
+12-02 21:35:45.539: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaba78cd0 (native @ 0xab622af0)]
+12-02 21:35:45.539: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/video.gaiamobile.org/resources_metadata.json
+12-02 21:35:45.539: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaba78c40 (native @ 0xab622940)]
+12-02 21:35:45.539: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/video.gaiamobile.org/cache
+12-02 21:35:45.539: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:45.749: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:45.749: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa785fd0 (native @ 0xab622d30)]
+12-02 21:35:45.749: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/wallpaper.gaiamobile.org
+12-02 21:35:45.749: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xac2e0070 (native @ 0xab622e50)]
+12-02 21:35:45.749: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/wallpaper.gaiamobile.org/resources_metadata.json
+12-02 21:35:45.749: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa785fd0 (native @ 0xab622d30)]
+12-02 21:35:45.749: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/wallpaper.gaiamobile.org/cache
+12-02 21:35:45.749: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:45.959: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:45.959: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa97f880 (native @ 0xab622ee0)]
+12-02 21:35:45.959: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/wappush.gaiamobile.org
+12-02 21:35:45.959: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa97f910 (native @ 0xab622f70)]
+12-02 21:35:45.959: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/wappush.gaiamobile.org/resources_metadata.json
+12-02 21:35:45.959: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa97f880 (native @ 0xab622ee0)]
+12-02 21:35:45.959: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/wappush.gaiamobile.org/cache
+12-02 21:35:45.959: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:46.179: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:46.179: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xac2f6a60 (native @ 0xab65d1a0)]
+12-02 21:35:46.179: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/{b8a6b8cd-9cb7-f04a-b0b1-a812dcf67ac2}
+12-02 21:35:46.179: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xac2f6a90 (native @ 0xab65d350)]
+12-02 21:35:46.179: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/{b8a6b8cd-9cb7-f04a-b0b1-a812dcf67ac2}/resources_metadata.json
+12-02 21:35:46.179: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xac2f6a60 (native @ 0xab65d1a0)]
+12-02 21:35:46.179: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/{b8a6b8cd-9cb7-f04a-b0b1-a812dcf67ac2}/cache
+12-02 21:35:46.179: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:46.369: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:46.369: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa967460 (native @ 0xab65d6b0)]
+12-02 21:35:46.369: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/{447752c8-60c2-e04d-ae5e-73b654dd6ebd}
+12-02 21:35:46.369: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa967490 (native @ 0xab65d740)]
+12-02 21:35:46.369: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/{447752c8-60c2-e04d-ae5e-73b654dd6ebd}/resources_metadata.json
+12-02 21:35:46.369: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa967460 (native @ 0xab65d6b0)]
+12-02 21:35:46.369: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/{447752c8-60c2-e04d-ae5e-73b654dd6ebd}/cache
+12-02 21:35:46.369: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:46.549: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:46.549: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xab61cdc0 (native @ 0xab621590)]
+12-02 21:35:46.549: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/{65a7f29e-f4a3-8445-a8d7-ece018e449f8}
+12-02 21:35:46.549: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xab61cdf0 (native @ 0xab65d8f0)]
+12-02 21:35:46.549: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/{65a7f29e-f4a3-8445-a8d7-ece018e449f8}/resources_metadata.json
+12-02 21:35:46.549: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xab61cdc0 (native @ 0xab621590)]
+12-02 21:35:46.549: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/{65a7f29e-f4a3-8445-a8d7-ece018e449f8}/cache
+12-02 21:35:46.549: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:46.719: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:46.719: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xab6361f0 (native @ 0xab6218f0)]
+12-02 21:35:46.719: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/{b59c3c3b-9648-0843-b0b9-c9ac4c09f596}
+12-02 21:35:46.729: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xab636220 (native @ 0xab621f20)]
+12-02 21:35:46.729: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/{b59c3c3b-9648-0843-b0b9-c9ac4c09f596}/resources_metadata.json
+12-02 21:35:46.729: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xab6361f0 (native @ 0xab6218f0)]
+12-02 21:35:46.729: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/{b59c3c3b-9648-0843-b0b9-c9ac4c09f596}/cache
+12-02 21:35:46.729: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:46.899: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:46.899: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa4eeee0 (native @ 0xab622a60)]
+12-02 21:35:46.909: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/{63b7eb3d-26f4-b947-9150-eae236b2460f}
+12-02 21:35:46.909: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa4eef10 (native @ 0xab65daa0)]
+12-02 21:35:46.909: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/{63b7eb3d-26f4-b947-9150-eae236b2460f}/resources_metadata.json
+12-02 21:35:46.909: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa4eeee0 (native @ 0xab622a60)]
+12-02 21:35:46.909: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/{63b7eb3d-26f4-b947-9150-eae236b2460f}/cache
+12-02 21:35:46.909: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:46.909: E/GeckoConsole(8643): [JavaScript Error: "PermissionsTable.jsm: expandPermissions: Unknown Permission: storage" {file: "resource://gre/modules/PermissionsTable.jsm" line: 558}]
+12-02 21:35:46.909: I/Gecko(8643): PermissionsTable.jsm: expandPermissions: Unknown Permission: storage
+12-02 21:35:47.079: E/GeckoConsole(8643): [JavaScript Error: "PermissionsInstaller.jsm: 'storage' is not a valid Webapps permission name." {file: "resource://gre/modules/PermissionsInstaller.jsm" line: 129}]
+12-02 21:35:47.079: I/Gecko(8643): PermissionsInstaller.jsm: 'storage' is not a valid Webapps permission name.
+12-02 21:35:47.089: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:47.089: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa695640 (native @ 0xab622dc0)]
+12-02 21:35:47.089: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/{3b86a61e-b1ef-e846-ba34-6f42c8267f2d}
+12-02 21:35:47.089: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa6956d0 (native @ 0xab65d470)]
+12-02 21:35:47.089: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/{3b86a61e-b1ef-e846-ba34-6f42c8267f2d}/resources_metadata.json
+12-02 21:35:47.089: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa695640 (native @ 0xab622dc0)]
+12-02 21:35:47.089: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/{3b86a61e-b1ef-e846-ba34-6f42c8267f2d}/cache
+12-02 21:35:47.089: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:47.279: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:47.279: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xac6a7250 (native @ 0xab65d7d0)]
+12-02 21:35:47.279: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/marketplace-dev.allizom.org
+12-02 21:35:47.279: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xac6a7310 (native @ 0xab65dd70)]
+12-02 21:35:47.279: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/marketplace-dev.allizom.org/resources_metadata.json
+12-02 21:35:47.279: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xac6a7250 (native @ 0xab65d7d0)]
+12-02 21:35:47.279: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/marketplace-dev.allizom.org/cache
+12-02 21:35:47.279: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:47.479: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:47.479: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa3205b0 (native @ 0xab65df20)]
+12-02 21:35:47.479: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/in_app_pay_test.gaiamobile.org
+12-02 21:35:47.479: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa320670 (native @ 0xab65e040)]
+12-02 21:35:47.479: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/in_app_pay_test.gaiamobile.org/resources_metadata.json
+12-02 21:35:47.479: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa3205b0 (native @ 0xab65df20)]
+12-02 21:35:47.479: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/in_app_pay_test.gaiamobile.org/cache
+12-02 21:35:47.479: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:47.669: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:47.669: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa338fd0 (native @ 0xab65e0d0)]
+12-02 21:35:47.669: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/marketplace.allizom.org
+12-02 21:35:47.669: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa33b0a0 (native @ 0xab65e280)]
+12-02 21:35:47.669: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/marketplace.allizom.org/resources_metadata.json
+12-02 21:35:47.669: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa338fd0 (native @ 0xab65e0d0)]
+12-02 21:35:47.669: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/marketplace.allizom.org/cache
+12-02 21:35:47.669: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:47.869: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:47.869: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xac624310 (native @ 0xab65e3a0)]
+12-02 21:35:47.869: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/{b0b12b0b-260b-bd4d-a592-515ed9347484}
+12-02 21:35:47.869: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xac624340 (native @ 0xab65e430)]
+12-02 21:35:47.879: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/{b0b12b0b-260b-bd4d-a592-515ed9347484}/resources_metadata.json
+12-02 21:35:47.879: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xac624310 (native @ 0xab65e3a0)]
+12-02 21:35:47.879: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/{b0b12b0b-260b-bd4d-a592-515ed9347484}/cache
+12-02 21:35:47.879: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:48.169: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:48.169: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xac20b610 (native @ 0xab65e670)]
+12-02 21:35:48.169: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/ds-test.gaiamobile.org
+12-02 21:35:48.169: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xac20b6a0 (native @ 0xab65e820)]
+12-02 21:35:48.169: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/ds-test.gaiamobile.org/resources_metadata.json
+12-02 21:35:48.169: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xac20b610 (native @ 0xab65e670)]
+12-02 21:35:48.169: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/ds-test.gaiamobile.org/cache
+12-02 21:35:48.169: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:48.399: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:48.399: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa384880 (native @ 0xab65ea60)]
+12-02 21:35:48.399: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/geoloc.gaiamobile.org
+12-02 21:35:48.409: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa384910 (native @ 0xab65ec10)]
+12-02 21:35:48.409: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/geoloc.gaiamobile.org/resources_metadata.json
+12-02 21:35:48.409: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa384880 (native @ 0xab65ea60)]
+12-02 21:35:48.409: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/geoloc.gaiamobile.org/cache
+12-02 21:35:48.409: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:48.619: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:48.619: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xabaa77f0 (native @ 0xab65ed30)]
+12-02 21:35:48.619: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/l20n-app.gaiamobile.org
+12-02 21:35:48.619: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xabaa7880 (native @ 0xab65edc0)]
+12-02 21:35:48.619: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/l20n-app.gaiamobile.org/resources_metadata.json
+12-02 21:35:48.619: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xabaa77f0 (native @ 0xab65ed30)]
+12-02 21:35:48.619: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/l20n-app.gaiamobile.org/cache
+12-02 21:35:48.619: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:48.849: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:48.849: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa2ee2b0 (native @ 0xab65eee0)]
+12-02 21:35:48.849: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/membuster.gaiamobile.org
+12-02 21:35:48.859: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa2ee340 (native @ 0xab65ef70)]
+12-02 21:35:48.859: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/membuster.gaiamobile.org/resources_metadata.json
+12-02 21:35:48.859: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa2ee2b0 (native @ 0xab65eee0)]
+12-02 21:35:48.859: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/membuster.gaiamobile.org/cache
+12-02 21:35:48.859: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:49.069: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:49.069: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa2e3d60 (native @ 0xab689080)]
+12-02 21:35:49.069: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/test-ime.gaiamobile.org
+12-02 21:35:49.069: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa2e3df0 (native @ 0xab689110)]
+12-02 21:35:49.069: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/test-ime.gaiamobile.org/resources_metadata.json
+12-02 21:35:49.069: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa2e3d60 (native @ 0xab689080)]
+12-02 21:35:49.069: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/test-ime.gaiamobile.org/cache
+12-02 21:35:49.069: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:49.299: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:49.299: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaaab2400 (native @ 0xab6892c0)]
+12-02 21:35:49.299: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/share-receiver.gaiamobile.org
+12-02 21:35:49.299: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaaab24c0 (native @ 0xab689470)]
+12-02 21:35:49.299: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/share-receiver.gaiamobile.org/resources_metadata.json
+12-02 21:35:49.299: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaaab2400 (native @ 0xab6892c0)]
+12-02 21:35:49.299: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/share-receiver.gaiamobile.org/cache
+12-02 21:35:49.299: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:49.559: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:49.559: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa3b6e80 (native @ 0xab689590)]
+12-02 21:35:49.559: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/template.gaiamobile.org
+12-02 21:35:49.559: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa3b6f10 (native @ 0xab689620)]
+12-02 21:35:49.559: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/template.gaiamobile.org/resources_metadata.json
+12-02 21:35:49.559: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa3b6e80 (native @ 0xab689590)]
+12-02 21:35:49.559: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/template.gaiamobile.org/cache
+12-02 21:35:49.559: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:49.799: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:49.799: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa3d89a0 (native @ 0xab689860)]
+12-02 21:35:49.799: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/test-agent.gaiamobile.org
+12-02 21:35:49.799: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa3d8a60 (native @ 0xab6898f0)]
+12-02 21:35:49.799: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/test-agent.gaiamobile.org/resources_metadata.json
+12-02 21:35:49.799: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa3d89a0 (native @ 0xab689860)]
+12-02 21:35:49.799: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/test-agent.gaiamobile.org/cache
+12-02 21:35:49.799: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:50.049: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:50.049: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa201700 (native @ 0xab689980)]
+12-02 21:35:50.049: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/test-container.gaiamobile.org
+12-02 21:35:50.049: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa2017c0 (native @ 0xab689a10)]
+12-02 21:35:50.049: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/test-container.gaiamobile.org/resources_metadata.json
+12-02 21:35:50.049: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa201700 (native @ 0xab689980)]
+12-02 21:35:50.049: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/test-container.gaiamobile.org/cache
+12-02 21:35:50.049: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:50.349: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:50.349: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa22b610 (native @ 0xab689aa0)]
+12-02 21:35:50.349: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/test-iac-publisher.gaiamobile.org
+12-02 21:35:50.359: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa22b6a0 (native @ 0xab689b30)]
+12-02 21:35:50.359: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/test-iac-publisher.gaiamobile.org/resources_metadata.json
+12-02 21:35:50.359: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa22b610 (native @ 0xab689aa0)]
+12-02 21:35:50.359: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/test-iac-publisher.gaiamobile.org/cache
+12-02 21:35:50.359: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:50.619: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:50.619: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa887af0 (native @ 0xab689c50)]
+12-02 21:35:50.619: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/test-iac-subscriber.gaiamobile.org
+12-02 21:35:50.619: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa887b20 (native @ 0xab689e00)]
+12-02 21:35:50.619: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/test-iac-subscriber.gaiamobile.org/resources_metadata.json
+12-02 21:35:50.619: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa887af0 (native @ 0xab689c50)]
+12-02 21:35:50.619: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/test-iac-subscriber.gaiamobile.org/cache
+12-02 21:35:50.619: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:50.879: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:50.879: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa141fa0 (native @ 0xab689fb0)]
+12-02 21:35:50.879: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/test-otasp.gaiamobile.org
+12-02 21:35:50.879: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xab663040 (native @ 0xab68a160)]
+12-02 21:35:50.879: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/test-otasp.gaiamobile.org/resources_metadata.json
+12-02 21:35:50.879: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa141fa0 (native @ 0xab689fb0)]
+12-02 21:35:50.879: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/test-otasp.gaiamobile.org/cache
+12-02 21:35:50.879: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:51.139: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:51.139: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa166cd0 (native @ 0xab68a1f0)]
+12-02 21:35:51.139: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/test-receiver-1.gaiamobile.org
+12-02 21:35:51.139: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa166d90 (native @ 0xab68a280)]
+12-02 21:35:51.139: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/test-receiver-1.gaiamobile.org/resources_metadata.json
+12-02 21:35:51.139: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa166cd0 (native @ 0xab68a1f0)]
+12-02 21:35:51.139: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/test-receiver-1.gaiamobile.org/cache
+12-02 21:35:51.139: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:51.399: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:51.399: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa1899a0 (native @ 0xab68a310)]
+12-02 21:35:51.399: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/test-receiver-2.gaiamobile.org
+12-02 21:35:51.399: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa189a60 (native @ 0xab68a3a0)]
+12-02 21:35:51.399: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/test-receiver-2.gaiamobile.org/resources_metadata.json
+12-02 21:35:51.399: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa1899a0 (native @ 0xab68a310)]
+12-02 21:35:51.399: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/test-receiver-2.gaiamobile.org/cache
+12-02 21:35:51.399: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:51.689: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:51.689: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa754610 (native @ 0xab68a4c0)]
+12-02 21:35:51.699: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/test-receiver-inline.gaiamobile.org
+12-02 21:35:51.699: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa754640 (native @ 0xab68a670)]
+12-02 21:35:51.699: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/test-receiver-inline.gaiamobile.org/resources_metadata.json
+12-02 21:35:51.699: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa754610 (native @ 0xab68a4c0)]
+12-02 21:35:51.699: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/test-receiver-inline.gaiamobile.org/cache
+12-02 21:35:51.699: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:51.959: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:51.959: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaaae6b20 (native @ 0xab68a820)]
+12-02 21:35:51.959: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/test-startup-limit.gaiamobile.org
+12-02 21:35:51.959: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaaae6bb0 (native @ 0xab68a9d0)]
+12-02 21:35:51.959: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/test-startup-limit.gaiamobile.org/resources_metadata.json
+12-02 21:35:51.959: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaaae6b20 (native @ 0xab68a820)]
+12-02 21:35:51.959: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/test-startup-limit.gaiamobile.org/cache
+12-02 21:35:51.959: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:52.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:52.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaba44fd0 (native @ 0xab68aa60)]
+12-02 21:35:52.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/test-wappush.gaiamobile.org
+12-02 21:35:52.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaf2db0d0 (native @ 0xab68aaf0)]
+12-02 21:35:52.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/test-wappush.gaiamobile.org/resources_metadata.json
+12-02 21:35:52.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaba44fd0 (native @ 0xab68aa60)]
+12-02 21:35:52.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/test-wappush.gaiamobile.org/cache
+12-02 21:35:52.229: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:52.499: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:52.499: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa1bfc40 (native @ 0xab68ab80)]
+12-02 21:35:52.499: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/uitest.gaiamobile.org
+12-02 21:35:52.509: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa1bfcd0 (native @ 0xab68ac10)]
+12-02 21:35:52.509: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/uitest.gaiamobile.org/resources_metadata.json
+12-02 21:35:52.509: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa1bfc40 (native @ 0xab68ab80)]
+12-02 21:35:52.509: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/uitest.gaiamobile.org/cache
+12-02 21:35:52.509: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:52.869: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:52.869: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaad04b20 (native @ 0xab6ec230)]
+12-02 21:35:52.869: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/uitest-privileged.gaiamobile.org
+12-02 21:35:52.869: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaad04bb0 (native @ 0xab6ec350)]
+12-02 21:35:52.869: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/uitest-privileged.gaiamobile.org/resources_metadata.json
+12-02 21:35:52.869: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaad04b20 (native @ 0xab6ec230)]
+12-02 21:35:52.869: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/uitest-privileged.gaiamobile.org/cache
+12-02 21:35:52.869: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:53.249: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:53.249: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa7c45e0 (native @ 0xab6ec470)]
+12-02 21:35:53.249: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/contacts-manager.gaiamobile.org
+12-02 21:35:53.249: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa7c46a0 (native @ 0xab6ec620)]
+12-02 21:35:53.249: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/contacts-manager.gaiamobile.org/resources_metadata.json
+12-02 21:35:53.249: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa7c45e0 (native @ 0xab6ec470)]
+12-02 21:35:53.249: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/contacts-manager.gaiamobile.org/cache
+12-02 21:35:53.249: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:53.539: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:53.539: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa9a7c70 (native @ 0xab6ec6b0)]
+12-02 21:35:53.539: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/contacts-ds-provider1.gaiamobile.org
+12-02 21:35:53.539: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa9a7ca0 (native @ 0xab6ec740)]
+12-02 21:35:53.539: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/contacts-ds-provider1.gaiamobile.org/resources_metadata.json
+12-02 21:35:53.539: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa9a7c70 (native @ 0xab6ec6b0)]
+12-02 21:35:53.539: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/contacts-ds-provider1.gaiamobile.org/cache
+12-02 21:35:53.539: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:53.819: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:53.819: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa9322b0 (native @ 0xab6ec860)]
+12-02 21:35:53.819: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/contacts-ds-provider2.gaiamobile.org
+12-02 21:35:53.819: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa9322e0 (native @ 0xab6ec980)]
+12-02 21:35:53.819: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/contacts-ds-provider2.gaiamobile.org/resources_metadata.json
+12-02 21:35:53.819: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa9322b0 (native @ 0xab6ec860)]
+12-02 21:35:53.819: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/contacts-ds-provider2.gaiamobile.org/cache
+12-02 21:35:53.819: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:54.099: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:54.099: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xa9fa48e0 (native @ 0xab6ecc50)]
+12-02 21:35:54.099: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/mobile-wallet.gaiamobile.org
+12-02 21:35:54.099: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xa9fa49a0 (native @ 0xab6ecce0)]
+12-02 21:35:54.099: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/mobile-wallet.gaiamobile.org/resources_metadata.json
+12-02 21:35:54.099: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xa9fa48e0 (native @ 0xab6ecc50)]
+12-02 21:35:54.099: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/mobile-wallet.gaiamobile.org/cache
+12-02 21:35:54.099: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:54.379: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:54.379: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xa9fd26a0 (native @ 0xab6ece90)]
+12-02 21:35:54.379: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/theme-test-1.gaiamobile.org
+12-02 21:35:54.379: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xa9fd2760 (native @ 0xab6ecf20)]
+12-02 21:35:54.379: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/theme-test-1.gaiamobile.org/resources_metadata.json
+12-02 21:35:54.379: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xa9fd26a0 (native @ 0xab6ece90)]
+12-02 21:35:54.379: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/theme-test-1.gaiamobile.org/cache
+12-02 21:35:54.379: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:54.659: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:54.659: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaf552130 (native @ 0xab6ecfb0)]
+12-02 21:35:54.659: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/theme-test-2.gaiamobile.org
+12-02 21:35:54.659: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaf5521f0 (native @ 0xab6ed040)]
+12-02 21:35:54.659: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/theme-test-2.gaiamobile.org/resources_metadata.json
+12-02 21:35:54.659: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaf552130 (native @ 0xab6ecfb0)]
+12-02 21:35:54.659: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/theme-test-2.gaiamobile.org/cache
+12-02 21:35:54.669: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:54.949: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:54.949: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xa9d20be0 (native @ 0xab6ed0d0)]
+12-02 21:35:54.949: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/theme-test-3.gaiamobile.org
+12-02 21:35:54.949: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xa9d20ca0 (native @ 0xab6ed1f0)]
+12-02 21:35:54.949: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/theme-test-3.gaiamobile.org/resources_metadata.json
+12-02 21:35:54.949: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xa9d20be0 (native @ 0xab6ed0d0)]
+12-02 21:35:54.949: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/theme-test-3.gaiamobile.org/cache
+12-02 21:35:54.949: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:55.239: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:55.239: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xa9d405b0 (native @ 0xab6ed3a0)]
+12-02 21:35:55.239: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/nfc-api-test.gaiamobile.org
+12-02 21:35:55.239: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xa9d40670 (native @ 0xab6ed4c0)]
+12-02 21:35:55.239: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/nfc-api-test.gaiamobile.org/resources_metadata.json
+12-02 21:35:55.239: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xa9d405b0 (native @ 0xab6ed3a0)]
+12-02 21:35:55.239: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/nfc-api-test.gaiamobile.org/cache
+12-02 21:35:55.239: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:55.529: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:55.529: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xa9d481c0 (native @ 0xab6ed550)]
+12-02 21:35:55.529: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/music-oga.gaiamobile.org
+12-02 21:35:55.529: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xa9d48250 (native @ 0xab6ed700)]
+12-02 21:35:55.529: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/music-oga.gaiamobile.org/resources_metadata.json
+12-02 21:35:55.529: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xa9d481c0 (native @ 0xab6ed550)]
+12-02 21:35:55.529: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/music-oga.gaiamobile.org/cache
+12-02 21:35:55.529: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:56.369: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:56.369: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa118790 (native @ 0xab621080)]
+12-02 21:35:56.369: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/addon1.gaiamobile.org
+12-02 21:35:56.369: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa118820 (native @ 0xab621110)]
+12-02 21:35:56.369: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/addon1.gaiamobile.org/resources_metadata.json
+12-02 21:35:56.369: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa118790 (native @ 0xab621080)]
+12-02 21:35:56.369: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/addon1.gaiamobile.org/cache
+12-02 21:35:56.369: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:56.639: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:56.639: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa34d730 (native @ 0xab621230)]
+12-02 21:35:56.639: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/addon2.gaiamobile.org
+12-02 21:35:56.639: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa34d8e0 (native @ 0xab6212c0)]
+12-02 21:35:56.639: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/addon2.gaiamobile.org/resources_metadata.json
+12-02 21:35:56.639: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa34d730 (native @ 0xab621230)]
+12-02 21:35:56.639: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/addon2.gaiamobile.org/cache
+12-02 21:35:56.639: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:56.899: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:56.899: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa695250 (native @ 0xab6213e0)]
+12-02 21:35:56.899: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/addon3.gaiamobile.org
+12-02 21:35:56.899: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa695bb0 (native @ 0xab621470)]
+12-02 21:35:56.899: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/addon3.gaiamobile.org/resources_metadata.json
+12-02 21:35:56.899: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa695250 (native @ 0xab6213e0)]
+12-02 21:35:56.899: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/addon3.gaiamobile.org/cache
+12-02 21:35:56.899: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.exists() === false
+12-02 21:35:57.169: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : installCache
+12-02 21:35:57.169: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa7533d0 (native @ 0xab621590)]
+12-02 21:35:57.169: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/{355195c6-320d-d54e-9f58-653be8ffbd17}
+12-02 21:35:57.169: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata =[xpconnect wrapped nsIFile @ 0xaa7535b0 (native @ 0xab621620)]
+12-02 21:35:57.169: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : resourcesMetadata.path =/system/b2g/webapps/{355195c6-320d-d54e-9f58-653be8ffbd17}/resources_metadata.json
+12-02 21:35:57.169: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir =[xpconnect wrapped nsIFile @ 0xaa7533d0 (native @ 0xab621590)]
+12-02 21:35:57.169: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheDir.path =/system/b2g/webapps/{355195c6-320d-d54e-9f58-653be8ffbd17}/cache
+12-02 21:35:57.169: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheManifest =[xpconnect wrapped nsIFile @ 0xaa7536a0 (native @ 0xab621740)]
+12-02 21:35:57.169: I/Gecko(8643): -*-*- OfflineCacheInstaller.jsm : cacheManifest.path =/system/b2g/webapps/{355195c6-320d-d54e-9f58-653be8ffbd17}/cache/manifest.appcache
+12-02 21:35:57.169: I/Gecko(8643): *************************
+12-02 21:35:57.169: I/Gecko(8643): A coding exception was thrown in a Promise resolution callback.
+12-02 21:35:57.169: I/Gecko(8643): See https://developer.mozilla.org/Mozilla/JavaScript_code_modules/Promise.jsm/Promise
+12-02 21:35:57.169: I/Gecko(8643): Full message: ReferenceError: aApp is not defined
+12-02 21:35:57.169: I/Gecko(8643): Full stack: installCache@resource://gre/modules/OfflineCacheInstaller.jsm:272:73
+12-02 21:35:57.169: I/Gecko(8643): this.DOMApplicationRegistry.updateOfflineCacheForApp/<@resource://gre/modules/Webapps.jsm:513:1
+12-02 21:35:57.169: I/Gecko(8643): Handler.prototype.process@resource://gre/modules/Promise.jsm -> resource://gre/modules/Promise-backend.js:934:23
+12-02 21:35:57.169: I/Gecko(8643): this.PromiseWalker.walkerLoop@resource://gre/modules/Promise.jsm -> resource://gre/modules/Promise-backend.js:813:7
+12-02 21:35:57.169: I/Gecko(8643): this.PromiseWalker.scheduleWalkerLoop/<@resource://gre/modules/Promise.jsm -> resource://gre/modules/Promise-backend.js:747:1
+12-02 21:35:57.169: I/Gecko(8643): *************************
+12-02 21:35:57.459: I/(Nuwa)(8666): Failed to load native module at path '/system/b2g/components/libtest656331.so': (80004005) dlopen failed: library "/system/b2g/components/libtest656331.so" not found
+12-02 21:35:57.459: I/(Nuwa)(8666): Failed to load native module at path '/system/b2g/components/libtestcompnoaslr.so': (80004005) dlopen failed: library "/system/b2g/components/libtestcompnoaslr.so" not found
+12-02 21:35:57.459: I/(Nuwa)(8666): Failed to load native module at path '/system/b2g/components/libtestcomponent.so': (80004005) dlopen failed: library "/system/b2g/components/libtestcomponent.so" not found
+12-02 21:35:57.989: I/Gecko(8643): [Parent 8643] WARNING: NextRequestSerialNumber doesn't match!: 'aLoggingInfo.nextRequestSerialNumber() == loggingInfo->mLoggingInfo.nextRequestSerialNumber()', file ../../../../gecko-dev/dom/indexedDB/ActorsParent.cpp, line 12724
+12-02 21:36:00.199: I/Gecko(8666): [Child 8666] WARNING: NS_ENSURE_SUCCESS(rv, rv) failed with result 0x80004005: file /home/fischer/Projects/gecko-dev/toolkit/xre/nsXREDirProvider.cpp, line 1412
+12-02 21:36:00.279: I/Gecko(8643): AlarmService: Callback after getting alarms from database: []
+12-02 21:36:00.279: I/Gecko(8643): AlarmService: Current alarm: null
+12-02 21:36:00.279: I/Gecko(8643): AlarmService: Alarm queue: []
+12-02 21:36:00.559: I/Gecko(8666): [Child 8666] WARNING: Unable to printf the requested string due to error.: file /home/fischer/Projects/gecko-dev/ipc/chromium/src/base/string_util.cc, line 427
+12-02 21:36:00.579: I/Gecko(8643): [Parent 8643] WARNING: Bluetooth is already disabled, or the toggling failed.: file ../../../../gecko-dev/dom/bluetooth/common/BluetoothService.cpp, line 506
+12-02 21:36:00.579: I/Gecko(8643): [Parent 8643] WARNING: No observer registered for path /B2G/bluetooth/adapter: file ../../../../gecko-dev/dom/bluetooth/common/BluetoothService.cpp, line 397
+12-02 21:36:00.669: I/Gecko(8666): [Child 8666] WARNING: ENSURE_MAIN_PROCESS failed. Cannot SetCString from content process: b2g.safe_mode: file /home/fischer/Projects/gecko-dev/modules/libpref/Preferences.cpp, line 1489
+12-02 21:36:00.669: I/Gecko(8666): [Child 8666] WARNING: NS_ENSURE_TRUE(lowMemFd != -1) failed: file ../../../../gecko-dev/widget/gonk/GonkMemoryPressureMonitoring.cpp, line 130
+12-02 21:36:00.959: I/Gecko(8666): ++DOCSHELL 0xb0a9b400 == 1 [pid = 8666] [id = 1]
+12-02 21:36:00.989: I/Gecko(8666): ++DOMWINDOW == 1 (0xb0a9b800) [pid = 8666] [serial = 1] [outer = 0x0]
+12-02 21:36:01.129: I/Gonk(8643): Connected to netd
+12-02 21:36:01.199: D/SoftapController(174): Softap fwReload - Ok
+12-02 21:36:01.429: E/BandwidthController(174): No such iface wlan0 to delete
+12-02 21:36:01.479: I/Gecko(8666): ###################################### forms.js loaded
+12-02 21:36:01.499: I/Gecko(8666): ############################### browserElementPanning.js loaded
+12-02 21:36:01.499: I/Gecko(8666): ###################################### BrowserElementCopyPaste.js loaded
+12-02 21:36:01.539: I/Gecko(8666): ######################## BrowserElementChildPreload.js loaded
+12-02 21:36:01.589: I/Gonk(8643): RIL[0]: OnConnectSuccess
+12-02 21:36:01.709: W/AudioPolicyManagerBase(8644): setPhoneState() setting same state 0
+12-02 21:36:01.859: I/rmt_storage(173): rmt_storage_connect_cb: clnt_h=0xa conn_h=0xb84b6160
