@@ -81,3 +81,23 @@ webapps_abserver/< shell.js
 
   AppsUtils.jsm
     46, 240
+
+
+7022c093-6e5c-6b4e-aa5b-2216a18743fa
+
+
+12-03 03:00:35.206: I/Gecko(15718): *************************
+12-03 03:00:35.206: I/Gecko(15718): A coding exception was thrown in a Promise resolution callback.
+12-03 03:00:35.206: I/Gecko(15718): See https://developer.mozilla.org/Mozilla/JavaScript_code_modules/Promise.jsm/Promise
+12-03 03:00:35.206: I/Gecko(15718): Full message: ReferenceError: aApp is not defined
+12-03 03:00:35.206: I/Gecko(15718): Full stack: installCache@resource://gre/modules/OfflineCacheInstaller.jsm:299:73
+12-03 03:00:35.206: I/Gecko(15718): this.DOMApplicationRegistry.updateOfflineCacheForApp/<@resource://gre/modules/Webapps.jsm:572:9
+12-03 03:00:35.206: I/Gecko(15718): Handler.prototype.process@resource://gre/modules/Promise.jsm -> resource://gre/modules/Promise-backend.js:934:23
+12-03 03:00:35.206: I/Gecko(15718): this.PromiseWalker.walkerLoop@resource://gre/modules/Promise.jsm -> resource://gre/modules/Promise-backend.js:813:7
+12-03 03:00:35.206: I/Gecko(15718): this.PromiseWalker.scheduleWalkerLoop/<@resource://gre/modules/Promise.jsm -> resource://gre/modules/Promise-backend.js:747:1
+12-03 03:00:35.206: I/Gecko(15718): *************************
+
+# Open with internet:
+  12-03 05:14:02.824: I/GeckoConsole(19694): Offline cache update done, URL=https://bits.wikimedia.org/WikipediaMobileFirefoxOS/app.appcache
+
+  12-03 05:14:28.894: I/Gecko(21933): [Child 21933] WARNING: Could not get disk status from nsIDiskSpaceWatcher: file /home/fischer/Projects/gecko-dev/uriloader/prefetch/nsOfflineCacheUpdateService.cpp, line 319
