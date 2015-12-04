@@ -82,6 +82,7 @@ webapps_abserver/< shell.js
   AppsUtils.jsm
     46, 240
 
+---- Wiki ----
 
 7022c093-6e5c-6b4e-aa5b-2216a18743fa
 
@@ -101,3 +102,11 @@ webapps_abserver/< shell.js
   12-03 05:14:02.824: I/GeckoConsole(19694): Offline cache update done, URL=https://bits.wikimedia.org/WikipediaMobileFirefoxOS/app.appcache
 
   12-03 05:14:28.894: I/Gecko(21933): [Child 21933] WARNING: Could not get disk status from nsIDiskSpaceWatcher: file /home/fischer/Projects/gecko-dev/uriloader/prefetch/nsOfflineCacheUpdateService.cpp, line 319
+
+---- Wiki ----
+
+---- hostedappcache ----
+c297ba8c-3f18-e542-a561-2f07804d4f61
+1449198351
+4294967295
+---- hostedappcache ----
