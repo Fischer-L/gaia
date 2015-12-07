@@ -551,9 +551,7 @@
   window.addEventListener('load', function() {
 
     // TMP DEL
-    if (mDBG.isDBG() && 1) {
-
-      var env_testOnB2G = 0;
+    if (mDBG.isDBG() && false) {
 
       var initForTest = function () {
 
@@ -567,9 +565,10 @@
         mockVideo.handleEvent = function (e) {
           console.log('------ Video event : ' + e.type);
           switch (e.type) {
-            case 'timeupdate':
-              console.log('---------- Current Time : ' + mockVideo.currentTime);
-            break;
+            // case 'timeupdate':
+            //   console.log('---------- Current Time : ' +
+            //                mockVideo.currentTime);
+            // break;
           }
         }.bind(mockVideo);
         for (var p in mockVideo) {
@@ -599,18 +598,31 @@
         }
 
         mockPresentation = new MockPresentation();
-        mockPresentation.mLoad = function () {
+        mockPresentation.mSeq = 0;
+        mockPresentation.mLoad = function (idx = 2) {
           var videos = [
             'http://media.w3.org/2010/05/sintel/trailer.webm',
             'http://video.webmfiles.org/elephants-dream.webm',
             'http://people.mozilla.org/~mfinkle/casting/' +
                 'Mobile-launch-greatday640.mp4',
-            'http://download.wavetlan.com/SVV/Media/HTTP/H264/Other_Media/' +
-               'H264_test5_voice_mp4_480x360.mp4'
+            'http://fischer-l.github.io/gaea/fling-player/test_video.webm'
           ];
-          var m = castingMsgTemplate.get().load;
-          m.url = videos[2];
-          mockPresentation.mCastMsgToReceiver(m);
+          var m, msgs = [], tmplt = castingMsgTemplate.get();
+
+          m = tmplt.load;
+          m.url = videos[idx];
+          m.seq = mockPresentation.mSeq++;
+          msgs.push(m);
+
+          m = tmplt['device-info'];
+          m.seq = mockPresentation.mSeq++;
+          msgs.push(m);
+
+          m = tmplt.play;
+          m.seq = mockPresentation.mSeq++;
+          msgs.push(m);
+
+          mockPresentation.mCastMsgToReceiver(msgs);
         }.bind(mockPresentation);
 
         fp = new FlingPlayer(
@@ -622,6 +634,10 @@
         window.fp = fp;
         window.mockVideo = mockVideo;
         window.mockPresentation = mockPresentation;
+        window.mockPresentation.mInit();
+        setTimeout(() => {
+          window.mockPresentation.mLoad();
+        }, 50);
 
         if (document.visibilityState === 'hidden') {
           navigator.mozApps.getSelf().onsuccess = function(evt) {
@@ -634,9 +650,9 @@
       };
 
       var scripts = [
-        'test/unit/mock_presentation.js',
-        'test/unit/mock_video_element.js',
-        'test/unit/casting_message_template.js'
+        'mock_presentation.js',
+        'mock_video_element.js',
+        'casting_message_template.js'
       ];
 
       scripts.waited = scripts.length;
@@ -649,14 +665,13 @@
             initForTest();
           }
         };
-        script.src = env_testOnB2G ? 'js/' + s : s;
+        script.src = 'js/TMP/' + s;
         document.head.appendChild(script);
       });
 
       return;
     }
     // TMP DEL end
-
     window.fp = new FlingPlayer(
       new VideoPlayer($(uiID.player)),
       new Connector(navigator.presentation)
