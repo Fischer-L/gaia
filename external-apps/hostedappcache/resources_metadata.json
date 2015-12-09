@@ -1,0 +1,11 @@
+{
+"hostedappcache/index.html": { "lastModified": "Epoch", "lastFetched": "Wed, 09 Dec 2015 21:48:56 GMT"},
+"hostedappcache/offline.html": { "lastModified": "Epoch", "lastFetched": "Wed, 09 Dec 2015 21:48:56 GMT"},
+"hostedappcache/js/index.js": { "lastModified": "Wed, 09 Dec 2015 21:09:14 GMT", "lastFetched": "Wed, 09 Dec 2015 21:48:56 GMT"},
+"hostedappcache/css/offline.css": { "lastModified": "Thu, 03 Dec 2015 18:33:44 GMT", "lastFetched": "Wed, 09 Dec 2015 21:48:56 GMT"},
+"hostedappcache/image/W_launchicon_16_1101.png": { "lastModified": "Tue, 24 Nov 2015 14:34:04 GMT", "lastFetched": "Wed, 09 Dec 2015 21:48:57 GMT"},
+"hostedappcache/image/W_launchicon_48_1101.png": { "lastModified": "Tue, 24 Nov 2015 14:34:04 GMT", "lastFetched": "Wed, 09 Dec 2015 21:48:57 GMT"},
+"hostedappcache/image/W_launchicon_128_1101.png": { "lastModified": "Tue, 24 Nov 2015 14:34:04 GMT", "lastFetched": "Wed, 09 Dec 2015 21:48:57 GMT"},
+"*": { "lastModified": "Tue, 24 Nov 2015 14:34:04 GMT", "lastFetched": "Wed, 09 Dec 2015 21:48:57 GMT"},
+"hostedappcache/cache/manifest.appcache": { "lastModified": "Wed, 09 Dec 2015 21:42:27 GMT", "lastFetched": "Wed, 09 Dec 2015 21:48:56 GMT"}
+}
