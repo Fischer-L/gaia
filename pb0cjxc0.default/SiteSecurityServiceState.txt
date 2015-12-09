@@ -1,0 +1,1 @@
+marketplace.firefox.com:HSTS	0	16776	1481055594597,1,0
