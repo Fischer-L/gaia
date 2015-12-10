@@ -1,1 +1,6 @@
-{"origin": "http://jostw.github.io", "manifestURL": "http://jostw.github.io/marketplace-tv-front-end/manifest.webapp", "installOrigin": "https://marketplace.firefox.com", "external": true}
+{
+  "origin": "https://marketplace.firefox.com",
+  "manifestURL": "https://marketplace.firefox.com/tv/manifest.webapp",
+  "installOrigin": "https://marketplace.firefox.com",
+  "external": true
+}
