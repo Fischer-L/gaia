@@ -5,6 +5,10 @@
 (function(window) {
   'use strict';
 
+  function dTMP(msg) {
+    dump("browser_context_menu.js - " + msg + "\n");
+  };
+
   var BUTTON_TYPE = 'contextmenu';
 
   // XXX: We use icon filename to determine if we have pin-to-card option
@@ -107,13 +111,13 @@
 
     hasSystemTargets = false;
 
-    console.log('contextmenu = ' + detail.contextmenu); // null
-    console.log('contextmenu items length = ' + detail.contextmenu.items.length); // undefined
+    // dTMP('contextmenu = ' + detail.contextmenu); // null
+    // dTMP('contextmenu items length = ' + detail.contextmenu.items.length); // undefined
 
 
-    console.log('hasSystemTargets = ' + hasSystemTargets);
-    console.log('hasContextMenu = ' + hasContextMenu); // null
-    console.log('isCertified = ' + this.app.isCertified()); // false
+    // dTMP('hasSystemTargets = ' + hasSystemTargets);
+    // dTMP('hasContextMenu = ' + hasContextMenu); // null
+    // dTMP('isCertified = ' + this.app.isCertified()); // false
     // Nothing to show
     if (!hasSystemTargets && !hasContextMenu) {
       return;
