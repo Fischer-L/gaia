@@ -10,3 +10,5 @@ tv_apps/remote-control
 tv_apps/remote-control-client
 outoftree_apps/*
 apps/sync
+apps/settings
+external-apps/*
