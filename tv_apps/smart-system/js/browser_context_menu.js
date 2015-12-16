@@ -52,6 +52,7 @@
   };
 
   BrowserContextMenu.prototype.handleEvent = function bcm_handleEvent(evt) {
+    console.log('@@@@ handleEvent' + evt.type);
     switch (evt.type) {
       case 'mozbrowsercontextmenu':
         this.show(evt);
@@ -104,6 +105,15 @@
     var hasSystemTargets = detail.systemTargets &&
       detail.systemTargets.length > 0;
 
+    hasSystemTargets = false;
+
+    console.log('contextmenu = ' + detail.contextmenu); // null
+    console.log('contextmenu items length = ' + detail.contextmenu.items.length); // undefined
+
+
+    console.log('hasSystemTargets = ' + hasSystemTargets);
+    console.log('hasContextMenu = ' + hasContextMenu); // null
+    console.log('isCertified = ' + this.app.isCertified()); // false
     // Nothing to show
     if (!hasSystemTargets && !hasContextMenu) {
       return;
@@ -117,6 +127,7 @@
     }
 
     var items = this._listItems(detail);
+    console.log('item length = ' + items.length);
 
     if (!items.length) {
       return;
