@@ -8,7 +8,6 @@
 *.swo
 .svn
 *~
-manifest.appcache
 
 /apps/calendar/js/common/presets.js
 /apps/camera/js/config.js
