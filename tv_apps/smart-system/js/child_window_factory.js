@@ -145,8 +145,7 @@
       url: evt.detail.url,
       origin: evt.detail.origin,
       manifestURL: evt.detail.manifestURL,
-      rearWindow: this.app,
-      oop: true // TMP _KEY_
+      rearWindow: this.app
     };
     var childWindow = new PreviewWindow(configObject);
     childWindow.element.addEventListener('_closing', this);
