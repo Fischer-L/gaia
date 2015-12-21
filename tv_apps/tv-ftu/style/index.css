@@ -17,15 +17,22 @@ html, body {
 }
 
 body {
+  font-size: 3.8rem;
   background: url('images/background.png');
+  opacity: 1;
 }
 
-.txt-mid {
-  font-size: 3.8rem;
+body.finish {
+  opacity: 0;
+  transition: opacity 0.1s ease;
 }
 
 .txt-large {
   font-size: 7rem;
+}
+
+.txt-bold {
+  font-weight: 400;
 }
 
 .txt-center {
@@ -38,86 +45,80 @@ smart-button[type=rounded-corner-text] {
   font-weight: normal;
 }
 
-.slide {
+.page {
   width: 100%;
   height: 100%;
   color: #fff;
   position: fixed;
+  opacity: 1;
+  transition: opacity 1s ease;
 }
 
-.slide-section {
+.page.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transition: none;
+}
+
+.page-section {
   position: absolute;
   margin-right: -50%;
   left: 50%;
   transform: translate(-50%, 0px);
 }
 
-.slide-section.top {
+.page-section.logo-section {
   top: 7.5rem;
 }
 
-.slide-section.mid {
+.page-section.content-section {
   width: 152rem;
-  height: 51rem;
-  top: 24rem;
-  overflow: hidden;
+  height: 40rem;
+  top: 39rem;
+  overflow: scroll;
+  text-align: justify;
 }
 
-.slide-section.bottom {
+.page-section.content-section:focus {
+  outline: none;
+}
+
+.page-section.button-section {
   bottom: 10.5rem;
 }
 
-.slide-description {
+.page-description {
   margin: 0;
   margin-bottom: 6rem;
 }
 
-.slide-description:last-child {
-  margin-bottom: 0;
-}
-
-#app-usage-slide {
-  background: rgba(0, 0, 0, 0.3);
-}
-
-#app-usage-terms-section {
-  overflow: scroll;
-}
-
-#app-usage-terms-section:focus {
-  outline: none;
-}
-
-#app-usage-terms-title {
-  margin-bottom: 8rem;
-}
-
-#app-usage-slide-logo {
+.firefox-logo {
   width: 15rem;
   height: 15rem;
+  display: block;
+  margin: 0px auto 1.5rem;
 }
 
-#app-usage-no-button {
-  margin-right: 1.8rem;
-}
-
-#app-usage-arrow-icon {
+.arrow-icon {
   width: 6rem;
   height: 6rem;
   position: absolute;
   margin-right: -50%;
-  bottom: 15rem;
+  bottom: 13rem;
   left: 50%;
   transform: translate(-50%, 0px);
   opacity: 1;
   transition: opacity 0.3s ease;
 }
 
-#app-usage-arrow-icon.hidden {
+.arrow-icon.hidden {
   opacity: 0;
 }
 
-#app-usage-arrow-icon[data-icon]::before {
+.arrow-icon[data-icon]::before {
   font-size: 6rem;
 }
 
+#app-usage-page-no-button {
+  margin-right: 1.8rem;
+}

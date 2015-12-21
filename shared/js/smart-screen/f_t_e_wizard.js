@@ -57,6 +57,9 @@
     this._simpleKeyNavigation = new SimpleKeyNavigation();
     this._onfinish = options.onfinish;
     this._onskip = options.onskip;
+    this._oninit = options.oninit;
+    this._ongoNext = options.ongoNext;
+    this._ongoPrev = options.ongoPrev;
 
     this._pages =
             Array.from(this._container.getElementsByClassName(this._pageClass));
@@ -83,6 +86,7 @@
     this._updateNavigation();
 
     this._running = true;
+    this._oninit && this._oninit(this._pages[this._currentPage]);
   };
 
   FTEWizard.prototype.uninit = function fw_uninit() {
@@ -106,9 +110,11 @@
     }
 
     this._hide(this._currentPage);
-    attachTransitionEnd(
-      this._pages[++this._currentPage], this._updateNavigation.bind(this)
-    );
+    attachTransitionEnd(this._pages[++this._currentPage], function () {
+        this._updateNavigation();
+        this._ongoNext &&
+          this._ongoNext(this._pages[this._currentPage]);
+      }.bind(this));
     this._show(this._currentPage);
   };
 
@@ -118,9 +124,11 @@
     }
 
     this._hide(this._currentPage);
-    attachTransitionEnd(
-      this._pages[--this._currentPage], this._updateNavigation.bind(this)
-    );
+    attachTransitionEnd(this._pages[--this._currentPage], function () {
+        this._updateNavigation();
+        this._ongoPrev &&
+          this._ongoPrev(this._pages[this._currentPage]);
+      }.bind(this));
     this._show(this._currentPage);
   };
 
