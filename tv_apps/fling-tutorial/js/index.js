@@ -29,7 +29,7 @@ window.addEventListener('load', function() {
       window.close();
     });
 
-    mozIframe.src = 'https://casttv.services.mozilla.com';
+    mozIframe.src = 'http://fischer-l.github.io/casting-tutorial/';
   } else {
 
     offlineContent.classList.remove('hidden');
