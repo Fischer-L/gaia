@@ -1,0 +1,10 @@
+CACHE MANIFEST
+index.html
+http://localhost:8674/offline/index.html?b=12345678
+http://localhost:8674/offline/css/index.css
+http://localhost:8674/offline/js/l10n.js
+http://localhost:8674/offline/js/index.js
+http://localhost:8674/offline/locales/marketplace-offline.en-US.properties
+
+NETWORK:
+*
