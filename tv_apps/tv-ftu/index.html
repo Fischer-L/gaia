@@ -38,79 +38,15 @@
 
   <body>
 
-    <article id="privacy-policy-page" class="page">
+    <article id="app-usage-page" class="page">
       <section class="page-section logo-section">
         <img class="firefox-logo" src="style/images/firefox_logo.png">
-        <span class="txt-large txt-center" data-l10n-id="privacy-policy"></span>
+        <span class="txt-large txt-center" data-l10n-id="help-mozilla"></span>
       </section>
       <section class="page-section content-section" tabindex="-1">
         <div class="page-content">
-          <p class="page-description txt-bold" data-l10n-id="mozilla-cares-privacy"></p>
-          <p class="page-description txt-bold" data-l10n-id="what-mean-by-personal-info"></p>
-          <p class="page-description" data-l10n-id="personal-info-means"></p>
-          <p class="page-description" data-l10n-id="non-personal-info"></p>
-          <p class="page-description" data-l10n-id="if-store-info"></p>
-          <p class="page-description txt-bold" data-l10n-id="how-we-learn"></p>
-          <p class="page-description" data-l10n-id="we-learn"></p>
-          <ul>
-            <li class="page-description" data-l10n-id="give-directly"></li>
-            <li class="page-description" data-l10n-id="we-collect"></li>
-            <li class="page-description" data-l10n-id="someone-tells"></li>
-            <li class="page-description" data-l10n-id="when-we-try"></li>
-          </ul>
-          <p class="page-description txt-bold" data-l10n-id="what-we-do"></p>
-          <p class="page-description" data-l10n-id="when-give-info"></p>
-          <p class="page-description txt-bold" data-l10n-id="when-we-share"></p>
-          <ul>
-            <li class="page-description" data-l10n-id="when-ask"></li>
-            <li class="page-description" data-l10n-id="for-processing"></li>
-            <li class="page-description" data-l10n-id="when-fulfilling"></li>
-            <li class="page-description" data-l10n-id="when-law-requires"></li>
-            <li class="page-description" data-l10n-id="when-necessary"></li>
-            <li class="page-description" data-l10n-id="if-changes"></li>
-          </ul>
-          <p class="page-description txt-bold" data-l10n-id="how-we-store"></p>
-          <p class="page-description" data-l10n-id="we-commit"></p>
-          <p class="page-description" data-l10n-id="no-longer-than-need"></p>
-          <p class="page-description txt-bold" data-l10n-id="what-should-know"></p>
-          <p class="page-description" data-l10n-id="we-are-global"></p>
-          <p class="page-description" data-l10n-id="if-under-13"></p>
-          <p class="page-description txt-bold" data-l10n-id="what-if-change"></p>
-          <p class="page-description" data-l10n-id="may-need-change"></p>
-        </div>
-      </section>
-      <section class="page-section button-section">
-        <div class="arrow-icon hidden" data-icon="arrow-down"></div>
-        <smart-button class="primary page-button" type="rounded-corner-text" data-behavior="next" data-l10n-id="ok"></smart-button>
-      </section>
-    </article>
-
-    <article id="activation-page" class="page">
-      <section class="page-section logo-section">
-        <img class="firefox-logo" src="style/images/firefox_logo.png">
-        <span class="txt-large txt-center" data-l10n-id="about-firefox-os"></span>
-      </section>
-      <section class="page-section content-section" tabindex="-1">
-        <div class="page-content">
-          <p class="page-description" data-l10n-id="welcome-to-fx-os"></p>
-          <p class="page-description" data-l10n-id="initial-activation"></p>
-          <p class="page-description" data-l10n-id="updates"></p>
-        </div>
-      </section>
-      <section class="page-section button-section">
-        <div class="arrow-icon hidden" data-icon="arrow-down"></div>
-        <smart-button class="primary page-button" type="rounded-corner-text" data-behavior="next" data-l10n-id="ok"></smart-button>
-      </section>
-    </article>
-
-    <article id="app-usage-page" class="page hidden">
-      <section class="page-section logo-section">
-        <img class="firefox-logo" src="style/images/firefox_logo.png">
-        <span class="txt-large txt-center" data-l10n-id="about-firefox-os"></span>
-      </section>
-      <section class="page-section content-section" tabindex="-1">
-        <div class="page-content">
-          <p class="page-description" data-l10n-id="app-usage-content"></p>
+          <p class="page-description"></p>
+          <p class="page-description" data-l10n-id="app-usage-notice"></p>
           <p class="page-description" data-l10n-id="device-is-created-by-several-parties"></p>
           <p class="page-description txt-center" data-l10n-id="send-to-mozilla"></p>
         </div>
@@ -118,7 +54,71 @@
       <section class="page-section button-section">
         <div class="arrow-icon hidden" data-icon="arrow-down"></div>
         <smart-button id="app-usage-page-no-button" class="page-button" type="rounded-corner-text" data-l10n-id="no"></smart-button>
-        <smart-button id="app-usage-page-yes-button" class="primary page-button" type="rounded-corner-text" data-l10n-id="yes"></smart-button>
+        <smart-button id="app-usage-page-yes-button" class="primary page-button page-default-button" type="rounded-corner-text" data-l10n-id="yes"></smart-button>
+      </section>
+    </article>
+
+    <article id="privacy-policy-page" class="page hidden">
+      <section class="page-section content-section" tabindex="-1">
+        <div class="page-content">
+          <div id="fxos-privacy-notice-content">
+            <p class="page-description txt-bold" data-l10n-id="privacy-notice"></p>
+            <p class="page-description" data-l10n-id="cares-about-your-privacy"></p>
+            <p class="page-description txt-bold" data-l10n-id="you-should-know"></p>
+            <p class="page-description" data-l10n-id="fxos-connects"></p>
+            <ul>
+              <li class="page-description" data-l10n-id="updates"></li>
+              <li class="page-description" data-l10n-id="locations"></li>
+              <li class="page-description" data-l10n-id="initial-activation"></li>
+              <li class="page-description" data-l10n-id="app-usage"></li>
+              <li class="page-description" data-l10n-id="search-engine"></li>
+            </ul>
+            <p class="page-description" data-l10n-id="device-you-using"></p>
+            <ul>
+              <li class="page-description" data-l10n-id="if-use-app"></li>
+              <li class="page-description" data-l10n-id="allows-you"></li>
+            </ul>
+          </div>
+          <div id="moz-privacy-policy-content">
+            <p class="page-description txt-bold" data-l10n-id="privacy-policy"></p>
+            <p class="page-description" data-l10n-id="privacy-is-important"></p>
+            <p class="page-description txt-bold" data-l10n-id="what-mean-by-personal-info"></p>
+            <p class="page-description" data-l10n-id="personal-info-means"></p>
+            <p class="page-description" data-l10n-id="non-personal-info"></p>
+            <p class="page-description" data-l10n-id="if-store-info"></p>
+            <p class="page-description txt-bold" data-l10n-id="how-we-learn"></p>
+            <p class="page-description" data-l10n-id="we-learn"></p>
+            <ul>
+              <li class="page-description" data-l10n-id="give-directly"></li>
+              <li class="page-description" data-l10n-id="we-collect"></li>
+              <li class="page-description" data-l10n-id="someone-tells"></li>
+              <li class="page-description" data-l10n-id="when-we-try"></li>
+            </ul>
+            <p class="page-description txt-bold" data-l10n-id="what-we-do"></p>
+            <p class="page-description" data-l10n-id="when-give-info"></p>
+            <p class="page-description txt-bold" data-l10n-id="when-we-share"></p>
+            <ul>
+              <li class="page-description" data-l10n-id="when-ask"></li>
+              <li class="page-description" data-l10n-id="for-processing"></li>
+              <li class="page-description" data-l10n-id="when-fulfilling"></li>
+              <li class="page-description" data-l10n-id="when-law-requires"></li>
+              <li class="page-description" data-l10n-id="when-necessary"></li>
+              <li class="page-description" data-l10n-id="if-changes"></li>
+            </ul>
+            <p class="page-description txt-bold" data-l10n-id="how-we-store"></p>
+            <p class="page-description" data-l10n-id="we-commit"></p>
+            <p class="page-description" data-l10n-id="no-longer-than-need"></p>
+            <p class="page-description txt-bold" data-l10n-id="what-should-know"></p>
+            <p class="page-description" data-l10n-id="we-are-global"></p>
+            <p class="page-description" data-l10n-id="if-under-13"></p>
+            <p class="page-description txt-bold" data-l10n-id="what-if-change"></p>
+            <p class="page-description" data-l10n-id="may-need-change"></p>
+          </div>
+        </div>
+      </section>
+      <section class="page-section button-section">
+        <div class="arrow-icon hidden" data-icon="arrow-down"></div>
+        <smart-button class="primary page-button" type="rounded-corner-text" data-behavior="prev" data-l10n-id="ok"></smart-button>
       </section>
     </article>
 

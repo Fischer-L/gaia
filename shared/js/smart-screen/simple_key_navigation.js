@@ -81,26 +81,30 @@
   };
 
   proto.focus = function skn_focus() {
-    var elem = this._List[this._focusedIndex];
-    if (elem.focus && (typeof elem.focus) === 'function') {
-      elem.focus();
+    if (this._List.length > 0) {
+      var elem = this._List[this._focusedIndex];
+      if (elem.focus && (typeof elem.focus) === 'function') {
+        elem.focus();
+      }
+      // Fon nested case, we need to propagate child navigator event to parent.
+      if (elem instanceof SimpleKeyNavigation) {
+        elem = elem._List[elem._focusedIndex];
+      }
+      this.fire('focusChanged', elem);
     }
-    // Fon nested case, we need to propagate child navigator event to parent.
-    if (elem instanceof SimpleKeyNavigation) {
-      elem = elem._List[elem._focusedIndex];
-    }
-    this.fire('focusChanged', elem);
   };
 
   proto.blur = function skn_blur() {
-    var elem = this._List[this._focusedIndex];
-    elem.blur && (typeof elem.blur === 'function') && elem.blur();
+    if (this._List.length > 0) {
+      var elem = this._List[this._focusedIndex];
+      elem.blur && (typeof elem.blur === 'function') && elem.blur();
 
-    // Fon nested case, we need to propagate child navigator event to parent.
-    if (elem instanceof SimpleKeyNavigation) {
-      elem = elem._List[elem._focusedIndex];
+      // Fon nested case, we need to propagate child navigator event to parent.
+      if (elem instanceof SimpleKeyNavigation) {
+        elem = elem._List[elem._focusedIndex];
+      }
+      this.fire('focusBlurred', elem);
     }
-    this.fire('focusBlurred', elem);
   };
 
   proto.focusOn = function skn_focusOn(elem) {

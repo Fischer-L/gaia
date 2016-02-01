@@ -17,7 +17,7 @@ html, body {
 }
 
 body {
-  font-size: 3.8rem;
+  font-size: 3.2rem;
   background: url('images/background.png');
   opacity: 1;
 }
@@ -25,6 +25,15 @@ body {
 body.finish {
   opacity: 0;
   transition: opacity 0.1s ease;
+}
+
+a {
+  text-decoration: underline;
+}
+
+a:focus {
+  font-weight: 400;
+  outline: 0;
 }
 
 .txt-large {
@@ -43,6 +52,10 @@ smart-button[type=rounded-corner-text] {
   width: 23.7rem;
   font-size: 2.4rem;
   font-weight: normal;
+}
+
+smart-button[type=rounded-corner-text].focused {
+  z-index: 1;
 }
 
 .page {
@@ -68,19 +81,23 @@ smart-button[type=rounded-corner-text] {
 }
 
 .page-section.logo-section {
-  top: 7.5rem;
+  top: 5rem;
 }
 
 .page-section.content-section {
-  width: 152rem;
-  height: 40rem;
-  top: 39rem;
+  width: 172rem;
+  height: 49rem;
+  top: 33rem;
   overflow: scroll;
   text-align: justify;
 }
 
 .page-section.content-section:focus {
   outline: none;
+}
+
+.page-content.hidden {
+  display: none;
 }
 
 .page-section.button-section {
@@ -90,6 +107,10 @@ smart-button[type=rounded-corner-text] {
 .page-description {
   margin: 0;
   margin-bottom: 6rem;
+}
+
+.page-description:last-child {
+  margin-bottom: 0;
 }
 
 .firefox-logo {
@@ -104,7 +125,7 @@ smart-button[type=rounded-corner-text] {
   height: 6rem;
   position: absolute;
   margin-right: -50%;
-  bottom: 13rem;
+  bottom: 12rem;
   left: 50%;
   transform: translate(-50%, 0px);
   opacity: 1;
@@ -121,4 +142,9 @@ smart-button[type=rounded-corner-text] {
 
 #app-usage-page-no-button {
   margin-right: 1.8rem;
+}
+
+#privacy-policy-page > .content-section {
+  top: 10rem;
+  height: 70rem;
 }
