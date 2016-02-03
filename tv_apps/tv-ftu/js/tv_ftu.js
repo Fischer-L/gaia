@@ -22,39 +22,6 @@ window.addEventListener('load', function() {
       this.keyNavAdapter = new KeyNavigationAdapter();
       this.linkNavigation = new SimpleKeyNavigation();
 
-      this.fteWizard = new FTEWizard('tvFTU.fteWizard');
-      this.fteWizard.init({
-        container: document.body,
-        pageClass: 'page',
-        buttonsClass: 'page-button',
-        propagateKeyEvent: true,
-        ongoNext: this.setupPage.bind(tvFTU),
-        ongoPrev: this.setupPage.bind(tvFTU),
-        oninit: function (currentPage) {
-
-          this.keyNavAdapter.init();
-          this.keyNavAdapter.on('move', this.onKeyMove.bind(this));
-          this.keyNavAdapter.on('esc-keyup', this.onBackKeyUp.bind(this));
-          this.keyNavAdapter.on('enter-keyup', this.onEnterKeyUp.bind(this));
-          this.on('focus', this.onFocus.bind(this));
-
-          this.linkNavigation.start(
-            [], SimpleKeyNavigation.DIRECTION.HORIZONTAL);
-          this.linkNavigation.on('focusChanged', (elem) => {
-            this.fire('focus', elem);
-          });
-
-          this.fteWizard._simpleKeyNavigation.on('focusChanged', (elem) => {
-            this.fire('focus', elem);
-          });
-
-          this.setupPage(currentPage);
-        }.bind(this),
-        onfinish: function () {
-          window.close();
-        }
-      });
-
       // Special treatment for translation with links
       Promise.all([
         navigator.mozL10n.formatValue('cares-privacy'),
@@ -75,7 +42,7 @@ window.addEventListener('load', function() {
         txt = [txt[0]].concat(
           txt[1].split('{{ LINK_MOZILLA_PRIVACY_POLICY }}'));
 
-        txtNode = document.createTextNode(txt[0] + ' ');
+        txtNode = document.createTextNode(txt[0]);
         frag.appendChild(txtNode);
 
         a = document.createElement('a');
@@ -85,7 +52,7 @@ window.addEventListener('load', function() {
         frag.appendChild(a);
 
         txtNode = txtNode.cloneNode(false);
-        txtNode.textContent = ' ' + txt[1] + ' ';
+        txtNode.textContent = txt[1];
         frag.appendChild(txtNode);
 
         a = a.cloneNode(false);
@@ -94,10 +61,44 @@ window.addEventListener('load', function() {
         frag.appendChild(a);
 
         txtNode = txtNode.cloneNode(false);
-        txtNode.textContent = ' ' + txt[2];
+        txtNode.textContent = txt[2];
         frag.appendChild(txtNode);
 
         p.appendChild(frag);
+      });
+
+      this.fteWizard = new FTEWizard('tvFTU.fteWizard');
+      this.fteWizard.init({
+        container: document.body,
+        pageClass: 'page',
+        buttonsClass: 'page-button',
+        propagateKeyEvent: true,
+        ongoNext: this.setupPage.bind(tvFTU),
+        ongoPrev: this.setupPage.bind(tvFTU),
+        oninit: function (currentPage) {
+
+          this.keyNavAdapter.init();
+          this.keyNavAdapter.on('move', this.onKeyMove.bind(this));
+          this.keyNavAdapter.on('back-keyup', this.onBackKeyUp.bind(this));
+          this.keyNavAdapter.on('enter-keyup', this.onEnterKeyUp.bind(this));
+          this.on('focus', this.onFocus.bind(this));
+
+          this.linkNavigation.start(
+            [], SimpleKeyNavigation.DIRECTION.HORIZONTAL);
+          this.linkNavigation.on('focusChanged', (elem) => {
+            this.fire('focus', elem);
+          });
+
+          this.fteWizard._simpleKeyNavigation.on('focusChanged', (elem) => {
+            this.fire('focus', elem);
+          });
+
+          this.setupPage(currentPage);
+
+        }.bind(this),
+        onfinish: function () {
+          window.close();
+        }
       });
     },
 
