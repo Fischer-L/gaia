@@ -22,51 +22,6 @@ window.addEventListener('load', function() {
       this.keyNavAdapter = new KeyNavigationAdapter();
       this.linkNavigation = new SimpleKeyNavigation();
 
-      // Special treatment for translation with links
-      Promise.all([
-        navigator.mozL10n.formatValue('cares-privacy'),
-        navigator.mozL10n.formatValue('privacy-notice'),
-        navigator.mozL10n.formatValue('privacy-policy')
-      ])
-      .then(values => {
-        var a;
-        var txtNode;
-        var txt = values[0];
-        var privacyNotice = values[1];
-        var privacyPolicy = values[2];
-        var frag = document.createDocumentFragment();
-        var p = document.querySelector(
-          '#app-usage-page .page-content > .page-description');
-
-        txt = txt.split('{{ LINK_FIREFOX_OS_PRIVACY_NOTICE }}');
-        txt = [txt[0]].concat(
-          txt[1].split('{{ LINK_MOZILLA_PRIVACY_POLICY }}'));
-
-        txtNode = document.createTextNode(txt[0]);
-        frag.appendChild(txtNode);
-
-        a = document.createElement('a');
-        a.textContent = privacyNotice;
-        a.setAttribute('tabindex', -1);
-        a.setAttribute('id', 'fxos-privacy-notice-link');
-        frag.appendChild(a);
-
-        txtNode = txtNode.cloneNode(false);
-        txtNode.textContent = txt[1];
-        frag.appendChild(txtNode);
-
-        a = a.cloneNode(false);
-        a.textContent = privacyPolicy;
-        a.setAttribute('id', 'moz-privacy-policy-link');
-        frag.appendChild(a);
-
-        txtNode = txtNode.cloneNode(false);
-        txtNode.textContent = txt[2];
-        frag.appendChild(txtNode);
-
-        p.appendChild(frag);
-      });
-
       this.fteWizard = new FTEWizard('tvFTU.fteWizard');
       this.fteWizard.init({
         container: document.body,
@@ -100,6 +55,14 @@ window.addEventListener('load', function() {
           window.close();
         }
       });
+
+      // Special treatment for translation with links
+      var links = document.querySelectorAll(
+        '#app-usage-page p[data-l10n-id=cares-privacy] > a');
+      links[0].setAttribute('tabindex', -1);
+      links[0].setAttribute('id', 'fxos-privacy-notice-link');
+      links[1].setAttribute('tabindex', -1);
+      links[1].setAttribute('id', 'moz-privacy-policy-link');
     },
 
     setupPage: function (currentPage) {
