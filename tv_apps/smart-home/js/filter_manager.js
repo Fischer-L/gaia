@@ -1,5 +1,5 @@
-/* global evt, CardFilter */
-
+/* global evt, CardFilter, CardUtil */
+window.TMP_NEW=1;
 (function(exports) {
   'use strict';
 
@@ -207,26 +207,52 @@
         return;
       }
 
-      var that = this;
       var filter = this.getFilterByIconName(this._cardFilter.filter);
-      var gotCardLists = function(filteredList) {
-        filteredList.forEach(function(card) {
-          that._cardScrollable.addNode(that._home.createCardNode(card));
-        });
-
-        that._filteredCardList =
-          (filter.name !== 'all') ? filteredList : undefined;
-        that._cardListElem.style.opacity = 0;
-        window.requestAnimationFrame(that._performBubbleUp.bind(that));
-      };
 
       if (!this._isBubbleSinking()) {
         this._isFilterChanging = false;
         return;
       }
 
+      this._filteredCardList = undefined;
+
+      var display = list => {
+        list.forEach(card => {
+          this._cardScrollable.addNode(this._home.createCardNode(card));
+        });
+        this._cardListElem.style.opacity = 0;
+        window.requestAnimationFrame(this._performBubbleUp.bind(this));
+      };
+
       this._cardScrollable.clean();
-      this._cardManager.getFilteredCardList(filter.name).then(gotCardLists);
+      if (filter.name === 'all') {
+        // If filtering condition is all cards, just display all cards.
+        // Don't need extra card sorting.
+        this._cardManager.getFilteredCardList(filter.name).then(display);
+      } else {
+        this._cardManager.getFilteredCardList(filter.name).then(list => {
+          var appearedList = [];
+          var uniqueList = [];
+          list.forEach(card => {
+            // Get url to which card is launched
+            var url = card.launchURL ? card.launchURL : card.manifest.origin;
+            // Get sorting key based on card name
+            var key = CardUtil.getSortKey(card);
+            // The same card which appeared before will not be picked up.
+            // By the same card, we mean card has the same url and key
+            if (appearedList.indexOf(url + key) < 0) {
+              appearedList.push(url + key);
+              uniqueList.push({
+                card: card,
+                key: key
+              });
+            }
+          });
+          uniqueList.sort((a, b) => a.key.localeCompare(b.key));
+          this._filteredCardList = uniqueList.map(item => item.card);
+          display(this._filteredCardList);
+        });
+      }
     },
 
     /**

@@ -409,6 +409,7 @@
         document.l10n.formatValue('enter-new-name')
       ]).then(([oldName, val]) => {
         var result = prompt(val, oldName);
+if (window.TMP_the_name) { result = window.TMP_the_name; }
         if (!result) {
           return;
         }
