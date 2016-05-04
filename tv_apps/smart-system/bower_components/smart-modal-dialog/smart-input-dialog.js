@@ -27,6 +27,11 @@
 
 (function(exports) {
   'use strict';
+var TMP_log = function () { return;
+  var args = Array.from(arguments);
+  args.unshift('smart-input-dialog.js -');
+  console.log.apply(console, args);
+};
 
   var DEFAULT_MARGIN = 44;
   var INPUT_GROUP_INDEX = 0;
@@ -184,6 +189,7 @@
 
     this.element.classList.add('visible');
     this.element.open();
+    TMP_log('_open - focus', this.element);
     this.element.focus();
   };
 

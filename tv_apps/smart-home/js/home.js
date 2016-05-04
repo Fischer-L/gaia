@@ -213,6 +213,10 @@
     },
 
     onMoveMenuItemClick: function () {
+if (1) { // TMP
+  prompt('aaa', 'bbb');
+  return;
+}
       this.edit.toggleEditMode();
       this.edit.toggleArrangeMode();
     },

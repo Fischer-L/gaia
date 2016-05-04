@@ -13,6 +13,29 @@
 
 'use strict';
 
+window.TMP_active = null
+window.TMP_start_observe_focus = function () {
+  window.TMP_active = document.activeElement;
+  window.TMP_home = document.querySelector('#homescreen iframe#browser0');
+  setInterval(() => {
+    if (window.TMP_active !== document.activeElement) {
+      console.log('------------ Old global focus', window.TMP_active);
+      window.TMP_active = document.activeElement;
+      console.log('------------ New global focus', window.TMP_active);
+    }
+  }, 1);
+  setTimeout(function () {
+    // window.TMP_home.addEventListener('focus', function () {
+    //   throw tgfredr;
+    // });
+    // window.addEventListener('focus', () => {
+    //   console.log('------------ Throw at', document.activeElement);
+    //   throw wertyu;
+    // }, true);
+    // window.TMP_KEY_always_injected = 1;
+    // console.log('------------- REGISTERED ------------');
+  }, 7000);
+}
 
 window.addEventListener('load', function startup() {
   /**

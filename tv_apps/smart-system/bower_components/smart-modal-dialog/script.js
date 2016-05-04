@@ -21,6 +21,11 @@
 
 (function(exports) {
   'use strict';
+var TMP_log = function () { return;
+  var args = Array.from(arguments);
+  args.unshift('smart-modal-dialog.js -');
+  console.log.apply(console, args);
+};
 
   var DEFAULT_MARGIN = 44;
 
@@ -169,6 +174,7 @@
     }
     this.isOpened = true;
     this._focusedIndex = this.defaultFocusIndex;
+TMP_log('open - this._focusedIndex =', this._focusedIndex);
     // We should wait two frames for reflow.
     window.requestAnimationFrame(function() {
       window.requestAnimationFrame(this._open.bind(this, options));
@@ -198,6 +204,7 @@
    * Scroll the list to the input element
    */
   proto._scrollTo = function(element) {
+TMP_log('_scrollTo - element =', element);
     var newTransition = this._getScrollOffset(element);
     this._translateX = newTransition;
     this.buttonGroup.style.transform = 'translateX(' + this._translateX +
@@ -250,6 +257,8 @@
   proto.focus = function() {
     if (this.element.classList.contains('opening') ||
         this.element.classList.contains('closing')) {
+TMP_log('focus - this.element contains opening/closing');
+TMP_log('focus - this.element =', this.element);
       this.element.focus();
     } else {
       var elem = this._getFocusedElement()
@@ -257,6 +266,7 @@
 
       // move focus to smart dialog while transition running
       if (elem.focus && (typeof elem.focus) === 'function') {
+TMP_log('focus - elem =', elem);
         elem.focus();
       }
     }
@@ -265,6 +275,7 @@
   proto.blur = function() {
     var elem = this._getFocusedElement();
     if (elem.blur && (typeof elem.blur === 'function')) {
+TMP_log('blur - elem =', elem);
       elem.blur();
     }
   };
@@ -308,6 +319,7 @@
         if (e.type === 'will-open' || e.type === 'will-close') {
           this.fireEvent('modal-dialog-' + e.type);
         } else if (e.type === 'opened') {
+TMP_log('handleEvent - opened');
           this._scrollTo(this.buttonElements[0]);
           // Play bubble animation when the smart-dialog is opened
           this.smartBubble.play(this.buttonElements);

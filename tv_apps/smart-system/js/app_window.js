@@ -11,6 +11,11 @@
 'use strict';
 
 (function(exports) {
+var TMP_log = function () {
+  var args = Array.from(arguments);
+  args.unshift('app_window.js -');
+  console.log.apply(console, args);
+};
   // Turn on this flag to debug all windows.
   var DEBUG = false;
   // Turn on this flag to print all trace in debugging function.
@@ -1300,7 +1305,9 @@
                             });
 
       this.debug('publishing internal event: ' + event);
+      TMP_log('broadcast - this.element =', this.element);
       this.element.dispatchEvent(internalEvent);
+      TMP_log('broadcast - this.element dispatched event', '_' + event);
     }
   };
 

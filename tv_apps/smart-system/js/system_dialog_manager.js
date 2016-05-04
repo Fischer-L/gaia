@@ -5,6 +5,11 @@
 
 (function(exports) {
   var DEBUG = false;
+var TMP_log = function () {
+  var args = Array.from(arguments);
+  args.unshift('system_dialog_manager.js -');
+  console.log.apply(console, args);
+};
 
   /**
    * A manager for each SystemDialog `show` and `hide`.
@@ -80,6 +85,7 @@
    * @memberof SystemDialogManager
    */
   SystemDialogManager.prototype.handleEvent = function sdm_handleEvent(evt) {
+TMP_log('handleEvent -', evt.type);
     var dialog = null;
     switch (evt.type) {
       case 'system-dialog-created':
@@ -96,8 +102,10 @@
         break;
       case 'system-resize':
         if (this.states.activeDialog) {
+TMP_log('handleEvent - befoer activeDialog.resize - document.activeElement =', document.activeElement);
           this.states.activeDialog.resize();
         }
+TMP_log('handleEvent - after activeDialog.resize - document.activeElement =', document.activeElement);
         break;
       case 'home':
       case 'holdhome':
@@ -118,10 +126,14 @@
         if (typesToHandle.indexOf(evt.detail.inputType) < 0) {
           return;
         }
+TMP_log('handleEvent - befoer evt.stopImmediatePropagation - document.activeElement =', document.activeElement);
         // Making sure app-window does not receive this event.
         evt.stopImmediatePropagation();
+TMP_log('handleEvent - after evt.stopImmediatePropagation - document.activeElement =', document.activeElement);
+TMP_log('handleEvent - befoer activeDialog.broadcast - document.activeElement =', document.activeElement);
         this.states.activeDialog.broadcast('inputmethod-contextchange',
           evt.detail);
+TMP_log('handleEvent - after activeDialog.broadcast - document.activeElement =', document.activeElement);
         break;
       case 'mozPresentationContentEvent':
         var type = evt.detail.type;

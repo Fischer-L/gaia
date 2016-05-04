@@ -3,6 +3,11 @@
 'use strict';
 
 (function(exports) {
+var TMP_log = function () {
+  var args = Array.from(arguments);
+  args.unshift('app_window_manager.js -');
+  console.log.apply(console, args);
+};
   var screenElement = document.getElementById('screen');
 
   /**
@@ -401,6 +406,7 @@
     },
 
     handleEvent: function awm_handleEvent(evt) {
+      TMP_log('handleEvent -', evt.type);
       this.debug('handling ' + evt.type);
       var activeApp = this._activeApp;
       var detail = evt.detail;
@@ -413,6 +419,7 @@
           if (activeApp) {
             this.debug(' Resizing ' + activeApp.name);
             if (!activeApp.isTransitioning()) {
+              TMP_log('handleEvent - system-resize - activeApp.resize =', activeApp);
               activeApp.resize();
             }
           }
@@ -582,12 +589,14 @@
           break;
 
         case 'mozChromeEvent':
+          if (window.TMP_KEY_no_chrome) return;
           if (!activeApp || !evt.detail ||
             evt.detail.type !== 'inputmethod-contextchange') {
             return;
           }
           activeApp.getTopMostWindow().broadcast('inputmethod-contextchange',
             evt.detail);
+          TMP_log('handleEvent - broadcasted inputmethod-contextchange');
           break;
       }
     },

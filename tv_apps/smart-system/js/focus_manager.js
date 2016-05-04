@@ -2,6 +2,11 @@
 
 (function(exports) {
   'use strict';
+var TMP_log = function () {
+  // var args = Array.from(arguments);
+  // args.unshift('focus_manager.js -');
+  // console.log.apply(console, args);
+};
 
   var SETTINGS_AUTO_FIXING = 'focusmanager.autofix.enabled';
 
@@ -159,15 +164,18 @@
           }
           var nodes = this._getNodesUnderLeastCommonAncestor(
                                        topMost.getElement(), item.getElement());
+          // TMP_log('focus - compare topMost and item', topMost.getElement(), item.getElement());
           if (!nodes) {
             // they are not at the same tree
             console.warn('No LCA found, at least a UI is removed from UI but ' +
                          'not removed from focus manager.');
           } else if (nodes.a && !nodes.b) {
             console.warn('A UI is under another UI while focusing it.');
+            // TMP_log('focus - nodes.a and !nodes.b', nodes.a, nodes.b);
             // We view topMost as higher than item in this case.
           } else if (!nodes.a && nodes.b) {
             console.warn('A UI is under another UI while focusing it.');
+            // TMP_log('focus - !nodes.a and nodes.b', nodes.a, nodes.b);
             // We view item as higher than topMost in this case.
             topMost = item;
           } else {
@@ -187,10 +195,12 @@
       } else if (AppWindowManager.getActiveApp()){
         // no system UI, we set focus back to top-most AppWindow
         topMost = AppWindowManager.getActiveApp();
+        // TMP_log('focus - AppWindowManager.getActiveApp =', topMost);
         // We will always have active app, except booting.
       }
       if (topMost) {
         // focus top-most system UI
+        TMP_log('focus - topMost =', topMost);
         topMost.focus();
         window.dispatchEvent(
           new CustomEvent('focuschanged', {detail: { topMost: topMost }}));
@@ -235,6 +245,8 @@
   };
 
   proto.isWrongFocus = function ff_isWrongFocus() {
+    TMP_log('isWrongFocus - document.activeElement.tagName =', document.activeElement.tagName);
+    TMP_log('isWrongFocus - is document.activeElement visible =', this.isElementVisible(document.activeElement));
     // if active element is body or html, it is wrong focus.
     if (document.activeElement.tagName === 'BODY' ||
         document.activeElement.tagName === 'HTML') {
@@ -250,6 +262,7 @@
   };
 
   proto.handleEvent = function ff_handleEvent(e) {
+    TMP_log('handleEvent', e.type);
     // prevent evenything.
     switch(e.type) {
       case 'keydown':
@@ -259,11 +272,11 @@
         if (ScreenManager.screenEnabled &&
             BLACK_LIST_KEYS.indexOf(e.key.toLowerCase()) === -1 &&
             this.isWrongFocus()) {
-
           e.preventDefault();
           e.stopImmediatePropagation();
           e.stopPropagation();
           // try to focus back to correct UI.
+          TMP_log('handleEvent - try to focus back to correct UI.');
           this.focus();
         }
         break;

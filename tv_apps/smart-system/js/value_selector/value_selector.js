@@ -4,7 +4,11 @@
 'use strict';
 
 (function(exports) {
-
+var TMP_log = function () {
+  var args = Array.from(arguments);
+  args.unshift('value_selector.js -');
+  console.log.apply(console, args);
+};
   var _id = 0;
 
   function toCamelCase(str) {
@@ -109,9 +113,20 @@
         if (typesToHandle.indexOf(evt.detail.inputType) < 0) {
           return;
         }
+        if (window.TMP_KEY_always_injected) {
+          TMP_log('always this._injected');
+          this.show(evt.detail);
+          return;
+        }
+        // TMP_KEY_:
+        // At the 1st time of prompting and pressing down key to hide keyboard,
+        // this._injected is false and it would cause focus back to the background homescreen.
+        // After this 1st time, this._injected is ture and everything works as expected
         if (this._injected) {
+          TMP_log('this._injected');
           this.show(evt.detail);
         } else {
+          TMP_log('this._injected is false');
           this.render(function afterRender() {
             this.show(evt.detail);
           }.bind(this));

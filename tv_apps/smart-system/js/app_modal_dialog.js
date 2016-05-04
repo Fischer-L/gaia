@@ -1,7 +1,11 @@
 /* global AppModalDialog, SimpleKeyNavigation, focusManager, SharedUtils */
 'use strict';
-
 (function(exports) {
+var TMP_log = function () {
+  // var args = Array.from(arguments);
+  // args.unshift('app_modal_dialog.js -');
+  // console.log.apply(console, args);
+};
   var _id = 0;
 
   /**
@@ -48,6 +52,7 @@
   };
 
   AppModalDialog.prototype.handleEvent = function amd_handleEvent(evt) {
+TMP_log('handleEvent -', evt.type);
     this.app.debug('handling ' + evt.type);
     switch (evt.type) {
       case 'mozbrowsershowmodalprompt':
@@ -63,6 +68,7 @@
         break;
       case 'modal-dialog-will-open':
       case 'modal-dialog-closed':
+TMP_log('handleEvent - this.isSmartModalDialog =', this.isSmartModalDialog);
         if (this.isSmartModalDialog) {
           focusManager.focus();
         }
@@ -214,6 +220,7 @@
 
     var option;
     var textRawPromises = [];
+TMP_log('_show - type =', type);
     switch (type) {
       case 'alert':
         option = {
@@ -295,6 +302,7 @@
             .then(text => option.buttonSettings[0].textRaw = text));
         }
 
+TMP_log('_show - this.smartInputDialog.open() for prompt');
         Promise.all(textRawPromises)
           .then(() => this.smartInputDialog.open(option));
         break;
@@ -323,6 +331,7 @@
     this._dialogType = type;
     // TODO: Currently we only implmented key navigation for prompt dialog.
     // Other dialogs also need to be implemented.
+TMP_log('show - type =', type);
     switch (type) {
       case 'alert':
       case 'confirm':
@@ -394,6 +403,7 @@
     }
     // simpleKeyNavigation.start will focus the default element, however, we do
     // not want to have any button or input focused before bubbling animation.
+TMP_log('show - blur', this.simpleKeyNavigation.getFocusedElement());
     this.simpleKeyNavigation.blur();
 
     this.app.publish('modaldialog-' + type + '-shown');
@@ -402,6 +412,7 @@
   };
 
   AppModalDialog.prototype.hide = function amd_hide() {
+TMP_log('hide');
     if (!this.isSmartModalDialog) {
       // Only start/stop simple key navigation when it's not smart-modal-dialog.
       this.simpleKeyNavigation.blur();
@@ -439,26 +450,33 @@
     // XXX: Focusing smart-button fails at the second time popup if we don't
     // postpone it. We need to find the root cause.
     document.activeElement.blur();
+TMP_log('focus - blur document.activeElement');
     if (this.isSmartModalDialog && !this.isSmartInputDialog) {
       this.smartModalDialog.focus();
+TMP_log('focus - this.smartModalDialog =', this.smartModalDialog);
       return;
     } else if (this.isSmartModalDialog && this.isSmartInputDialog) {
       this.smartInputDialog.focus();
+TMP_log('focus - this.smartInputDialog =', this.smartInputDialog);
       return;
     } else if (!this.isSmartModalDialog) {
       this.element.focus();
+TMP_log('focus - this.element =', this.element);
       return;
     }
 
     switch(this._dialogType) {
       case 'selectone':
         this.elements.selectOne.focus();
+TMP_log('focus - this.elements.selectOne =', this.elements.selectOne);
         break;
       case 'custom-prompt':
         this.elements.customPrompt.focus();
+TMP_log('focus - this.elements.customPrompt =', this.elements.customPrompt);
         break;
       default:
         this.simpleKeyNavigation && this.simpleKeyNavigation.focus();
+TMP_log('focus - this.simpleKeyNavigation =', this.simpleKeyNavigation.getFocusedElement());
         break;
     }
   };

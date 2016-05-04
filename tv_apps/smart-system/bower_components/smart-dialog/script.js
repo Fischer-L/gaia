@@ -16,6 +16,11 @@
 
 window.SmartDialog = (function(win) {
   'use strict';
+var TMP_log = function () { return;
+  var args = Array.from(arguments);
+  args.unshift('smart-dialog.js -');
+  console.log.apply(console, args);
+};
 
   // The value of openDuration and closeDuration should be the same as
   // transitionDuration in opening and closing css class.
@@ -36,6 +41,7 @@ window.SmartDialog = (function(win) {
   };
 
   proto._onOpened = function sd_onOpened() {
+TMP_log('_onOpened');
     this.classList.remove('opening');
     this.classList.add('opened');
     this.fireEvent('opened');
@@ -57,6 +63,7 @@ window.SmartDialog = (function(win) {
     this.classList.remove('closed');
     this.classList.add('opening');
     // handle the case when transitionend event is not fired
+TMP_log('open');
     clearTimeout(this.transitionTimer);
     this.transitionTimer = setTimeout(function() {
       this._onOpened();
