@@ -33,6 +33,8 @@
     <meta name="defaultLanguage" content="en-US">
     <meta name="availableLanguages" content="en-US">
     <link rel="localization" href="locales/ftu.{locale}.properties"/>
+    <!-- L10n pana.properties -->
+    <link rel="localization" href="locales/tv-ftu.{locale}.pana.properties"/>
   </head>
 
   <body>
@@ -40,14 +42,18 @@
     <article id="app-usage-page" class="page hidden">
       <section class="page-section logo-section">
         <img class="firefox-logo" src="style/images/firefox_logo.png">
-        <span class="txt-large txt-center" data-l10n-id="welcome"></span>
+        <span class="txt-large txt-center" data-l10n-id="LT_FXOS_MOZ_FTE_TITLE"></span>
       </section>
       <section class="page-section content-section" tabindex="-1">
         <div class="page-content">
-          <p class="page-description" data-l10n-id="fxos-is-free"></p>
-          <p class="page-description" data-l10n-id="app-usage-text"></p>
-          <p class="page-description" data-l10n-id="only-cover-mozilla"></p>
-          <p class="page-description txt-center" data-l10n-id="send-to-mozilla"></p>
+          <p class="page-description" data-l10n-id="LT_FXOS_MOZ_FTE_MSG"></p>
+          <p class="page-description">
+            <span data-l10n-id="LT_FXOS_MOZ_FTE_APP_USAGE"></span> 
+            <span data-l10n-id="LT_FXOS_MOZ_FTE_MSG1"></span> 
+            <span data-l10n-id="LT_FXOS_MOZ_FTE_MSG2"></span> 
+          </p>
+          <p class="page-description" data-l10n-id="LT_FXOS_MOZ_FTE_NOTICE_COVER"></p>
+          <p class="page-description txt-center" data-l10n-id="LT_FXOS_MOZ_FTE_SEND_DATA_CHECK"></p>
         </div>
       </section>
       <section class="page-section arrow-icon-section hidden">
@@ -55,8 +61,8 @@
         <div class="arrow-icon arrow-2" data-icon="arrow-down"></div>
       </section>
       <section class="page-section button-section">
-        <smart-button id="app-usage-page-no-button" class="page-button" type="rounded-corner-text" data-l10n-id="no"></smart-button>
-        <smart-button id="app-usage-page-yes-button" class="primary page-button page-default-button" type="rounded-corner-text" data-l10n-id="yes"></smart-button>
+        <smart-button id="app-usage-page-no-button" class="page-button" type="rounded-corner-text" data-l10n-id="LT_NO"></smart-button>
+        <smart-button id="app-usage-page-yes-button" class="primary page-button page-default-button" type="rounded-corner-text" data-l10n-id="LT_YES"></smart-button>
       </section>
     </article>
 
@@ -64,51 +70,61 @@
       <section class="page-section content-section" tabindex="-1">
         <div class="page-content">
           <div id="fxos-privacy-notice-content">
-            <p class="page-description txt-bold" data-l10n-id="privacy-notice"></p>
-            <p class="page-description" data-l10n-id="cares-about-your-privacy"></p>
-            <p class="page-description txt-bold" data-l10n-id="you-should-know"></p>
-            <p class="page-description" data-l10n-id="fxos-connects"></p>
+            <p class="page-description txt-bold" data-l10n-id="LT_FXOS_PRI_NOC"></p>
+            <p class="page-description" data-l10n-id="LT_FXOS_PRI_NOC_INTRO"></p>
+            <p class="page-description txt-bold" data-l10n-id="LT_FXOS_PRI_NOC_MSG1"></p>
+            <p class="page-description" data-l10n-id="LT_FXOS_PRI_NOC_MSG2"></p>
             <ul>
-              <li class="page-description" data-l10n-id="updates"></li>
-              <li class="page-description" data-l10n-id="initial-activation"></li>
-              <li class="page-description" data-l10n-id="app-usage-term"></li>
+              <li class="page-description">
+		<span data-l10n-id="LT_FXOS_PRI_NOC_UPDATES"></span> 
+		<span data-l10n-id="LT_FXOS_PRI_NOC_UPDATES_MSG"></span> 
+              </li>
+              <li class="page-description">
+		<span data-l10n-id="LT_FXOS_PRI_NOC_INITIAL_ACTIVATION"></span> 
+		<span data-l10n-id="LT_FXOS_PRI_NOC_INITIAL_ACTIVATION_MSG"></span> 
+              </li>
+              <li class="page-description">
+                <span data-l10n-id="LT_FXOS_MOZ_FTE_APP_USAGE"></span> 
+                <span data-l10n-id="LT_FXOS_MOZ_FTE_MSG1"></span> 
+                <span data-l10n-id="LT_FXOS_MOZ_FTE_MSG2"></span> 
+              </li>
             </ul>
-            <p class="page-description" data-l10n-id="only-cover-mozilla"></p>
+            <p class="page-description" data-l10n-id="LT_FXOS_MOZ_FTE_NOTICE_COVER"></p>
           </div>
           <div id="moz-privacy-policy-content">
-            <p class="page-description txt-bold" data-l10n-id="privacy-policy"></p>
-            <p class="page-description" data-l10n-id="cares-privacy"></p>
-            <p class="page-description txt-bold" data-l10n-id="what-mean-by-personal-infomation"></p>
-            <p class="page-description" data-l10n-id="personal-info-means"></p>
-            <p class="page-description" data-l10n-id="non-personal-infomation"></p>
-            <p class="page-description" data-l10n-id="if-store-info"></p>
-            <p class="page-description txt-bold" data-l10n-id="how-we-learn"></p>
-            <p class="page-description" data-l10n-id="we-learn"></p>
+            <p class="page-description txt-bold" data-l10n-id="LT_FXOS_MOZ_PRI_POL"></p>
+            <p class="page-description" data-l10n-id="LT_FXOS_PRI_NOC_INTRO"></p>
+            <p class="page-description txt-bold" data-l10n-id="LT_FXOS_MOZ_PRI_POL_PERSONAL_INFO"></p>
+            <p class="page-description" data-l10n-id="LT_FXOS_MOZ_PRI_POL_PERSONAL_INFO_MEANS"></p>
+            <p class="page-description" data-l10n-id="LT_FXOS_MOZ_PRI_POL_NON_PERSONAL_INFO"></p>
+            <p class="page-description" data-l10n-id="LT_FXOS_MOZ_PRI_POL_MSG"></p>
+            <p class="page-description txt-bold" data-l10n-id="LT_FXOS_MOZ_PRI_POL_LEARN_INFO"></p>
+            <p class="page-description" data-l10n-id="LT_FXOS_MOZ_PRI_POL_WHEN_LEARN_INFO"></p>
             <ul>
-              <li class="page-description" data-l10n-id="give-directly"></li>
-              <li class="page-description" data-l10n-id="we-collect"></li>
-              <li class="page-description" data-l10n-id="someone-tells"></li>
-              <li class="page-description" data-l10n-id="when-we-try"></li>
+              <li class="page-description" data-l10n-id="LT_FXOS_MOZ_PRI_POL_LEARN_INFO_SCENE1"></li>
+              <li class="page-description" data-l10n-id="LT_FXOS_MOZ_PRI_POL_LEARN_INFO_SCENE2"></li>
+              <li class="page-description" data-l10n-id="LT_FXOS_MOZ_PRI_POL_LEARN_INFO_SCENE3"></li>
+              <li class="page-description" data-l10n-id="LT_FXOS_MOZ_PRI_POL_LEARN_INFO_SCENE4"></li>
             </ul>
-            <p class="page-description txt-bold" data-l10n-id="what-we-do"></p>
-            <p class="page-description" data-l10n-id="when-give-info"></p>
-            <p class="page-description txt-bold" data-l10n-id="when-we-share"></p>
+            <p class="page-description txt-bold" data-l10n-id="LT_FXOS_MOZ_PRI_POL_WHAT_TO_DO_WITH_INFO"></p>
+            <p class="page-description" data-l10n-id="LT_FXOS_MOZ_PRI_POL_WHAT_TO_DO_WITH_INFO_MSG"></p>
+            <p class="page-description txt-bold" data-l10n-id="LT_FXOS_MOZ_PRI_POL_WHEN_SHARE_INFO"></p>
             <ul>
-              <li class="page-description" data-l10n-id="when-ask"></li>
-              <li class="page-description" data-l10n-id="for-processing"></li>
-              <li class="page-description" data-l10n-id="when-fulfilling-mission"></li>
-              <li class="page-description" data-l10n-id="when-law-requires"></li>
-              <li class="page-description" data-l10n-id="when-necessary"></li>
-              <li class="page-description" data-l10n-id="if-changes"></li>
+              <li class="page-description" data-l10n-id="LT_FXOS_MOZ_PRI_POL_SHARE_INFO_SCENE1"></li>
+              <li class="page-description" data-l10n-id="LT_FXOS_MOZ_PRI_POL_SHARE_INFO_SCENE2"></li>
+              <li class="page-description" data-l10n-id="LT_FXOS_MOZ_PRI_POL_SHARE_INFO_SCENE3"></li>
+              <li class="page-description" data-l10n-id="LT_FXOS_MOZ_PRI_POL_SHARE_INFO_SCENE4"></li>
+              <li class="page-description" data-l10n-id="LT_FXOS_MOZ_PRI_POL_SHARE_INFO_SCENE5"></li>
+              <li class="page-description" data-l10n-id="LT_FXOS_MOZ_PRI_POL_SHARE_INFO_SCENE6"></li>
             </ul>
-            <p class="page-description txt-bold" data-l10n-id="how-we-store"></p>
-            <p class="page-description" data-l10n-id="we-commit"></p>
-            <p class="page-description" data-l10n-id="no-longer-than-need"></p>
-            <p class="page-description txt-bold" data-l10n-id="what-should-know"></p>
-            <p class="page-description" data-l10n-id="we-are-global"></p>
-            <p class="page-description" data-l10n-id="if-under-13"></p>
-            <p class="page-description txt-bold" data-l10n-id="what-if-change"></p>
-            <p class="page-description" data-l10n-id="may-need-change"></p>
+            <p class="page-description txt-bold" data-l10n-id="LT_FXOS_MOZ_PRI_POL_HOW_STORE_PROTECT_INFO"></p>
+            <p class="page-description" data-l10n-id="LT_FXOS_MOZ_PRI_POL_STORE_PROTECT_INFO1"></p>
+            <p class="page-description" data-l10n-id="LT_FXOS_MOZ_PRI_POL_STORE_PROTECT_INFO2"></p>
+            <p class="page-description txt-bold" data-l10n-id="LT_FXOS_MOZ_PRI_POL_WHAT_ELSE"></p>
+            <p class="page-description" data-l10n-id="LT_FXOS_MOZ_PRI_POL_ELSE_TO_KNOW1"></p>
+            <p class="page-description" data-l10n-id="LT_FXOS_MOZ_PRI_POL_ELSE_TO_KNOW2"></p>
+            <p class="page-description txt-bold" data-l10n-id="LT_FXOS_MOZ_PRI_POL_WHAT_ELSE2"></p>
+            <p class="page-description" data-l10n-id="LT_FXOS_MOZ_PRI_POL_ELSE2_MSG"></p>
           </div>
         </div>
       </section>
@@ -117,7 +133,7 @@
         <div class="arrow-icon arrow-2" data-icon="arrow-down"></div>
       </section>
       <section class="page-section button-section">
-        <smart-button id="open-app-usage-page-button" class="primary page-button" type="rounded-corner-text" data-l10n-id="ok"></smart-button>
+        <smart-button id="open-app-usage-page-button" class="primary page-button" type="rounded-corner-text" data-l10n-id="LT_OK"></smart-button>
       </section>
     </article>
 

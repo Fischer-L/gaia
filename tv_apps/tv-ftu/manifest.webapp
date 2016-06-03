@@ -3,6 +3,7 @@
   "description": "TV First Time Usage",
   "launch_path": "/index.html",
   "type": "certified",
+  "role": "foreground-only",
   "developer": {
     "name": "The Gaia Team",
     "url": "https://github.com/mozilla-b2g/gaia"
@@ -19,6 +20,20 @@
   "default_locale": "en-US",
   "permissions": {
     "settings":{ "access": "readwrite" },
-    "moz-extremely-unstable-and-will-change-webcomponents":{}
+    "moz-extremely-unstable-and-will-change-webcomponents":{},
+    "pana-ext":{}
+  },
+  "panasonic_extension" : {
+    "productid": "0387878700000128",
+    "disclaimer": false,
+    "latest_check": false,
+    "restricted": false,
+    "lockable": false,
+    "removable": false,
+    "dial_protocol" : {
+      "dial_name": "",
+      "dial_allow_stop": false,
+      "dial_state_recognizable": false
+    }
   }
 }

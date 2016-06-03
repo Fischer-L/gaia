@@ -1,5 +1,4 @@
-/* global evt, SettingsListener, KeyNavigationAdapter, SimpleKeyNavigation
-*/
+/* global evt, KeyNavigationAdapter, SimpleKeyNavigation */
 (function (exports) {
 'use strict';
 
@@ -38,8 +37,12 @@ window.addEventListener('load', function() {
       this.keyNav.on('focusChanged', elem => this.fire('focus', elem));
 
       // Special treatment for translation with links
-      var links = document.querySelectorAll(
-        '#app-usage-page p[data-l10n-id=fxos-is-free] > a');
+
+      /* to avoid picking up incorrect LT label */
+      var l10nId = 'LT_FXOS_MOZ_FTE_MSG';
+      var query = '#app-usage-page p[data-l10n-id=' + l10nId + '] > a';
+
+      var links = document.querySelectorAll(query);
       links[0].setAttribute('tabindex', -1);
       links[0].setAttribute('id', 'fxos-privacy-notice-link');
       links[1].setAttribute('tabindex', -1);
@@ -158,6 +161,7 @@ window.addEventListener('load', function() {
       switch (this._currentFocused.id) {
         case 'app-usage-page-no-button':
         case 'app-usage-page-yes-button':
+	  /*
           var setting = {};
           if (this._currentFocused.id === 'app-usage-page-yes-button') {
             setting[this.APP_USAGE_ENABLE_KEY] = this.APP_USAGE_ENABLE_VALUE;
@@ -165,6 +169,15 @@ window.addEventListener('load', function() {
             setting[this.APP_USAGE_ENABLE_KEY] = this.APP_USAGE_DISABLE_VALUE;
           }
           SettingsListener.getSettingsLock().set(setting);
+	  */
+          var setting;
+          if (this._currentFocused.id === 'app-usage-page-yes-button') {
+            setting = this.APP_USAGE_ENABLE_VALUE;
+          } else {
+            setting = this.APP_USAGE_DISABLE_VALUE;
+          }
+          navigator.panaSystem.tvstore.set({ 'appUsageEnable': setting });
+
           window.close();
         break;
 
